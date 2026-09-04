@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>FORIOR — Interior Photo Services</title>
-  <meta name="description" content="Showcase portofolio fotografi interior dan arsitektur profesional oleh FORIOR. Dokumentasi visual beresolusi tinggi untuk residensial, vila, hotel, komersial, dan ruang publik." />
+  <meta name="description" content="Showcase portofolio fotografi interior dan arsitektur profesional oleh FORIOR." />
   <link rel="canonical" href="https://showcase.forior.id/" />
 
   <!-- Open Graph & WhatsApp Link Preview -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://showcase.forior.id/" />
   <meta property="og:title" content="FORIOR — Interior Photo Services" />
-  <meta property="og:description" content="Showcase portofolio visual arsitektur & interior fotografi beresolusi tinggi." />
+  <meta property="og:description" content="Showcase portofolio fotografi interior dan arsitektur profesional oleh FORIOR." />
   <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" />
 
-  <!-- Favicon Logo FORIOR (SVG Lens Aperture) -->
+  <!-- Favicon Logo FORIOR -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23281775'/%3E%3Ccircle cx='50' cy='50' r='28' fill='none' stroke='%23ffffff' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='14' fill='%23ffffff'/%3E%3Cpath d='M50 22 L50 32 M78 50 L68 50 M50 78 L50 68 M22 50 L32 50' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
 
   <!-- Google Fonts: Inter -->
@@ -48,7 +48,7 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Firebase App & Firestore SDK (v10 Compat) -->
+  <!-- Firebase App & Firestore SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -65,33 +65,29 @@
 
 <body class="bg-appleBg text-appleDark antialiased selection:bg-foriorBrand selection:text-white">
 
-  <!-- ================= NAVBAR (Apple Frosted Glass) ================= -->
-  <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 h-18 py-3.5 flex items-center justify-between">
+  <!-- ================= NAVBAR ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-2">
       
-      <!-- Brand Logo FORIOR -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-xl bg-foriorBrand flex items-center justify-center text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
-          <!-- Stylized Camera Aperture / O Logo -->
-          <svg viewBox="0 0 100 100" class="w-5 h-5 fill-white">
+      <!-- Brand Logo FORIOR (Hanya FORIOR tanpa subjudul) -->
+      <a href="#" class="flex items-center gap-2.5 group shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-foriorBrand flex items-center justify-center text-white shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+          <svg viewBox="0 0 100 100" class="w-4.5 h-4.5 fill-white">
             <circle cx="50" cy="50" r="28" fill="none" stroke="#ffffff" stroke-width="8"/>
             <circle cx="50" cy="50" r="13" fill="#ffffff"/>
             <path d="M50 20 L50 32 M80 50 L68 50 M50 80 L50 68 M20 50 L32 50" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="flex flex-col">
-          <span class="text-base font-extrabold tracking-wider text-appleDark leading-none">FORIOR</span>
-          <span class="text-[9px] font-semibold tracking-[0.24em] text-neutral-500 uppercase mt-0.5">INTERIOR PHOTO SERVICES</span>
-        </div>
+        <span class="text-base sm:text-lg font-black tracking-wider text-appleDark leading-none">FORIOR</span>
       </a>
 
       <!-- Quick Nav & Admin Control -->
-      <div class="flex items-center gap-3">
-        <a href="https://forior.id" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-appleGray hover:text-appleDark px-3 py-1.5 transition-colors hidden md:inline-block">
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <a href="https://forior.id" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-appleGray hover:text-appleDark px-2.5 py-1.5 transition-colors hidden md:inline-block">
           forior.id ↗
         </a>
 
-        <!-- Status Cloud Badge Indicator -->
+        <!-- Status Cloud Indicator -->
         <div id="cloudStatusNav" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 border border-appleBorder text-[11px] font-medium text-appleGray">
           <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
           <span id="cloudStatusText">Menghubungkan...</span>
@@ -101,7 +97,7 @@
         <button 
           id="navAdminBtn"
           onclick="handleAdminNavClick()" 
-          class="inline-flex items-center gap-2 bg-appleDark text-white text-xs font-medium px-4 py-2 rounded-full hover:bg-neutral-800 active:scale-95 transition-all shadow-sm">
+          class="inline-flex items-center gap-1.5 bg-appleDark text-white text-xs font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-neutral-800 active:scale-95 transition-all shadow-sm whitespace-nowrap shrink-0">
           <i data-lucide="lock" class="w-3.5 h-3.5" id="navAdminIcon"></i>
           <span id="navAdminLabel">Kelola Portofolio</span>
         </button>
@@ -110,9 +106,8 @@
     </div>
   </header>
 
-  <!-- ================= SECTION 1: HERO IMAGE (Apple Style Full Width) ================= -->
-  <section class="relative w-full h-[90vh] min-h-[600px] max-h-[940px] flex items-end pb-16 md:pb-24 pt-28 overflow-hidden">
-    <!-- Hero Photography Background -->
+  <!-- ================= SECTION 1: HERO IMAGE ================= -->
+  <section class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
     <img 
       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
       alt="FORIOR Interior Photography Showcase" 
@@ -120,14 +115,12 @@
       onerror="this.src='https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2000&auto=format&fit=crop'"
     />
 
-    <!-- Cinematic Gradient Overlay -->
     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25"></div>
 
-    <!-- Text Overlay Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 w-full text-white">
-      <div class="max-w-3xl space-y-4">
+    <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full text-white">
+      <div class="max-w-3xl space-y-3.5 sm:space-y-4">
         
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-xs font-medium tracking-wider uppercase text-neutral-200">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-medium tracking-wider uppercase text-neutral-200">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
           SHOWCASE ARSITEKTUR & INTERIOR
         </div>
@@ -136,16 +129,16 @@
           Menangkap Jiwa, Ruang & Cahaya.
         </h1>
 
-        <p class="text-neutral-300 text-sm sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
+        <p class="text-neutral-300 text-xs sm:text-base md:text-lg max-w-xl font-normal leading-relaxed">
           Eksplorasi portofolio fotografi interior dan arsitektur oleh FORIOR. Dokumentasi visual presisi tinggi untuk vila, residensial, klinik, hingga ruang komersial.
         </p>
 
-        <div class="pt-3 flex flex-wrap items-center gap-3.5">
-          <a href="#portfolio" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md">
+        <div class="pt-2 flex flex-wrap items-center gap-3">
+          <a href="#portfolio" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md">
             <span>Lihat Galeri Proyek</span>
             <i data-lucide="arrow-down" class="w-4 h-4"></i>
           </a>
-          <a href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20layanan%20foto%20arsitektur%20dan%20interior" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-full border border-white/25 transition-all">
+          <a href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20layanan%20foto%20arsitektur%20dan%20interior" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
             <span>Konsultasi Pemotretan</span>
           </a>
@@ -156,16 +149,15 @@
   </section>
 
   <!-- ================= SECTION 2: GRID PORTOFOLIO & FILTER ================= -->
-  <main id="portfolio" class="max-w-7xl mx-auto px-5 sm:px-8 py-16 md:py-24">
+  <main id="portfolio" class="max-w-7xl mx-auto px-4 sm:px-8 py-14 md:py-24">
 
     <!-- Header Section -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-8 gap-3">
       <div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Daftar Portofolio</h2>
-        <p class="text-sm text-appleGray mt-1">Pilih kategori proyek untuk memfilter. Klik kartu proyek untuk membuka album foto.</p>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Pilih kategori proyek untuk memfilter. Klik kartu proyek untuk membuka album foto.</p>
       </div>
 
-      <!-- Counter Badge -->
       <div class="flex items-center gap-2 self-start md:self-auto">
         <div class="text-xs font-medium text-appleGray bg-white border border-appleBorder px-3.5 py-1.5 rounded-full shadow-xs">
           Menampilkan <span id="projectCount" class="font-semibold text-appleDark">0</span> Proyek
@@ -173,20 +165,20 @@
       </div>
     </div>
 
-    <!-- Filter Kategori (Apple Segmented Pill Tabs) -->
-    <div class="relative mb-10">
+    <!-- Filter Kategori -->
+    <div class="relative mb-8 md:mb-10">
       <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
         <!-- Pills digenerate otomatis via JS -->
       </div>
     </div>
 
     <!-- Grid Proyek -->
-    <div id="portfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <div id="portfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <!-- Cards proyek dimuat dinamis -->
     </div>
 
-    <!-- Loading State Skeleton -->
-    <div id="loadingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    <!-- Loading Skeleton -->
+    <div id="loadingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse">
         <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200"></div>
         <div class="h-4 bg-neutral-200 rounded mt-4 w-3/4"></div>
@@ -210,7 +202,7 @@
         <i data-lucide="image-off" class="w-6 h-6"></i>
       </div>
       <h3 class="text-base font-semibold text-appleDark">Belum Ada Proyek</h3>
-      <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tidak ada portofolio pada kategori ini. Anda dapat menambahkan karya baru melalui panel admin.</p>
+      <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tidak ada portofolio pada kategori ini. Tambahkan karya baru melalui panel admin.</p>
       <button onclick="handleAdminNavClick()" class="mt-4 inline-flex items-center gap-2 text-xs font-semibold bg-appleDark text-white px-4 py-2 rounded-full hover:bg-neutral-800 transition-all">
         <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tambah Proyek Sekarang
       </button>
@@ -219,12 +211,11 @@
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="border-t border-appleBorder bg-white py-14">
+  <footer class="border-t border-appleBorder bg-white py-12 sm:py-14">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10 border-b border-appleBorder">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-appleBorder">
         
-        <!-- Brand Info -->
-        <div class="space-y-3">
+        <div class="space-y-2.5">
           <div class="flex items-center gap-2.5">
             <div class="w-7 h-7 rounded-lg bg-foriorBrand flex items-center justify-center text-white">
               <svg viewBox="0 0 100 100" class="w-4 h-4 fill-white">
@@ -232,24 +223,22 @@
                 <circle cx="50" cy="50" r="13" fill="#ffffff"/>
               </svg>
             </div>
-            <span class="font-bold text-sm tracking-wider text-appleDark">FORIOR</span>
+            <span class="font-black text-sm tracking-wider text-appleDark">FORIOR</span>
           </div>
           <p class="text-xs text-appleGray leading-relaxed max-w-sm">
             Layanan fotografi arsitektur, interior residensial & komersial dengan penekanan pada estetika tata ruang, pencahayaan alami, dan komposisi simetris.
           </p>
         </div>
 
-        <!-- Kontak Langsung -->
-        <div class="space-y-2 text-xs">
-          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px]">Informasi Kontak</h4>
+        <div class="space-y-1.5 text-xs">
+          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Informasi Kontak</h4>
           <p class="text-appleGray">Website: <a href="https://forior.id" target="_blank" rel="noopener noreferrer" class="text-appleDark font-medium hover:underline">forior.id</a></p>
           <p class="text-appleGray">Email: <a href="mailto:foriorid@gmail.com" class="text-appleDark font-medium hover:underline">foriorid@gmail.com</a></p>
           <p class="text-appleGray">WhatsApp: <a href="https://wa.me/6281542048268" target="_blank" rel="noopener noreferrer" class="text-emerald-600 font-semibold hover:underline">0815 4204 8268</a></p>
         </div>
 
-        <!-- Tautan Cepat & Akses Admin -->
-        <div class="space-y-2 text-xs md:text-right">
-          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px]">Akses Cepat</h4>
+        <div class="space-y-1.5 text-xs md:text-right">
+          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Akses Cepat</h4>
           <div><a href="#portfolio" class="text-appleGray hover:text-appleDark transition-colors">Semua Portofolio</a></div>
           <div><button onclick="handleAdminNavClick()" class="text-appleGray hover:text-appleDark transition-colors">Panel Masuk Admin</button></div>
           <div><a href="#" class="text-appleGray hover:text-appleDark transition-colors">Kembali ke Atas ↑</a></div>
@@ -257,21 +246,18 @@
 
       </div>
 
-      <!-- Copyright Bar -->
-      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-appleGray">
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-appleGray">
         <p>© 2026 FORIOR Photography. Hak cipta dilindungi.</p>
-        <p class="text-[11px]">Showcase subdomain: <span class="font-mono text-appleDark">showcase.forior.id</span></p>
+        <p class="text-[11px]">Showcase: <span class="font-mono text-appleDark">showcase.forior.id</span></p>
       </div>
     </div>
   </footer>
 
   <!-- ================= MODAL LOGIN ADMIN ================= -->
   <div id="loginModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
-    <!-- Backdrop -->
     <div onclick="toggleLoginModal(false)" class="absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity"></div>
 
-    <!-- Modal Box -->
-    <div class="relative w-full max-w-md bg-white rounded-3xl p-7 shadow-2xl border border-appleBorder z-10">
+    <div class="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-appleBorder z-10">
       <div class="flex items-center justify-between pb-4 border-b border-appleBorder">
         <div class="flex items-center gap-2.5">
           <div class="w-8 h-8 rounded-xl bg-foriorBrand text-white flex items-center justify-center">
@@ -287,7 +273,7 @@
         </button>
       </div>
 
-      <!-- Whitelist Email Badges (Quick Select) -->
+      <!-- Quick Select Whitelist -->
       <div class="mt-4 p-3 rounded-2xl bg-neutral-50 border border-appleBorder">
         <span class="text-[10px] font-semibold text-appleGray uppercase tracking-wider block mb-2">Pilih Akun Email Terdaftar:</span>
         <div class="flex flex-col gap-1.5">
@@ -306,7 +292,7 @@
         </div>
       </div>
 
-      <!-- Form Login (Hint password dihapus untuk privasi & keamanan) -->
+      <!-- Form Login -->
       <form onsubmit="handleAdminLogin(event)" class="space-y-3.5 mt-4">
         <div>
           <label class="block text-xs font-medium text-appleDark mb-1">Email Akun</label>
@@ -326,7 +312,7 @@
               type="password" 
               id="loginPassword" 
               required 
-              placeholder="Masukkan password admin..."
+              placeholder="Masukkan password..."
               class="w-full text-xs bg-white border border-appleBorder rounded-xl px-3 py-2.5 pr-9 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
             />
             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-appleGray hover:text-appleDark">
@@ -352,42 +338,40 @@
 
   <!-- ================= BACKEND / ADMIN DRAWER ================= -->
   <div id="adminModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 ease-out flex justify-end">
-    <!-- Backdrop -->
     <div onclick="toggleAdminPanel(false)" class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
 
-    <!-- Drawer Panel Content -->
     <div class="relative w-full max-w-xl bg-white h-full shadow-2xl overflow-y-auto flex flex-col z-10">
       
       <!-- Drawer Header -->
-      <div class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-appleBorder p-6 flex items-center justify-between z-20">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-foriorBrand text-white flex items-center justify-center shadow-xs">
+      <div class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-appleBorder p-4 sm:p-5 flex items-center justify-between gap-3 z-20">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-xl bg-foriorBrand text-white flex items-center justify-center shadow-xs shrink-0">
             <i data-lucide="layout-grid" class="w-4 h-4"></i>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h3 class="text-sm font-semibold text-appleDark">Kelola Portofolio FORIOR</h3>
-              <span id="drawerCloudBadge" class="text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700">Cloud Aktif</span>
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <h3 class="text-xs sm:text-sm font-semibold text-appleDark truncate">Kelola Portofolio</h3>
+              <span id="drawerCloudBadge" class="text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700 shrink-0">Cloud Aktif</span>
             </div>
-            <p class="text-xs text-appleGray" id="activeAdminEmailDisplay">Login sebagai: admin</p>
+            <p class="text-[11px] text-appleGray truncate" id="activeAdminEmailDisplay">Login sebagai: admin</p>
           </div>
         </div>
 
-        <div class="flex items-center gap-2">
-          <button onclick="handleAdminLogout()" title="Logout" class="text-xs font-medium text-rose-600 hover:bg-rose-50 px-2.5 py-1.5 rounded-lg transition-colors">
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button onclick="handleAdminLogout()" title="Logout" class="text-xs font-medium text-rose-600 hover:bg-rose-50 px-2 py-1.5 rounded-lg transition-colors">
             Keluar
           </button>
-          <button onclick="toggleAdminPanel(false)" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-appleGray hover:text-appleDark transition-colors">
+          <button onclick="toggleAdminPanel(false)" class="w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-appleGray hover:text-appleDark transition-colors">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
       </div>
 
       <!-- Drawer Body -->
-      <div class="p-6 space-y-7 flex-1">
+      <div class="p-4 sm:p-6 space-y-6 flex-1">
 
         <!-- Form Tambah / Edit Proyek -->
-        <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-5 space-y-4">
+        <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-4 sm:p-5 space-y-3.5">
           <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider flex items-center gap-2">
             <i data-lucide="plus-circle" class="w-4 h-4 text-foriorBrand"></i>
             <span id="formHeaderTitle">Tambah Proyek Baru</span>
@@ -396,7 +380,6 @@
           <form id="projectForm" onsubmit="handleSaveProject(event)" class="space-y-3.5">
             <input type="hidden" id="editProjectId" value="">
 
-            <!-- Judul Proyek -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Judul Proyek Portofolio</label>
               <input 
@@ -408,7 +391,6 @@
               />
             </div>
 
-            <!-- Kategori & Tag Lokasi Kota -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-xs font-medium text-appleDark mb-1">Kategori</label>
@@ -417,7 +399,6 @@
                   required
                   class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
                 >
-                  <!-- Diisi otomatis via JS -->
                 </select>
               </div>
 
@@ -433,7 +414,6 @@
               </div>
             </div>
 
-            <!-- Link Google Photos -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span>Tautan Album Google Photos</span>
@@ -443,12 +423,11 @@
                 type="url" 
                 id="inputLink" 
                 required 
-                placeholder="https://photos.app.goo.gl/... atau https://photos.google.com/..."
+                placeholder="https://photos.app.goo.gl/..."
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
               />
             </div>
 
-            <!-- Featured Image (URL atau File Upload Otomatis Terkompresi) -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Featured Image (Foto Cover)</label>
               <input 
@@ -460,26 +439,24 @@
               />
               
               <div class="flex items-center gap-2">
-                <span class="text-[10px] text-appleGray">Atau unggah berkas (otomatis dioptimasi):</span>
+                <span class="text-[10px] text-appleGray">Atau unggah berkas:</span>
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1 rounded-lg hover:bg-neutral-100 transition-colors">
                   Pilih Berkas
                   <input type="file" id="inputFileUpload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
                 </label>
               </div>
 
-              <!-- Preview Kotak Foto -->
               <div id="imagePreviewContainer" class="mt-2.5 h-36 rounded-xl border border-appleBorder bg-neutral-200 overflow-hidden relative hidden">
                 <img id="imagePreview" src="" alt="Preview" class="w-full h-full object-cover">
               </div>
             </div>
 
-            <!-- Tombol Aksi Simpan -->
             <div class="flex items-center gap-2 pt-2">
               <button 
                 type="submit" 
                 id="submitBtn"
-                class="flex-1 inline-flex items-center justify-center gap-2 bg-foriorBrand text-white text-xs font-medium py-2.5 px-4 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all shadow-sm">
-                <i data-lucide="check" class="w-4 h-4" id="submitIcon"></i>
+                class="flex-1 inline-flex items-center justify-center gap-2 bg-foriorBrand text-white text-xs font-medium py-2.5 px-4 rounded-xl hover:opacity-90 transition-all shadow-sm">
+                <i data-lucide="check" class="w-4 h-4"></i>
                 <span id="btnSubmitText">Simpan & Publikasikan</span>
               </button>
               
@@ -494,23 +471,19 @@
           </form>
         </div>
 
-        <!-- List Kelola Item Proyek Aktif -->
         <div>
           <div class="flex items-center justify-between mb-3">
             <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider">Daftar Proyek Aktif</h4>
             <span id="adminListCount" class="text-[11px] text-appleGray">0 Item</span>
           </div>
 
-          <div id="adminProjectList" class="space-y-2.5">
-            <!-- List proyek dimuat via JS -->
-          </div>
+          <div id="adminProjectList" class="space-y-2.5"></div>
         </div>
 
       </div>
 
-      <!-- Drawer Footer -->
       <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray">
-        <span>FORIOR Showcase System v2.1</span>
+        <span>FORIOR Showcase System</span>
         <button onclick="confirmResetData()" class="hover:text-appleDark underline transition-colors">
           Reset Data Dummy
         </button>
@@ -519,7 +492,7 @@
     </div>
   </div>
 
-  <!-- Modal Konfirmasi Hapus Proyek (Apple Style) -->
+  <!-- Modal Konfirmasi Hapus Proyek -->
   <div id="confirmModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
     <div onclick="closeConfirmModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
@@ -539,7 +512,7 @@
     </div>
   </div>
 
-  <!-- Toast Notification Pill -->
+  <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4">
     <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
     <span id="toastMsg">Perubahan berhasil disimpan</span>
@@ -547,7 +520,6 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // 1. Kategori Portofolio Lengkap
     const CATEGORIES = [
       "Rumah",
       "Apartemen",
@@ -563,7 +535,6 @@
       "Lainnya"
     ];
 
-    // 2. Whitelist Email Resmi & Password Admin
     const WHITELIST_EMAILS = [
       "foriorid@gmail.com",
       "foriorproject@gmail.com",
@@ -571,7 +542,6 @@
     ];
     const ADMIN_PASSWORD_DEFAULT = "forior2026";
 
-    // 3. Konfigurasi Cloud Firebase
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyCJR4mH6VE3ci81zF3NzH9CtRtscZP_SqY",
       authDomain: "forior-showcase.firebaseapp.com",
@@ -581,7 +551,6 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
-    // 4. Data Dummy Awal
     const INITIAL_PROJECTS = [
       {
         id: "proj-1",
@@ -681,14 +650,12 @@
       }
     ];
 
-    // State Aplikasi
     let projects = [];
     let activeCategory = "Semua";
     let isCloudConnected = false;
     let dbInstance = null;
     let pendingDeleteId = null;
 
-    // Inisialisasi Saat Dokumen Siap
     document.addEventListener("DOMContentLoaded", () => {
       renderCategoryFilters();
       renderCategorySelectOptions();
@@ -697,7 +664,6 @@
       lucide.createIcons();
     });
 
-    // Inisialisasi Koneksi Firebase Firestore
     function initFirebaseConnection() {
       try {
         if (!firebase.apps.length) {
@@ -705,7 +671,6 @@
         }
         dbInstance = firebase.firestore();
         
-        // Listener Realtime Firestore
         dbInstance.collection("showcase_projects").onSnapshot((snapshot) => {
           isCloudConnected = true;
           updateCloudUIStatus(true);
@@ -715,13 +680,11 @@
             snapshot.forEach((doc) => {
               cloudData.push({ id: doc.id, ...doc.data() });
             });
-            // Urutkan data berdasarkan timestamp terbaru
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             hideLoadingSkeleton();
             renderProjects();
             renderAdminList();
           } else {
-            // Jika koleksi cloud masih kosong pertama kali, seed data sampel awal
             seedInitialDataToCloud();
           }
         }, (err) => {
@@ -735,7 +698,6 @@
       }
     }
 
-    // Seed Data Sampel ke Cloud Saat Pertama Kali
     async function seedInitialDataToCloud() {
       if (!dbInstance) return;
       try {
@@ -773,19 +735,15 @@
       const drawerBadge = document.getElementById("drawerCloudBadge");
 
       if (connected) {
-        if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
-        if (text) text.textContent = "Cloud Aktif";
-        if (drawerBadge) {
-          drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700";
-          drawerBadge.textContent = "Cloud Aktif";
-        }
+        dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+        text.textContent = "Cloud Aktif";
+        drawerBadge.className = "text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700 shrink-0";
+        drawerBadge.textContent = "Cloud Aktif";
       } else {
-        if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400";
-        if (text) text.textContent = "Lokal Mode";
-        if (drawerBadge) {
-          drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700";
-          drawerBadge.textContent = "Lokal Mode";
-        }
+        dot.className = "w-2 h-2 rounded-full bg-amber-400";
+        text.textContent = "Lokal Mode";
+        drawerBadge.className = "text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700 shrink-0";
+        drawerBadge.textContent = "Lokal Mode";
       }
     }
 
@@ -794,14 +752,13 @@
       if (skeleton) skeleton.classList.add("hidden");
     }
 
-    // Render Filter Bar Kategori (Pill Style ala Apple)
     function renderCategoryFilters() {
       const container = document.getElementById("categoryFilterContainer");
       const allCategories = ["Semua", ...CATEGORIES];
 
       container.innerHTML = allCategories.map(cat => {
         const isActive = cat === activeCategory;
-        const baseClass = "px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none";
+        const baseClass = "px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none";
         const activeClass = isActive 
           ? "bg-appleDark text-white shadow-sm" 
           : "bg-white text-appleGray border border-appleBorder hover:text-appleDark hover:border-neutral-400";
@@ -829,7 +786,6 @@
       select.innerHTML = CATEGORIES.map(cat => `<option value="${cat}">${cat}</option>`).join("");
     }
 
-    // Render Grid Card Portofolio
     function renderProjects() {
       const grid = document.getElementById("portfolioGrid");
       const emptyState = document.getElementById("emptyState");
@@ -855,7 +811,6 @@
           rel="noopener noreferrer"
           class="group block bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
           
-          <!-- Image Container -->
           <div class="relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-100">
             <img 
               src="${item.image}" 
@@ -865,20 +820,17 @@
               onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
             />
 
-            <!-- Badge Kategori Floating -->
             <div class="absolute top-3.5 right-3.5">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-medium tracking-wide bg-white/85 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
                 ${item.category || 'Portofolio'}
               </span>
             </div>
 
-            <!-- Indicator Hover Button -->
             <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             </div>
           </div>
 
-          <!-- Project Meta -->
           <div class="pt-3 pb-1 px-1">
             <div class="flex items-center justify-between">
               <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1">
@@ -890,7 +842,6 @@
               </span>
             </div>
 
-            <!-- Tag Lokasi Kota -->
             <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
               <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
               <span class="truncate">${item.location || 'Indonesia'}</span>
@@ -902,7 +853,6 @@
       lucide.createIcons();
     }
 
-    // Render List Proyek di Drawer Admin
     function renderAdminList() {
       const container = document.getElementById("adminProjectList");
       document.getElementById("adminListCount").textContent = `${projects.length} Item`;
@@ -941,50 +891,40 @@
       lucide.createIcons();
     }
 
-    // Kompresi Berkas Gambar Client-Side Melalui Canvas (Mencegah Limit 1MB Firestore)
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      showToast("Mengoptimasi ukuran foto...");
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement("canvas");
-          let width = img.width;
-          let height = img.height;
-          const maxDim = 1280;
-
-          if (width > height && width > maxDim) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else if (height > maxDim) {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, width, height);
-
-          // Kompresi ke format JPEG kualitas 0.78 (menghasilkan berkas ~80KB-160KB)
-          // Memastikan jauh di bawah batas 1MB Firestore dan proses upload cloud sangat cepat
-          const optimizedBase64 = canvas.toDataURL("image/jpeg", 0.78);
-          document.getElementById("inputImageUrl").value = optimizedBase64;
-          previewImageUrl(optimizedBase64);
-          showToast("Foto berhasil dioptimasi untuk Cloud");
+    // Client-side image compression
+    function compressImageFile(file, maxWidth = 1200, quality = 0.75) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL("image/jpeg", quality));
+          };
+          img.onerror = () => resolve(event.target.result);
         };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      });
     }
 
-    // Simpan atau Edit Proyek (Cloud Sync)
     async function handleSaveProject(event) {
       event.preventDefault();
+      const submitBtn = document.getElementById("submitBtn");
+      const submitText = document.getElementById("btnSubmitText");
+      
+      submitBtn.disabled = true;
+      submitText.textContent = "Menyimpan ke Cloud...";
 
       const editId = document.getElementById("editProjectId").value;
       const title = document.getElementById("inputTitle").value.trim();
@@ -997,50 +937,32 @@
         image = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
       }
 
-      // Validasi proteksi ukuran dokumen Firestore (< 950KB)
-      if (image.startsWith("data:") && image.length > 950000) {
-        alert("Ukuran berkas gambar terlalu besar untuk database Firestore (>1MB). Silakan gunakan tombol 'Pilih Berkas' agar gambar terkompresi otomatis, atau gunakan tautan URL foto langsung.");
-        return;
-      }
-
-      const submitBtn = document.getElementById("submitBtn");
-      const submitText = document.getElementById("btnSubmitText");
-      
-      submitBtn.disabled = true;
-      submitText.textContent = "Menyimpan ke Cloud...";
-
       const projectData = {
         title,
-        category: category || "Lainnya",
-        location: location || "Indonesia",
-        link: link || "https://photos.google.com/",
+        category,
+        location,
+        link,
         image,
         timestamp: Date.now()
       };
 
-      try {
-        if (isCloudConnected && dbInstance) {
+      if (isCloudConnected && dbInstance) {
+        try {
           const docId = editId || ("proj-" + Date.now());
           await dbInstance.collection("showcase_projects").doc(docId).set(projectData, { merge: true });
-          
-          // Kembalikan filter kategori ke "Semua" agar proyek yang baru dibuat langsung terlihat
-          activeCategory = "Semua";
-          renderCategoryFilters();
-          
           showToast(editId ? "Proyek berhasil diperbarui di Cloud!" : "Proyek baru dipublikasikan ke Cloud!");
-          resetForm();
-        } else {
+        } catch (err) {
+          console.error("Gagal simpan ke Firestore:", err);
           saveLocally(editId, projectData);
-          resetForm();
         }
-      } catch (err) {
-        console.error("Gagal simpan ke Firestore:", err);
-        alert("Gagal menyimpan ke database cloud:\n" + (err.message || err));
+      } else {
         saveLocally(editId, projectData);
-      } finally {
-        submitBtn.disabled = false;
-        submitText.textContent = editId ? "Simpan Perubahan" : "Simpan & Publikasikan";
       }
+
+      setCategoryFilter("Semua");
+      resetForm();
+      submitBtn.disabled = false;
+      submitText.textContent = "Simpan & Publikasikan";
     }
 
     function saveLocally(editId, projectData) {
@@ -1051,8 +973,6 @@
         projects.unshift({ id: "proj-" + Date.now(), ...projectData });
       }
       localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
-      activeCategory = "Semua";
-      renderCategoryFilters();
       renderProjects();
       renderAdminList();
       showToast("Tersimpan dalam mode lokal");
@@ -1137,7 +1057,15 @@
       }
     }
 
-    // Autentikasi Admin & Whitelist Email
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const optimizedBase64 = await compressImageFile(file, 1200, 0.75);
+      document.getElementById("inputImageUrl").value = optimizedBase64;
+      previewImageUrl(optimizedBase64);
+    }
+
     function handleAdminNavClick() {
       const loggedUser = sessionStorage.getItem("forior_admin_logged");
       if (loggedUser) {
@@ -1186,18 +1114,17 @@
       const errorMsg = document.getElementById("loginErrorMsg");
 
       if (!WHITELIST_EMAILS.includes(email)) {
-        errorMsg.textContent = "Akses ditolak: Email Anda belum terdaftar di whitelist FORIOR.";
+        errorMsg.textContent = "Akses ditolak: Email belum terdaftar di whitelist FORIOR.";
         errorDiv.classList.remove("hidden");
         return;
       }
 
       if (password !== ADMIN_PASSWORD_DEFAULT) {
-        errorMsg.textContent = "Password yang Anda masukkan salah.";
+        errorMsg.textContent = "Password yang dimasukkan salah.";
         errorDiv.classList.remove("hidden");
         return;
       }
 
-      // Login Sukses
       sessionStorage.setItem("forior_admin_logged", email);
       checkAuthStatus();
       toggleLoginModal(false);
@@ -1211,14 +1138,16 @@
       const navLabel = document.getElementById("navAdminLabel");
       const navIcon = document.getElementById("navAdminIcon");
 
+      const isMobile = window.innerWidth < 640;
+
       if (loggedUser) {
-        document.getElementById("activeAdminEmailDisplay").textContent = `Login sebagai: ${loggedUser}`;
-        navLabel.textContent = "Panel Portofolio";
+        document.getElementById("activeAdminEmailDisplay").textContent = `Login: ${loggedUser}`;
+        navLabel.textContent = isMobile ? "Panel" : "Panel Portofolio";
         navIcon.setAttribute("data-lucide", "settings");
         navBtn.classList.remove("bg-appleDark");
         navBtn.classList.add("bg-foriorBrand");
       } else {
-        navLabel.textContent = "Login Admin";
+        navLabel.textContent = isMobile ? "Admin" : "Kelola Portofolio";
         navIcon.setAttribute("data-lucide", "lock");
         navBtn.classList.remove("bg-foriorBrand");
         navBtn.classList.add("bg-appleDark");
@@ -1226,11 +1155,13 @@
       lucide.createIcons();
     }
 
+    window.addEventListener("resize", checkAuthStatus);
+
     function handleAdminLogout() {
       sessionStorage.removeItem("forior_admin_logged");
       checkAuthStatus();
       toggleAdminPanel(false);
-      showToast("Anda telah keluar dari panel admin.");
+      showToast("Keluar dari panel admin.");
     }
 
     function toggleAdminPanel(show) {
