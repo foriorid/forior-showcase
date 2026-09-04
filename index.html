@@ -69,16 +69,9 @@
   <header class="fixed top-0 left-0 right-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-2">
       
-      <!-- Brand Logo FORIOR (Hanya FORIOR tanpa subjudul) -->
-      <a href="#" class="flex items-center gap-2.5 group shrink-0">
-        <div class="w-8 h-8 rounded-xl bg-foriorBrand flex items-center justify-center text-white shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
-          <svg viewBox="0 0 100 100" class="w-4.5 h-4.5 fill-white">
-            <circle cx="50" cy="50" r="28" fill="none" stroke="#ffffff" stroke-width="8"/>
-            <circle cx="50" cy="50" r="13" fill="#ffffff"/>
-            <path d="M50 20 L50 32 M80 50 L68 50 M50 80 L50 68 M20 50 L32 50" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <span class="text-base sm:text-lg font-black tracking-wider text-appleDark leading-none">FORIOR</span>
+      <!-- Brand Logo FORIOR (Teks Only, No Icon) -->
+      <a href="#" class="group shrink-0 py-1">
+        <span class="text-lg sm:text-xl font-black tracking-wider text-appleDark leading-none group-hover:text-foriorBrand transition-colors">FORIOR</span>
       </a>
 
       <!-- Quick Nav & Admin Control -->
@@ -216,15 +209,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-appleBorder">
         
         <div class="space-y-2.5">
-          <div class="flex items-center gap-2.5">
-            <div class="w-7 h-7 rounded-lg bg-foriorBrand flex items-center justify-center text-white">
-              <svg viewBox="0 0 100 100" class="w-4 h-4 fill-white">
-                <circle cx="50" cy="50" r="28" fill="none" stroke="#ffffff" stroke-width="8"/>
-                <circle cx="50" cy="50" r="13" fill="#ffffff"/>
-              </svg>
-            </div>
-            <span class="font-black text-sm tracking-wider text-appleDark">FORIOR</span>
-          </div>
+          <span class="font-black text-base tracking-wider text-appleDark block">FORIOR</span>
           <p class="text-xs text-appleGray leading-relaxed max-w-sm">
             Layanan fotografi arsitektur, interior residensial & komersial dengan penekanan pada estetika tata ruang, pencahayaan alami, dan komposisi simetris.
           </p>
@@ -891,7 +876,6 @@
       lucide.createIcons();
     }
 
-    // Client-side image compression
     function compressImageFile(file, maxWidth = 1200, quality = 0.75) {
       return new Promise((resolve) => {
         const reader = new FileReader();
