@@ -306,7 +306,7 @@
         </div>
       </div>
 
-      <!-- Form Login -->
+      <!-- Form Login (Hint password dihapus untuk privasi & keamanan) -->
       <form onsubmit="handleAdminLogin(event)" class="space-y-3.5 mt-4">
         <div>
           <label class="block text-xs font-medium text-appleDark mb-1">Email Akun</label>
@@ -320,16 +320,13 @@
         </div>
 
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs font-medium text-appleDark">Password Admin</label>
-            <span class="text-[10px] text-appleGray">Default: <code class="font-mono text-appleDark font-semibold">forior2026</code></span>
-          </div>
+          <label class="block text-xs font-medium text-appleDark mb-1">Password Admin</label>
           <div class="relative">
             <input 
               type="password" 
               id="loginPassword" 
               required 
-              placeholder="Masukkan password..."
+              placeholder="Masukkan password admin..."
               class="w-full text-xs bg-white border border-appleBorder rounded-xl px-3 py-2.5 pr-9 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
             />
             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-appleGray hover:text-appleDark">
@@ -451,7 +448,7 @@
               />
             </div>
 
-            <!-- Featured Image (URL atau File Upload) -->
+            <!-- Featured Image (URL atau File Upload Otomatis Terkompresi) -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Featured Image (Foto Cover)</label>
               <input 
@@ -463,7 +460,7 @@
               />
               
               <div class="flex items-center gap-2">
-                <span class="text-[10px] text-appleGray">Atau unggah file gambar:</span>
+                <span class="text-[10px] text-appleGray">Atau unggah berkas (otomatis dioptimasi):</span>
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1 rounded-lg hover:bg-neutral-100 transition-colors">
                   Pilih Berkas
                   <input type="file" id="inputFileUpload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
@@ -481,8 +478,8 @@
               <button 
                 type="submit" 
                 id="submitBtn"
-                class="flex-1 inline-flex items-center justify-center gap-2 bg-foriorBrand text-white text-xs font-medium py-2.5 px-4 rounded-xl hover:opacity-90 transition-all shadow-sm">
-                <i data-lucide="check" class="w-4 h-4"></i>
+                class="flex-1 inline-flex items-center justify-center gap-2 bg-foriorBrand text-white text-xs font-medium py-2.5 px-4 rounded-xl hover:opacity-90 disabled:opacity-50 transition-all shadow-sm">
+                <i data-lucide="check" class="w-4 h-4" id="submitIcon"></i>
                 <span id="btnSubmitText">Simpan & Publikasikan</span>
               </button>
               
@@ -513,7 +510,7 @@
 
       <!-- Drawer Footer -->
       <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray">
-        <span>FORIOR Showcase System v2.0</span>
+        <span>FORIOR Showcase System v2.1</span>
         <button onclick="confirmResetData()" class="hover:text-appleDark underline transition-colors">
           Reset Data Dummy
         </button>
@@ -550,7 +547,7 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // 1. Kategori Lengkap Termasuk "Klinik"
+    // 1. Kategori Portofolio Lengkap
     const CATEGORIES = [
       "Rumah",
       "Apartemen",
@@ -574,7 +571,7 @@
     ];
     const ADMIN_PASSWORD_DEFAULT = "forior2026";
 
-    // 3. Konfigurasi Cloud Firebase Milik Proyek Anda
+    // 3. Konfigurasi Cloud Firebase
     const FIREBASE_CONFIG = {
       apiKey: "AIzaSyCJR4mH6VE3ci81zF3NzH9CtRtscZP_SqY",
       authDomain: "forior-showcase.firebaseapp.com",
@@ -584,7 +581,7 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
-    // 4. Data Dummy Awal Lengkap dengan Tag Lokasi Kota
+    // 4. Data Dummy Awal
     const INITIAL_PROJECTS = [
       {
         id: "proj-1",
@@ -718,13 +715,13 @@
             snapshot.forEach((doc) => {
               cloudData.push({ id: doc.id, ...doc.data() });
             });
-            // Urutkan berdasarkan waktu jika ada
+            // Urutkan data berdasarkan timestamp terbaru
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             hideLoadingSkeleton();
             renderProjects();
             renderAdminList();
           } else {
-            // Jika koleksi cloud masih kosong pertama kali, seed data awal ke cloud
+            // Jika koleksi cloud masih kosong pertama kali, seed data sampel awal
             seedInitialDataToCloud();
           }
         }, (err) => {
@@ -776,15 +773,19 @@
       const drawerBadge = document.getElementById("drawerCloudBadge");
 
       if (connected) {
-        dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
-        text.textContent = "Cloud Aktif";
-        drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700";
-        drawerBadge.textContent = "Cloud Aktif";
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+        if (text) text.textContent = "Cloud Aktif";
+        if (drawerBadge) {
+          drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700";
+          drawerBadge.textContent = "Cloud Aktif";
+        }
       } else {
-        dot.className = "w-2 h-2 rounded-full bg-amber-400";
-        text.textContent = "Lokal Mode";
-        drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700";
-        drawerBadge.textContent = "Lokal Mode";
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-amber-400";
+        if (text) text.textContent = "Lokal Mode";
+        if (drawerBadge) {
+          drawerBadge.className = "text-[10px] px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700";
+          drawerBadge.textContent = "Lokal Mode";
+        }
       }
     }
 
@@ -940,6 +941,47 @@
       lucide.createIcons();
     }
 
+    // Kompresi Berkas Gambar Client-Side Melalui Canvas (Mencegah Limit 1MB Firestore)
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      showToast("Mengoptimasi ukuran foto...");
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1280;
+
+          if (width > height && width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Kompresi ke format JPEG kualitas 0.78 (menghasilkan berkas ~80KB-160KB)
+          // Memastikan jauh di bawah batas 1MB Firestore dan proses upload cloud sangat cepat
+          const optimizedBase64 = canvas.toDataURL("image/jpeg", 0.78);
+          document.getElementById("inputImageUrl").value = optimizedBase64;
+          previewImageUrl(optimizedBase64);
+          showToast("Foto berhasil dioptimasi untuk Cloud");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
     // Simpan atau Edit Proyek (Cloud Sync)
     async function handleSaveProject(event) {
       event.preventDefault();
@@ -955,29 +997,50 @@
         image = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
       }
 
+      // Validasi proteksi ukuran dokumen Firestore (< 950KB)
+      if (image.startsWith("data:") && image.length > 950000) {
+        alert("Ukuran berkas gambar terlalu besar untuk database Firestore (>1MB). Silakan gunakan tombol 'Pilih Berkas' agar gambar terkompresi otomatis, atau gunakan tautan URL foto langsung.");
+        return;
+      }
+
+      const submitBtn = document.getElementById("submitBtn");
+      const submitText = document.getElementById("btnSubmitText");
+      
+      submitBtn.disabled = true;
+      submitText.textContent = "Menyimpan ke Cloud...";
+
       const projectData = {
         title,
-        category,
-        location,
-        link,
+        category: category || "Lainnya",
+        location: location || "Indonesia",
+        link: link || "https://photos.google.com/",
         image,
         timestamp: Date.now()
       };
 
-      if (isCloudConnected && dbInstance) {
-        try {
+      try {
+        if (isCloudConnected && dbInstance) {
           const docId = editId || ("proj-" + Date.now());
           await dbInstance.collection("showcase_projects").doc(docId).set(projectData, { merge: true });
+          
+          // Kembalikan filter kategori ke "Semua" agar proyek yang baru dibuat langsung terlihat
+          activeCategory = "Semua";
+          renderCategoryFilters();
+          
           showToast(editId ? "Proyek berhasil diperbarui di Cloud!" : "Proyek baru dipublikasikan ke Cloud!");
-        } catch (err) {
-          console.error("Gagal simpan ke Firestore:", err);
+          resetForm();
+        } else {
           saveLocally(editId, projectData);
+          resetForm();
         }
-      } else {
+      } catch (err) {
+        console.error("Gagal simpan ke Firestore:", err);
+        alert("Gagal menyimpan ke database cloud:\n" + (err.message || err));
         saveLocally(editId, projectData);
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = editId ? "Simpan Perubahan" : "Simpan & Publikasikan";
       }
-
-      resetForm();
     }
 
     function saveLocally(editId, projectData) {
@@ -988,6 +1051,8 @@
         projects.unshift({ id: "proj-" + Date.now(), ...projectData });
       }
       localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
+      activeCategory = "Semua";
+      renderCategoryFilters();
       renderProjects();
       renderAdminList();
       showToast("Tersimpan dalam mode lokal");
@@ -1070,19 +1135,6 @@
       } else {
         box.classList.add("hidden");
       }
-    }
-
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64Url = e.target.result;
-        document.getElementById("inputImageUrl").value = base64Url;
-        previewImageUrl(base64Url);
-      };
-      reader.readAsDataURL(file);
     }
 
     // Autentikasi Admin & Whitelist Email
