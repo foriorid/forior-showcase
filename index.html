@@ -290,7 +290,7 @@
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
           <span>Menampilkan</span>
-          <span id="photoProjectCount" class="font-semibold text-appleDark mx-1">0</span>
+          <span id="photoProjectCount" class="font-semibold text-appleDark mx-1">...</span>
           <span>Proyek Foto</span>
         </div>
       </div>
@@ -303,7 +303,41 @@
       </div>
     </div>
 
-    <!-- Grid Foto Proyek -->
+    <!-- Loading Skeleton Grid Foto (Tampil saat data dimuat) -->
+    <div id="photoSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden lg:block">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden lg:block">
+        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+    </div>
+
+    <!-- Grid Foto Proyek Nyata -->
     <div id="photoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <!-- Cards proyek foto dimuat dinamis -->
     </div>
@@ -317,24 +351,6 @@
         <span id="photoLoadMoreText">Tampilkan Lebih Banyak Foto</span>
         <i data-lucide="chevron-down" class="w-4 h-4"></i>
       </button>
-    </div>
-
-    <div id="loadingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8 mt-4">
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-4 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/2"></div>
-      </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-4 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/2"></div>
-      </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-4 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/2"></div>
-      </div>
     </div>
 
     <!-- Empty State Foto -->
@@ -389,13 +405,32 @@
 
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
-          <span id="videoProjectCount" class="font-semibold text-appleDark mr-1">0</span>
+          <span id="videoProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Video Tersedia</span>
         </div>
       </div>
     </div>
 
-    <!-- Grid Video (16:9 Aspect Ratio Cards Tanpa Overlay Hitam Redup) -->
+    <!-- Loading Skeleton Grid Video -->
+    <div id="videoSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-video rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-2/3"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/4"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-video rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-2/3"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/4"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
+        <div class="w-full aspect-video rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-2/3"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/4"></div>
+      </div>
+    </div>
+
+    <!-- Grid Video Nyata -->
     <div id="videoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <!-- Video cards dimuat dinamis -->
     </div>
@@ -463,13 +498,32 @@
 
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
-          <span id="droneProjectCount" class="font-semibold text-appleDark mr-1">0</span>
+          <span id="droneProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Proyek Aerial</span>
         </div>
       </div>
     </div>
 
-    <!-- Grid Drone -->
+    <!-- Loading Skeleton Grid Drone -->
+    <div id="droneSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
+        <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
+        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
+        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
+      </div>
+    </div>
+
+    <!-- Grid Drone Nyata -->
     <div id="dronePortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <!-- Drone cards dimuat dinamis -->
     </div>
@@ -1093,9 +1147,8 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
-    // Data Dummy Awal Lengkap (Foto, Video Sinematik YouTube 4K, dan Drone Aerial)
+    // Data Bawaan Awal (Hanya dipakai jika admin menekan 'Reset Data Dummy' atau inisialisasi cloud perdana)
     const INITIAL_PROJECTS = [
-      // 1. PORTOFOLIO FOTO
       {
         id: "foto-1",
         type: "foto",
@@ -1161,8 +1214,6 @@
         gallery: [],
         link: "https://photos.google.com/"
       },
-
-      // 2. PORTOFOLIO VIDEO (YouTube 4K)
       {
         id: "vid-1",
         type: "video",
@@ -1191,17 +1242,6 @@
         link: "https://www.youtube.com/watch?v=ipmDgsh9cq0"
       },
       {
-        id: "vid-4",
-        type: "video",
-        title: "Modern Penthouse Interior Walkthrough",
-        category: "Apartemen",
-        location: "SCBD, Jakarta Selatan",
-        image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop",
-        link: "https://www.youtube.com/watch?v=jPkBJY1KI_Q"
-      },
-
-      // 3. PORTOFOLIO DRONE (Aerial Perspective)
-      {
         id: "drone-1",
         type: "drone",
         title: "Epic FPV Drone One-Shot — Tokay Sanctuary",
@@ -1227,19 +1267,11 @@
         location: "Sanur, Bali",
         image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=XzHaI7jCgfo"
-      },
-      {
-        id: "drone-4",
-        type: "drone",
-        title: "Aerial View & Architectural Facade Dago Hills",
-        category: "Vila",
-        location: "Dago, Bandung",
-        image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop",
-        link: "https://www.youtube.com/watch?v=R1p-Mclzlcs"
       }
     ];
 
     let projects = [];
+    let isDataLoaded = false;
     let activeCategory = "Semua";
     let adminFilterType = "all";
     let isCloudConnected = false;
@@ -1261,31 +1293,79 @@
     let touchEndX = 0;
 
     document.addEventListener("DOMContentLoaded", () => {
-      loadInitialDataImmediate();
       renderCategoryFilters();
       renderCategorySelectOptions();
       checkAuthStatus();
+      
+      // Cek apakah ada cache lokal sebelumnya
+      loadInitialCache();
+
+      // Sambungkan ke Firestore
       initFirebaseConnection();
       setupLightboxKeyboardAndSwipe();
       lucide.createIcons();
     });
 
-    function loadInitialDataImmediate() {
+    function loadInitialCache() {
       const saved = localStorage.getItem("forior_portfolio_projects");
       if (saved) {
         try {
-          projects = JSON.parse(saved).map(p => ({ ...p, type: p.type || "foto" }));
-        } catch(e) {
-          projects = [...INITIAL_PROJECTS];
-        }
-      } else {
-        projects = [...INITIAL_PROJECTS];
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            projects = parsed.map(p => ({ ...p, type: p.type || "foto" }));
+            isDataLoaded = true;
+            hideAllLoadingSkeletons();
+            renderAllSections();
+            return;
+          }
+        } catch(e) {}
       }
-      hideLoadingSkeleton();
-      renderAllSections();
+      // Jika device baru / belum ada cache lokal, biarkan skeleton berdenyut (JANGAN tampilkan dummy!)
+      showAllLoadingSkeletons();
+    }
+
+    function showAllLoadingSkeletons() {
+      const photoSkel = document.getElementById("photoSkeletonGrid");
+      const videoSkel = document.getElementById("videoSkeletonGrid");
+      const droneSkel = document.getElementById("droneSkeletonGrid");
+      
+      if (photoSkel) photoSkel.classList.remove("hidden");
+      if (videoSkel) videoSkel.classList.remove("hidden");
+      if (droneSkel) droneSkel.classList.remove("hidden");
+
+      // Sembunyikan empty states selama skeleton aktif
+      document.getElementById("emptyPhotoState")?.classList.add("hidden");
+      document.getElementById("emptyVideoState")?.classList.add("hidden");
+      document.getElementById("emptyDroneState")?.classList.add("hidden");
+    }
+
+    function hideAllLoadingSkeletons() {
+      const photoSkel = document.getElementById("photoSkeletonGrid");
+      const videoSkel = document.getElementById("videoSkeletonGrid");
+      const droneSkel = document.getElementById("droneSkeletonGrid");
+      
+      if (photoSkel) photoSkel.classList.add("hidden");
+      if (videoSkel) videoSkel.classList.add("hidden");
+      if (droneSkel) droneSkel.classList.add("hidden");
     }
 
     function initFirebaseConnection() {
+      // Safety timeout: jika dalam 6 detik cloud belum membalas dan device baru belum punya data
+      const timeoutGuard = setTimeout(() => {
+        if (!isDataLoaded) {
+          isDataLoaded = true;
+          hideAllLoadingSkeletons();
+          // Fallback lokal
+          const saved = localStorage.getItem("forior_portfolio_projects");
+          if (saved) {
+            try { projects = JSON.parse(saved); } catch(e) { projects = [...INITIAL_PROJECTS]; }
+          } else {
+            projects = [...INITIAL_PROJECTS];
+          }
+          renderAllSections();
+        }
+      }, 6000);
+
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(FIREBASE_CONFIG);
@@ -1293,6 +1373,7 @@
         dbInstance = firebase.firestore();
         
         dbInstance.collection("showcase_projects").onSnapshot((snapshot) => {
+          clearTimeout(timeoutGuard);
           isCloudConnected = true;
           updateCloudUIStatus(true);
           
@@ -1307,18 +1388,23 @@
               });
             });
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-            hideLoadingSkeleton();
-            renderAllSections();
-            renderAdminList();
+            localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
           } else {
             seedInitialDataToCloud();
           }
+
+          isDataLoaded = true;
+          hideAllLoadingSkeletons();
+          renderAllSections();
+          renderAdminList();
         }, (err) => {
+          clearTimeout(timeoutGuard);
           console.warn("Koneksi Firestore dialihkan ke lokal:", err.message);
           fallbackToLocalStorage();
         });
 
       } catch (e) {
+        clearTimeout(timeoutGuard);
         console.warn("Inisialisasi Firebase fallback:", e);
         fallbackToLocalStorage();
       }
@@ -1344,7 +1430,16 @@
     function fallbackToLocalStorage() {
       isCloudConnected = false;
       updateCloudUIStatus(false);
-      loadInitialDataImmediate();
+      isDataLoaded = true;
+      hideAllLoadingSkeletons();
+
+      const saved = localStorage.getItem("forior_portfolio_projects");
+      if (saved) {
+        try { projects = JSON.parse(saved); } catch(e) { projects = [...INITIAL_PROJECTS]; }
+      } else {
+        projects = [...INITIAL_PROJECTS];
+      }
+      renderAllSections();
       renderAdminList();
     }
 
@@ -1368,11 +1463,6 @@
           drawerBadge.textContent = "Lokal Mode";
         }
       }
-    }
-
-    function hideLoadingSkeleton() {
-      const skeleton = document.getElementById("loadingGrid");
-      if (skeleton) skeleton.classList.add("hidden");
     }
 
     function renderCategoryFilters() {
@@ -1425,6 +1515,8 @@
       const loadMoreContainer = document.getElementById("photoLoadMoreContainer");
       const loadMoreText = document.getElementById("photoLoadMoreText");
       
+      if (!isDataLoaded) return;
+
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
       const filtered = activeCategory === "Semua" 
         ? photoProjects 
@@ -1519,6 +1611,8 @@
       const loadMoreContainer = document.getElementById("videoLoadMoreContainer");
       const loadMoreText = document.getElementById("videoLoadMoreText");
 
+      if (!isDataLoaded) return;
+
       const videoProjects = projects.filter(p => p.type === 'video');
       document.getElementById("videoProjectCount").textContent = videoProjects.length;
 
@@ -1607,6 +1701,8 @@
       const emptyState = document.getElementById("emptyDroneState");
       const loadMoreContainer = document.getElementById("droneLoadMoreContainer");
       const loadMoreText = document.getElementById("droneLoadMoreText");
+
+      if (!isDataLoaded) return;
 
       const droneProjects = projects.filter(p => p.type === 'drone');
       document.getElementById("droneProjectCount").textContent = droneProjects.length;
@@ -2000,7 +2096,6 @@
           logging: false,
           backgroundColor: "#F5F5F7",
           onclone: (clonedDoc) => {
-            // Hapus pembatasan teks terpotong di cloned DOM
             clonedDoc.querySelectorAll('.line-clamp-1, .truncate').forEach(el => {
               el.style.webkitLineClamp = 'unset';
               el.style.overflow = 'visible';
@@ -2008,7 +2103,6 @@
               el.style.lineHeight = '1.35';
             });
 
-            // Presisi perataan vertikal badge hitungan & pil kategori
             clonedDoc.querySelectorAll('.project-count-badge, .category-pill').forEach(el => {
               el.style.boxSizing = 'border-box';
               el.style.height = '32px';
@@ -2020,7 +2114,6 @@
               el.style.justifyContent = 'center';
             });
 
-            // Presisi perataan vertikal badge kartu proyek
             clonedDoc.querySelectorAll('.badge-category, .badge-counter').forEach(el => {
               el.style.boxSizing = 'border-box';
               el.style.height = '24px';
