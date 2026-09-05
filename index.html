@@ -2212,29 +2212,25 @@
       document.body.removeChild(textArea);
     }
 
-    // Kompresi foto pintar adaptif agar dokumen tidak melebihi kuota 1MB Firestore
-    function compressImage(source, targetBytes = 140000, initialMaxDim = 1280) {
+    function compressImageFile(file, minDimension = 960, maxDimension = 1800, maxBytes = 850000) {
       return new Promise((resolve) => {
-        // Jika berupa tautan URL web biasa (bukan base64), biarkan apa adanya
-        if (typeof source === 'string' && source.startsWith('http') && !source.startsWith('data:')) {
-          return resolve(source);
-        }
-
-        const processImage = (src) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
           const img = new Image();
-          img.crossOrigin = "anonymous";
+          img.src = event.target.result;
           img.onload = () => {
-            let maxDim = initialMaxDim;
             let width = img.width;
             let height = img.height;
             const longestSide = Math.max(width, height);
             
-            if (longestSide > maxDim) {
-              const ratio = maxDim / longestSide;
+            if (longestSide > maxDimension) {
+              const ratio = maxDimension / longestSide;
               width = Math.round(width * ratio);
               height = Math.round(height * ratio);
             }
 
+            const minAllowed = Math.min(minDimension, longestSide);
             const canvas = document.createElement("canvas");
             canvas.width = width;
             canvas.height = height;
@@ -2244,41 +2240,28 @@
             ctx.imageSmoothingQuality = "high";
             ctx.drawImage(img, 0, 0, width, height);
 
-            let quality = 0.82;
+            let quality = 0.88;
             let result = canvas.toDataURL("image/jpeg", quality);
 
-            // Kurangi kualitas secara dinamis jika melebihi kuota target
-            while (result.length > targetBytes && quality > 0.48) {
-              quality -= 0.08;
+            while (result.length > maxBytes && quality > 0.65) {
+              quality -= 0.06;
               result = canvas.toDataURL("image/jpeg", quality);
             }
 
-            // Jika masih melebihi, turunkan dimensi canvas
-            while (result.length > targetBytes && Math.max(width, height) > 640) {
-              width = Math.round(width * 0.85);
-              height = Math.round(height * 0.85);
+            if (result.length > maxBytes && Math.max(width, height) > minAllowed) {
+              const scaleDown = Math.max(minAllowed / Math.max(width, height), 0.82);
+              width = Math.max(Math.round(width * scaleDown), minAllowed);
+              height = Math.max(Math.round(height * scaleDown), Math.round((height / width) * minAllowed));
               canvas.width = width;
               canvas.height = height;
               ctx.drawImage(img, 0, 0, width, height);
-              result = canvas.toDataURL("image/jpeg", Math.max(quality, 0.55));
+              result = canvas.toDataURL("image/jpeg", Math.max(quality, 0.72));
             }
 
             resolve(result);
           };
-          img.onerror = () => resolve(src);
-          img.src = src;
+          img.onerror = () => resolve(event.target.result);
         };
-
-        if (source instanceof File || source instanceof Blob) {
-          const reader = new FileReader();
-          reader.onload = (e) => processImage(e.target.result);
-          reader.onerror = () => resolve("");
-          reader.readAsDataURL(source);
-        } else if (typeof source === 'string') {
-          processImage(source);
-        } else {
-          resolve("");
-        }
       });
     }
 
@@ -2360,18 +2343,6 @@
       lucide.createIcons();
     }
 
-    function updateLocalProjectCache(docId, projectData) {
-      const idx = projects.findIndex(p => p.id === docId);
-      if (idx !== -1) {
-        projects[idx] = { id: docId, ...projectData };
-      } else {
-        projects.unshift({ id: docId, ...projectData });
-      }
-      localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
-      renderAllSections();
-      renderAdminList();
-    }
-
     async function handleSaveProject(event) {
       event.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
@@ -2388,17 +2359,12 @@
       const link = document.getElementById("inputLink").value.trim();
       let image = document.getElementById("inputImageUrl").value.trim();
 
-      // Hitung anggaran ukuran per foto agar TOTAL dokumen Firestore tidak tembus batas 1MB (maksimal total payload 720KB aman)
-      const base64CoverCount = (pendingCoverFile || (image && image.startsWith("data:image"))) ? 1 : 0;
-      const base64GalleryCount = (type === 'video') ? 0 : pendingGalleryItems.filter(it => it.type === 'file' || (it.url && it.url.startsWith('data:image'))).length;
-      const totalBase64Images = Math.max(base64CoverCount + base64GalleryCount, 1);
-      const perImageBudget = Math.min(Math.floor(720000 / totalBase64Images), 220000);
+      const totalImagesToSave = (pendingCoverFile ? 1 : 1) + (type === 'video' ? 0 : pendingGalleryItems.length);
+      const perImageBudget = Math.max(Math.floor(900000 / Math.max(totalImagesToSave, 1)), 160000);
 
       try {
         if (pendingCoverFile) {
-          image = await compressImage(pendingCoverFile, perImageBudget, 1280);
-        } else if (image && image.startsWith("data:image") && image.length > perImageBudget) {
-          image = await compressImage(image, perImageBudget, 1280);
+          image = await compressImageFile(pendingCoverFile, 960, 1800, perImageBudget);
         } else if (!image) {
           image = type === 'video' 
             ? "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
@@ -2409,16 +2375,10 @@
         if (type !== 'video') {
           for (const item of pendingGalleryItems) {
             if (item.type === 'file' && item.file) {
-              const compressed = await compressImage(item.file, perImageBudget, 1280);
+              const compressed = await compressImageFile(item.file, 960, 1800, perImageBudget);
               finalGallery.push(compressed);
             } else if (item.url) {
-              // Jika ini base64 lama yang berukuran besar, re-kompresi agar muat dalam kuota cloud
-              if (item.url.startsWith("data:image") && item.url.length > perImageBudget) {
-                const recompressed = await compressImage(item.url, perImageBudget, 1280);
-                finalGallery.push(recompressed);
-              } else {
-                finalGallery.push(item.url);
-              }
+              finalGallery.push(item.url);
             }
           }
         }
@@ -2434,28 +2394,13 @@
           timestamp: Date.now()
         };
 
-        const payloadSize = JSON.stringify(projectData).length;
-        console.log(`[FORIOR Save] Total project payload size: ${(payloadSize / 1024).toFixed(1)} KB`);
-
         if (isCloudConnected && dbInstance) {
           try {
             const docId = editId || (type + "-" + Date.now());
             await dbInstance.collection("showcase_projects").doc(docId).set(projectData, { merge: true });
             showToast(editId ? "Portofolio berhasil diperbarui di Cloud!" : "Portofolio baru dipublikasikan ke Cloud!");
-            
-            // Perbarui cache lokal agar perubahan tampil seketika
-            updateLocalProjectCache(docId, projectData);
-            resetForm();
-            return;
           } catch (err) {
-            console.error("Firestore save error detail:", err);
-            let userErrMsg = "Gagal Cloud: " + (err.message || "Koneksi terganggu");
-            if (err.code === 'permission-denied') {
-              userErrMsg = "Gagal Cloud: Izin ditolak. Periksa Firestore Security Rules.";
-            } else if (err.message && err.message.includes("1 MiB")) {
-              userErrMsg = "Gagal Cloud: Ukuran data foto melebihi kapasitas 1MB.";
-            }
-            showToast(userErrMsg);
+            console.error("Firestore save error:", err);
             saveLocally(editId, projectData);
           }
         } else {
