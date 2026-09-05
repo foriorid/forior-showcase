@@ -134,8 +134,21 @@
     </div>
   </header>
 
+  <!-- ================= BANNER MODE FOKUS AKTIF ================= -->
+  <div id="focusModeBanner" class="hidden fixed top-16 left-0 right-0 z-30 bg-foriorBrand text-white px-4 py-2.5 shadow-md flex items-center justify-between text-xs transition-all">
+    <div class="max-w-7xl mx-auto w-full flex items-center justify-between px-2 sm:px-4">
+      <div class="flex items-center gap-2">
+        <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+        <span id="focusBannerText" class="font-medium">Menampilkan Kurasi Section Khusus</span>
+      </div>
+      <button onclick="resetFocusMode()" class="bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1">
+        ← Tampilkan Semua Section
+      </button>
+    </div>
+  </div>
+
   <!-- ================= SECTION 1: HERO CINEMATIC ================= -->
-  <section class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
+  <section id="heroSection" class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
     <img 
       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
       alt="FORIOR Interior Photography Showcase" 
@@ -185,9 +198,15 @@
 
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-8 gap-3">
       <div>
-        <div class="inline-flex items-center gap-2 text-xs font-semibold text-foriorBrand uppercase tracking-wider mb-1">
-          <i data-lucide="camera" class="w-3.5 h-3.5"></i>
-          <span>Portofolio Fotografi</span>
+        <div class="flex items-center gap-2.5 mb-1">
+          <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-foriorBrand uppercase tracking-wider">
+            <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+            <span>Portofolio Fotografi</span>
+          </span>
+          <!-- Tombol Share Section Foto -->
+          <button type="button" onclick="shareSection('foto')" title="Bagikan Section Foto" class="text-appleGray hover:text-foriorBrand p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
+            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+          </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Interior & Arsitektur</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Pilih kategori untuk memfilter. Klik kartu proyek untuk membuka galeri foto.</p>
@@ -254,9 +273,15 @@
 
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
       <div>
-        <div class="inline-flex items-center gap-2 text-xs font-semibold text-rose-600 uppercase tracking-wider mb-1">
-          <i data-lucide="video" class="w-3.5 h-3.5"></i>
-          <span>Cinema & Video Walkthrough</span>
+        <div class="flex items-center gap-2.5 mb-1">
+          <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 uppercase tracking-wider">
+            <i data-lucide="video" class="w-3.5 h-3.5"></i>
+            <span>Cinema & Video Walkthrough</span>
+          </span>
+          <!-- Tombol Share Section Video -->
+          <button type="button" onclick="shareSection('video')" title="Bagikan Section Video" class="text-appleGray hover:text-rose-600 p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
+            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+          </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Portofolio Video Sinematik</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ruang dengan gerakan kamera halus, pencahayaan dramatis, dan transisi elegan.</p>
@@ -296,9 +321,15 @@
 
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
       <div>
-        <div class="inline-flex items-center gap-2 text-xs font-semibold text-sky-600 uppercase tracking-wider mb-1">
-          <i data-lucide="plane" class="w-3.5 h-3.5"></i>
-          <span>Aerial & Masterplan Perspective</span>
+        <div class="flex items-center gap-2.5 mb-1">
+          <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-600 uppercase tracking-wider">
+            <i data-lucide="plane" class="w-3.5 h-3.5"></i>
+            <span>Aerial & Masterplan Perspective</span>
+          </span>
+          <!-- Tombol Share Section Drone -->
+          <button type="button" onclick="shareSection('drone')" title="Bagikan Section Drone" class="text-appleGray hover:text-sky-600 p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
+            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+          </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Portofolio Drone & Aerial</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Dokumentasi fasad bangunan megah, keindahan lingkungan sekitar, dan tata ruang dari udara.</p>
@@ -930,9 +961,7 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
-    // Data Awal: Foto, Video Sinematik YouTube 4K, dan Drone Aerial
     const INITIAL_PROJECTS = [
-      // FOTO PORTOFOLIO
       {
         id: "foto-1",
         type: "foto",
@@ -1005,7 +1034,7 @@
         link: "https://photos.google.com/"
       },
 
-      // VIDEO PORTOFOLIO (Walkthrough / Film Sinematik YouTube)
+      // VIDEO PORTOFOLIO
       {
         id: "vid-1",
         type: "video",
@@ -1043,7 +1072,7 @@
         link: "https://www.youtube.com/watch?v=jPkBJY1KI_Q"
       },
 
-      // DRONE PORTOFOLIO (Aerial & Masterplan YouTube)
+      // DRONE PORTOFOLIO
       {
         id: "drone-1",
         type: "drone",
@@ -1117,6 +1146,7 @@
       loadInitialDataImmediate();
       initFirebaseConnection();
       setupLightboxKeyboardAndSwipe();
+      checkUrlFocusMode();
       if (window.lucide) lucide.createIcons();
     });
 
@@ -1201,18 +1231,17 @@
             hideLoadingSkeleton();
             renderAllSections();
             renderAdminList();
+            checkUrlFocusMode();
           } else {
             seedInitialDataToCloud();
           }
         }, (err) => {
           clearTimeout(connectionTimer);
-          console.warn("Koneksi Firestore fallback lokal:", err.message);
           fallbackToLocalStorage();
         });
 
       } catch (e) {
         clearTimeout(connectionTimer);
-        console.warn("Firebase fallback:", e);
         fallbackToLocalStorage();
       }
     }
@@ -1259,6 +1288,7 @@
       hideLoadingSkeleton();
       renderAllSections();
       renderAdminList();
+      checkUrlFocusMode();
     }
 
     function updateCloudUIStatus(connected) {
@@ -1333,6 +1363,87 @@
       if (window.lucide) lucide.createIcons();
     }
 
+    // ================= FITUR SHARE SECTION (MODE FOKUS) =================
+    function shareSection(sectionType) {
+      const url = `${window.location.origin}${window.location.pathname}?section=${sectionType}`;
+      const titles = {
+        'foto': 'Portofolio Fotografi Interior & Arsitektur FORIOR',
+        'video': 'Portofolio Video Sinematik FORIOR',
+        'drone': 'Portofolio Drone & Aerial FORIOR'
+      };
+      const text = `Lihat kurasi ${titles[sectionType] || 'Portofolio FORIOR'}:`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: titles[sectionType],
+          text: text,
+          url: url
+        }).catch((err) => {
+          if (err.name !== 'AbortError') {
+            copyTextToClipboard(url);
+            showToast("Tautan section berhasil disalin ke clipboard!");
+          }
+        });
+      } else {
+        copyTextToClipboard(url);
+        showToast("Tautan section berhasil disalin ke clipboard!");
+      }
+    }
+
+    function checkUrlFocusMode() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const section = urlParams.get('section');
+      if (section && ['foto', 'video', 'drone'].includes(section)) {
+        applyFocusMode(section);
+      }
+    }
+
+    function applyFocusMode(sectionType) {
+      const hero = document.getElementById("heroSection");
+      const secFoto = document.getElementById("section-foto");
+      const secVideo = document.getElementById("section-video");
+      const secDrone = document.getElementById("section-drone");
+      const banner = document.getElementById("focusModeBanner");
+      const bannerText = document.getElementById("focusBannerText");
+
+      if (hero) hero.classList.add("hidden");
+      if (secFoto) secFoto.classList.add("hidden");
+      if (secVideo) secVideo.classList.add("hidden");
+      if (secDrone) secDrone.classList.add("hidden");
+
+      const target = document.getElementById(`section-${sectionType}`);
+      if (target) target.classList.remove("hidden");
+
+      if (banner) banner.classList.remove("hidden");
+      if (bannerText) {
+        const names = { 'foto': 'Kurasi Portofolio Fotografi', 'video': 'Kurasi Portofolio Video Sinematik', 'drone': 'Kurasi Portofolio Drone & Aerial' };
+        bannerText.textContent = names[sectionType] || 'Kurasi Portofolio';
+      }
+
+      try {
+        window.history.replaceState({ section: sectionType }, '', `${window.location.pathname}?section=${sectionType}`);
+      } catch(e) {}
+    }
+
+    function resetFocusMode() {
+      const hero = document.getElementById("heroSection");
+      const secFoto = document.getElementById("section-foto");
+      const secVideo = document.getElementById("section-video");
+      const secDrone = document.getElementById("section-drone");
+      const banner = document.getElementById("focusModeBanner");
+
+      if (hero) hero.classList.remove("hidden");
+      if (secFoto) secFoto.classList.remove("hidden");
+      if (secVideo) secVideo.classList.remove("hidden");
+      if (secDrone) secDrone.classList.remove("hidden");
+      if (banner) banner.classList.add("hidden");
+
+      try {
+        window.history.replaceState({}, '', window.location.pathname);
+      } catch(e) {}
+    }
+
+    // ================= RENDER FOTO SECTION (Max 9 + Load More) =================
     function renderPhotoSection() {
       const grid = document.getElementById("photoPortfolioGrid");
       const emptyState = document.getElementById("emptyPhotoState");
@@ -1347,13 +1458,7 @@
       const toDisplay = filtered.slice(0, photoLimit);
       
       const countEl = document.getElementById("photoProjectCount");
-      if (countEl) {
-        if (filtered.length > toDisplay.length) {
-          countEl.textContent = `${toDisplay.length} dari ${filtered.length}`;
-        } else {
-          countEl.textContent = filtered.length;
-        }
-      }
+      if (countEl) countEl.textContent = filtered.length;
 
       if (filtered.length === 0) {
         grid.innerHTML = "";
@@ -1431,6 +1536,7 @@
       }).join("");
     }
 
+    // ================= RENDER VIDEO SECTION (Max 9 + Load More) =================
     function renderVideoSection() {
       const grid = document.getElementById("videoPortfolioGrid");
       const emptyState = document.getElementById("emptyVideoState");
@@ -1441,13 +1547,7 @@
       const toDisplay = videoProjects.slice(0, videoLimit);
 
       const countEl = document.getElementById("videoProjectCount");
-      if (countEl) {
-        if (videoProjects.length > toDisplay.length) {
-          countEl.textContent = `${toDisplay.length} dari ${videoProjects.length}`;
-        } else {
-          countEl.textContent = videoProjects.length;
-        }
-      }
+      if (countEl) countEl.textContent = videoProjects.length;
 
       if (videoProjects.length === 0) {
         grid.innerHTML = "";
@@ -1491,7 +1591,7 @@
               </span>
             </div>
 
-            <!-- Tombol Play Tengah Sinematik -->
+            <!-- Tombol Play Tengah Sinematik Tanpa Overlay Gelap -->
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-rose-600 group-hover:text-white">
                 <i data-lucide="play" class="w-5 h-5 fill-current"></i>
@@ -1524,6 +1624,7 @@
       `).join("");
     }
 
+    // ================= RENDER DRONE SECTION (Max 9 + Load More) =================
     function renderDroneSection() {
       const grid = document.getElementById("dronePortfolioGrid");
       const emptyState = document.getElementById("emptyDroneState");
@@ -1534,13 +1635,7 @@
       const toDisplay = droneProjects.slice(0, droneLimit);
 
       const countEl = document.getElementById("droneProjectCount");
-      if (countEl) {
-        if (droneProjects.length > toDisplay.length) {
-          countEl.textContent = `${toDisplay.length} dari ${droneProjects.length}`;
-        } else {
-          countEl.textContent = droneProjects.length;
-        }
-      }
+      if (countEl) countEl.textContent = droneProjects.length;
 
       if (droneProjects.length === 0) {
         grid.innerHTML = "";
@@ -1562,13 +1657,11 @@
         }
       }
 
-      grid.innerHTML = toDisplay.map(item => {
-        const isVideo = item.link && (item.link.includes("youtube.com") || item.link.includes("youtu.be") || item.link.endsWith(".mp4"));
-        return `
+      grid.innerHTML = toDisplay.map(item => `
         <div 
           role="button"
           tabindex="0"
-          onclick="handleDroneCardClick('${item.id}')"
+          onclick="openProjectLightbox('${item.id}')"
           class="group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
           
           <div class="relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-neutral-100">
@@ -1588,15 +1681,16 @@
               </span>
             </div>
 
+            <!-- Tombol Play Tengah Drone Tanpa Overlay Gelap -->
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-sky-600 group-hover:text-white">
-                <i data-lucide="${isVideo ? 'play' : 'maximize-2'}" class="w-5 h-5 ${isVideo ? 'fill-current' : ''}"></i>
+                <i data-lucide="maximize-2" class="w-5 h-5"></i>
               </div>
             </div>
 
             <div class="absolute bottom-3 left-3">
               <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-black/65 backdrop-blur-md text-white border border-white/20">
-                <i data-lucide="${isVideo ? 'video' : 'layers'}" class="w-2.5 h-2.5"></i> ${isVideo ? 'Video Aerial' : 'Foto Aerial'}
+                <i data-lucide="layers" class="w-2.5 h-2.5"></i> Foto Aerial
               </span>
             </div>
           </div>
@@ -1607,7 +1701,7 @@
                 ${item.title}
               </h3>
               <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
-                ${isVideo ? 'Tonton' : 'Lihat'} <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                Lihat <i data-lucide="chevron-right" class="w-3 h-3"></i>
               </span>
             </div>
 
@@ -1617,8 +1711,7 @@
             </div>
           </div>
         </div>
-      `;
-      }).join("");
+      `).join("");
     }
 
     function loadMorePhotos() {
@@ -1639,17 +1732,7 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    function handleDroneCardClick(id) {
-      const item = projects.find(p => p.id === id);
-      if (!item) return;
-      const isVideo = item.link && (item.link.includes("youtube.com") || item.link.includes("youtu.be") || item.link.endsWith(".mp4"));
-      if (isVideo) {
-        openVideoModal(id);
-      } else {
-        openProjectLightbox(id);
-      }
-    }
-
+    // ================= LIGHTBOX FOTO & DRONE =================
     function openProjectLightbox(id) {
       const project = projects.find(p => p.id === id);
       if (!project) return;
@@ -1661,28 +1744,19 @@
       }
       currentLightboxIndex = 0;
 
-      const titleEl = document.getElementById("lightboxProjectTitle");
-      const catEl = document.getElementById("lightboxProjectCategory");
-      const locEl = document.getElementById("lightboxProjectLocation");
-      const extBtn = document.getElementById("lightboxExternalBtn");
-
-      if (titleEl) titleEl.textContent = project.title;
-      if (catEl) catEl.textContent = project.category || "Portofolio";
-      if (locEl) {
-        locEl.innerHTML = `
-          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
-          <span>${project.location || 'Indonesia'}</span>
-        `;
-      }
-      if (extBtn) extBtn.href = project.link || "https://photos.google.com/";
+      document.getElementById("lightboxProjectTitle").textContent = project.title;
+      document.getElementById("lightboxProjectCategory").textContent = project.category || "Portofolio";
+      document.getElementById("lightboxProjectLocation").innerHTML = `
+        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
+        <span>${project.location || 'Indonesia'}</span>
+      `;
+      document.getElementById("lightboxExternalBtn").href = project.link || "https://photos.google.com/";
 
       updateLightboxDisplay();
 
       const modal = document.getElementById("lightboxModal");
-      if (modal) {
-        modal.classList.remove("opacity-0", "pointer-events-none");
-        modal.classList.add("opacity-100", "pointer-events-auto");
-      }
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
       document.body.style.overflow = "hidden";
 
       if (window.lucide) lucide.createIcons();
@@ -1690,10 +1764,8 @@
 
     function closeProjectLightbox() {
       const modal = document.getElementById("lightboxModal");
-      if (modal) {
-        modal.classList.remove("opacity-100", "pointer-events-auto");
-        modal.classList.add("opacity-0", "pointer-events-none");
-      }
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
       document.body.style.overflow = "";
       setTimeout(() => {
         activeLightboxProject = null;
@@ -1732,15 +1804,10 @@
       const total = currentLightboxPhotos.length;
       const current = currentLightboxIndex + 1;
       
-      const idxDisp = document.getElementById("lightboxIndexDisplay");
-      const totDisp = document.getElementById("lightboxTotalDisplay");
-      const mobIdx = document.getElementById("lightboxMobileIndex");
-      const mobTot = document.getElementById("lightboxMobileTotal");
-
-      if (idxDisp) idxDisp.textContent = current;
-      if (totDisp) totDisp.textContent = total;
-      if (mobIdx) mobIdx.textContent = current;
-      if (mobTot) mobTot.textContent = total;
+      document.getElementById("lightboxIndexDisplay").textContent = current;
+      document.getElementById("lightboxTotalDisplay").textContent = total;
+      document.getElementById("lightboxMobileIndex").textContent = current;
+      document.getElementById("lightboxMobileTotal").textContent = total;
 
       const thumbContainer = document.getElementById("lightboxThumbnails");
       if (thumbContainer) {
@@ -1775,6 +1842,7 @@
       }
     }
 
+    // ================= MODAL VIDEO PLAYER =================
     function extractYouTubeId(url) {
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -1786,16 +1854,11 @@
       const item = projects.find(p => p.id === id);
       if (!item) return;
 
-      const titleEl = document.getElementById("videoModalTitle");
-      const locEl = document.getElementById("videoModalLocation");
-
-      if (titleEl) titleEl.textContent = item.title;
-      if (locEl) {
-        locEl.innerHTML = `
-          <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400"></i>
-          <span>${item.location || 'Indonesia'}</span>
-        `;
-      }
+      document.getElementById("videoModalTitle").textContent = item.title;
+      document.getElementById("videoModalLocation").innerHTML = `
+        <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400"></i>
+        <span>${item.location || 'Indonesia'}</span>
+      `;
 
       const iframeContainer = document.getElementById("videoModalIframeContainer");
       const iframe = document.getElementById("videoModalIframe");
@@ -1803,38 +1866,30 @@
       const fallback = document.getElementById("videoModalFallback");
       const fallbackBtn = document.getElementById("videoModalFallbackBtn");
 
-      if (iframeContainer) iframeContainer.classList.add("hidden");
-      if (iframe) iframe.src = "";
-      if (videoPlayer) {
-        videoPlayer.classList.add("hidden");
-        videoPlayer.src = "";
-      }
-      if (fallback) fallback.classList.add("hidden");
+      iframeContainer.classList.add("hidden");
+      iframe.src = "";
+      videoPlayer.classList.add("hidden");
+      videoPlayer.src = "";
+      fallback.classList.add("hidden");
 
       const rawLink = (item.link || '').trim();
       const ytId = extractYouTubeId(rawLink);
 
       if (ytId) {
-        if (iframe) {
-          iframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&controls=1`;
-        }
-        if (iframeContainer) iframeContainer.classList.remove("hidden");
+        iframe.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&playsinline=1&controls=1`;
+        iframeContainer.classList.remove("hidden");
       } else if (rawLink.endsWith(".mp4") || rawLink.endsWith(".webm")) {
-        if (videoPlayer) {
-          videoPlayer.src = rawLink;
-          videoPlayer.classList.remove("hidden");
-          videoPlayer.play();
-        }
+        videoPlayer.src = rawLink;
+        videoPlayer.classList.remove("hidden");
+        videoPlayer.play();
       } else {
-        if (fallbackBtn) fallbackBtn.href = rawLink || "https://photos.google.com/";
-        if (fallback) fallback.classList.remove("hidden");
+        fallbackBtn.href = rawLink || "https://photos.google.com/";
+        fallback.classList.remove("hidden");
       }
 
       const modal = document.getElementById("videoModal");
-      if (modal) {
-        modal.classList.remove("opacity-0", "pointer-events-none");
-        modal.classList.add("opacity-100", "pointer-events-auto");
-      }
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
       document.body.style.overflow = "hidden";
       if (window.lucide) lucide.createIcons();
     }
@@ -1845,17 +1900,13 @@
       const iframe = document.getElementById("videoModalIframe");
       const videoPlayer = document.getElementById("videoModalPlayer");
       
-      if (iframe) iframe.src = "";
-      if (iframeContainer) iframeContainer.classList.add("hidden");
-      if (videoPlayer) {
-        videoPlayer.pause();
-        videoPlayer.src = "";
-      }
+      iframe.src = "";
+      iframeContainer.classList.add("hidden");
+      videoPlayer.pause();
+      videoPlayer.src = "";
 
-      if (modal) {
-        modal.classList.remove("opacity-100", "pointer-events-auto");
-        modal.classList.add("opacity-0", "pointer-events-none");
-      }
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
       document.body.style.overflow = "";
     }
 
@@ -1890,6 +1941,139 @@
       }
     }
 
+    // ================= FULL PAGE SCREENSHOT =================
+    async function captureFullPageScreenshot() {
+      const btn = document.getElementById("screenshotBtn");
+      const label = document.getElementById("screenshotLabel");
+      const iconBox = document.getElementById("screenshotIconBox");
+
+      if (typeof html2canvas === "undefined") {
+        showToast("Modul screenshot sedang dimuat, silakan coba lagi.");
+        return;
+      }
+
+      btn.disabled = true;
+      if (label) label.textContent = "Memproses...";
+      if (iconBox) {
+        iconBox.innerHTML = `
+          <svg class="animate-spin w-3.5 h-3.5 text-foriorBrand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        `;
+      }
+
+      showToast("Sedang memproses screenshot satu halaman penuh...");
+
+      const originalScrollY = window.scrollY;
+      const header = document.querySelector("header");
+      const originalHeaderPos = header ? header.style.position : "";
+
+      try {
+        window.scrollTo(0, 0);
+        if (header) header.style.position = "absolute";
+
+        await new Promise((resolve) => setTimeout(resolve, 200));
+
+        const renderPromise = html2canvas(document.body, {
+          useCORS: true,
+          allowTaint: false,
+          imageTimeout: 5000,
+          scale: 1.2,
+          scrollX: 0,
+          scrollY: 0,
+          logging: false,
+          onclone: (clonedDoc) => {
+            clonedDoc.querySelectorAll('img').forEach(img => {
+              img.removeAttribute('loading');
+            });
+
+            const clonedHeader = clonedDoc.querySelector('header');
+            if (clonedHeader) {
+              clonedHeader.style.position = 'absolute';
+              clonedHeader.style.top = '0';
+            }
+
+            const removeIds = [
+              "lightboxModal",
+              "videoModal",
+              "loginModal",
+              "adminModal",
+              "confirmModal",
+              "screenshotModal",
+              "toast",
+              "focusModeBanner"
+            ];
+            removeIds.forEach(id => {
+              const el = clonedDoc.getElementById(id);
+              if (el) el.remove();
+            });
+          }
+        });
+
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error("Waktu proses melebihi batas.")), 12000)
+        );
+
+        const canvas = await Promise.race([renderPromise, timeoutPromise]);
+
+        if (header) header.style.position = originalHeaderPos;
+        window.scrollTo(0, originalScrollY);
+
+        currentScreenshotDataUrl = canvas.toDataURL("image/png");
+        openScreenshotModal(currentScreenshotDataUrl);
+        showToast("Screenshot satu halaman penuh berhasil!");
+
+      } catch (err) {
+        console.error("Gagal mengambil screenshot:", err);
+        if (header) header.style.position = originalHeaderPos;
+        window.scrollTo(0, originalScrollY);
+        showToast("Kendala screenshot: " + (err.message || "Gagal merender kanvas"));
+      } finally {
+        btn.disabled = false;
+        if (label) label.textContent = "Screenshot Web";
+        if (iconBox) {
+          iconBox.innerHTML = '<i data-lucide="camera" class="w-3.5 h-3.5 text-foriorBrand"></i>';
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    }
+
+    function openScreenshotModal(dataUrl) {
+      const modal = document.getElementById("screenshotModal");
+      const img = document.getElementById("screenshotPreviewImage");
+      if (!modal || !img) return;
+
+      img.src = dataUrl;
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.style.overflow = "hidden";
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeScreenshotModal() {
+      const modal = document.getElementById("screenshotModal");
+      if (!modal) return;
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.style.overflow = "";
+    }
+
+    function downloadCurrentScreenshot() {
+      if (!currentScreenshotDataUrl) return;
+
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const link = document.createElement("a");
+      link.download = `FORIOR-Showcase-Fullpage-${dateStr}.png`;
+      link.href = currentScreenshotDataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast("Tangkapan layar sedang diunduh (PNG)...");
+    }
+
+    // ================= KOMPRESI FOTO & ADMIN =================
     function compressImageFile(file, minDimension = 960, maxDimension = 1800, maxBytes = 850000) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -2283,6 +2467,7 @@
       showToast("Portofolio berhasil dihapus");
     }
 
+    // ================= AUTENTIKASI ADMIN =================
     function handleAdminNavClick() {
       const loggedUser = sessionStorage.getItem("forior_admin_logged");
       if (loggedUser) {
@@ -2365,19 +2550,15 @@
       if (loggedUser) {
         const displayUser = document.getElementById("activeAdminEmailDisplay");
         if (displayUser) displayUser.textContent = `Login: ${loggedUser}`;
-        if (navLabel) navLabel.textContent = isMobile ? "Panel" : "Panel Portofolio";
-        if (navIcon) navIcon.setAttribute("data-lucide", "settings");
-        if (navBtn) {
-          navBtn.classList.remove("bg-appleDark");
-          navBtn.classList.add("bg-foriorBrand");
-        }
+        navLabel.textContent = isMobile ? "Panel" : "Panel Portofolio";
+        navIcon.setAttribute("data-lucide", "settings");
+        navBtn.classList.remove("bg-appleDark");
+        navBtn.classList.add("bg-foriorBrand");
       } else {
-        if (navLabel) navLabel.textContent = isMobile ? "Admin" : "Kelola Portofolio";
-        if (navIcon) navIcon.setAttribute("data-lucide", "lock");
-        if (navBtn) {
-          navBtn.classList.remove("bg-foriorBrand");
-          navBtn.classList.add("bg-appleDark");
-        }
+        navLabel.textContent = isMobile ? "Admin" : "Kelola Portofolio";
+        navIcon.setAttribute("data-lucide", "lock");
+        navBtn.classList.remove("bg-foriorBrand");
+        navBtn.classList.add("bg-appleDark");
       }
       if (window.lucide) lucide.createIcons();
     }
@@ -2409,138 +2590,21 @@
       showToast("Data dummy berhasil di-reset ke Cloud");
     }
 
-    async function captureFullPageScreenshot() {
-      const btn = document.getElementById("screenshotBtn");
-      const label = document.getElementById("screenshotLabel");
-      const iconBox = document.getElementById("screenshotIconBox");
-
-      if (typeof html2canvas === "undefined") {
-        showToast("Modul screenshot sedang dimuat, silakan coba lagi.");
-        return;
-      }
-
-      btn.disabled = true;
-      if (label) label.textContent = "Memproses...";
-      if (iconBox) {
-        iconBox.innerHTML = `
-          <svg class="animate-spin w-3.5 h-3.5 text-foriorBrand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-          </svg>
-        `;
-      }
-
-      showToast("Sedang memproses screenshot satu halaman penuh...");
-
-      const originalScrollY = window.scrollY;
-      const header = document.querySelector("header");
-      const originalHeaderPos = header ? header.style.position : "";
-
+    function copyTextToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "-9999px";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
       try {
-        window.scrollTo(0, 0);
-        if (header) header.style.position = "absolute";
-
-        // Tunggu sejenak agar layout tenang
-        await new Promise((resolve) => setTimeout(resolve, 200));
-
-        // Safety timeout race (maksimal 10 detik agar tidak pernah stuck)
-        const renderPromise = html2canvas(document.body, {
-          useCORS: true,
-          allowTaint: false,
-          imageTimeout: 5000, // jangan pernah freeze karena 1 gambar lambat
-          scale: 1.2,
-          scrollX: 0,
-          scrollY: 0,
-          logging: false,
-          onclone: (clonedDoc) => {
-            // Hapus lazy loading di klon agar browser tidak menahan rendering
-            clonedDoc.querySelectorAll('img').forEach(img => {
-              img.removeAttribute('loading');
-            });
-
-            const clonedHeader = clonedDoc.querySelector('header');
-            if (clonedHeader) {
-              clonedHeader.style.position = 'absolute';
-              clonedHeader.style.top = '0';
-            }
-
-            // Hapus modal, backdrop, dan toast dari hasil screenshot
-            const removeIds = [
-              "lightboxModal",
-              "videoModal",
-              "loginModal",
-              "adminModal",
-              "confirmModal",
-              "screenshotModal",
-              "toast"
-            ];
-            removeIds.forEach(id => {
-              const el = clonedDoc.getElementById(id);
-              if (el) el.remove();
-            });
-          }
-        });
-
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("Waktu proses melebihi batas. Silakan coba lagi.")), 12000)
-        );
-
-        const canvas = await Promise.race([renderPromise, timeoutPromise]);
-
-        if (header) header.style.position = originalHeaderPos;
-        window.scrollTo(0, originalScrollY);
-
-        currentScreenshotDataUrl = canvas.toDataURL("image/png");
-        openScreenshotModal(currentScreenshotDataUrl);
-        showToast("Screenshot satu halaman penuh berhasil!");
-
+        document.execCommand('copy');
       } catch (err) {
-        console.error("Gagal mengambil screenshot:", err);
-        if (header) header.style.position = originalHeaderPos;
-        window.scrollTo(0, originalScrollY);
-        showToast("Kendala screenshot: " + (err.message || "Gagal merender kanvas"));
-      } finally {
-        btn.disabled = false;
-        if (label) label.textContent = "Screenshot Web";
-        if (iconBox) {
-          iconBox.innerHTML = '<i data-lucide="camera" class="w-3.5 h-3.5 text-foriorBrand"></i>';
-          if (window.lucide) lucide.createIcons();
-        }
+        console.warn("Gagal menyalin teks:", err);
       }
-    }
-
-    function openScreenshotModal(dataUrl) {
-      const modal = document.getElementById("screenshotModal");
-      const img = document.getElementById("screenshotPreviewImage");
-      if (!modal || !img) return;
-
-      img.src = dataUrl;
-      modal.classList.remove("opacity-0", "pointer-events-none");
-      modal.classList.add("opacity-100", "pointer-events-auto");
-      document.body.style.overflow = "hidden";
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function closeScreenshotModal() {
-      const modal = document.getElementById("screenshotModal");
-      if (!modal) return;
-      modal.classList.remove("opacity-100", "pointer-events-auto");
-      modal.classList.add("opacity-0", "pointer-events-none");
-      document.body.style.overflow = "";
-    }
-
-    function downloadCurrentScreenshot() {
-      if (!currentScreenshotDataUrl) return;
-
-      const dateStr = new Date().toISOString().slice(0, 10);
-      const link = document.createElement("a");
-      link.download = `FORIOR-Showcase-Fullpage-${dateStr}.png`;
-      link.href = currentScreenshotDataUrl;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      showToast("Tangkapan layar sedang diunduh (PNG)...");
+      document.body.removeChild(textArea);
     }
 
     function showToast(message) {
