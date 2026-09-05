@@ -1010,12 +1010,46 @@
       renderCategoryFilters();
       renderCategorySelectOptions();
       checkAuthStatus();
+      // Render data awal langsung agar tampilan tidak kosong saat menunggu koneksi cloud
+      loadInitialDataImmediate();
       initFirebaseConnection();
       setupLightboxKeyboardAndSwipe();
       lucide.createIcons();
     });
 
+    function loadInitialDataImmediate() {
+      const saved = localStorage.getItem("forior_portfolio_projects");
+      if (saved) {
+        try {
+          projects = JSON.parse(saved);
+          const hasVideo = projects.some(p => p.type === 'video');
+          const hasDrone = projects.some(p => p.type === 'drone');
+          if (!hasVideo || !hasDrone) {
+            const missing = INITIAL_PROJECTS.filter(item => 
+              (item.type === 'video' && !hasVideo) || (item.type === 'drone' && !hasDrone)
+            );
+            projects.push(...missing);
+            localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
+          }
+        } catch(e) {
+          projects = [...INITIAL_PROJECTS];
+        }
+      } else {
+        projects = [...INITIAL_PROJECTS];
+      }
+      hideLoadingSkeleton();
+      renderAllSections();
+      renderAdminList();
+    }
+
     function initFirebaseConnection() {
+      // Fallback timer: jika koneksi memakan waktu lebih dari 3 detik (misal diblokir adblocker/offline), beralih ke Lokal Mode
+      const connectionTimer = setTimeout(() => {
+        if (!isCloudConnected) {
+          updateCloudUIStatus(false);
+        }
+      }, 3000);
+
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(FIREBASE_CONFIG);
@@ -1023,6 +1057,7 @@
         dbInstance = firebase.firestore();
         
         dbInstance.collection("showcase_projects").onSnapshot((snapshot) => {
+          clearTimeout(connectionTimer);
           isCloudConnected = true;
           updateCloudUIStatus(true);
           
@@ -1037,7 +1072,7 @@
               });
             });
 
-            // Auto-Sync: Jika database belum memiliki video atau drone, otomatis inject dummy proyek
+            // Auto-Sync: Jika database cloud belum memiliki video atau drone, otomatis sinkronkan
             const hasVideo = cloudData.some(p => p.type === 'video');
             const hasDrone = cloudData.some(p => p.type === 'drone');
 
@@ -1069,11 +1104,13 @@
             seedInitialDataToCloud();
           }
         }, (err) => {
+          clearTimeout(connectionTimer);
           console.warn("Koneksi Firestore fallback lokal:", err.message);
           fallbackToLocalStorage();
         });
 
       } catch (e) {
+        clearTimeout(connectionTimer);
         console.warn("Firebase fallback:", e);
         fallbackToLocalStorage();
       }
@@ -1480,8 +1517,6 @@
       }
     }
 
-    // ================= MODAL VIDEO PLAYER =================
-    function openVideoModal(id) {
     function extractYouTubeId(url) {
       if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
