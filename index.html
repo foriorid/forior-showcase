@@ -183,7 +183,7 @@
   <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
   <section id="section-foto" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24">
 
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 md:mb-8 gap-3">
+    <div class="section-header-flex flex flex-col sm:flex-row sm:items-end justify-between mb-6 md:mb-8 gap-3 items-start">
       <div>
         <div class="flex items-center gap-2.5 mb-1 flex-wrap">
           <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-foriorBrand uppercase tracking-wider">
@@ -203,7 +203,7 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Pilih kategori untuk memfilter. Klik kartu proyek untuk membuka galeri foto.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start md:self-auto">
+      <div class="flex items-center gap-2">
         <div class="text-xs font-medium text-appleGray bg-white border border-appleBorder px-3.5 py-1.5 rounded-full shadow-xs">
           Menampilkan <span id="photoProjectCount" class="font-semibold text-appleDark">0</span> Proyek Foto
         </div>
@@ -262,7 +262,7 @@
   <!-- ================= SECTION 3: PORTOFOLIO VIDEO ================= -->
   <section id="section-video" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
 
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
+    <div class="section-header-flex flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3 items-start">
       <div>
         <div class="flex items-center gap-2.5 mb-1 flex-wrap">
           <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 uppercase tracking-wider">
@@ -282,7 +282,7 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ruang dengan gerakan kamera halus, pencahayaan dramatis, dan transisi elegan.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start md:self-auto">
+      <div class="flex items-center gap-2">
         <div class="text-xs font-medium text-appleGray bg-white border border-appleBorder px-3.5 py-1.5 rounded-full shadow-xs">
           <span id="videoProjectCount" class="font-semibold text-appleDark">0</span> Video Tersedia
         </div>
@@ -314,7 +314,7 @@
   <!-- ================= SECTION 4: PORTOFOLIO DRONE (AERIAL) ================= -->
   <section id="section-drone" class="max-w-7xl mx-auto px-4 sm:px-8 py-20 md:py-28">
 
-    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-3">
+    <div class="section-header-flex flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-3 items-start">
       <div>
         <div class="flex items-center gap-2.5 mb-1 flex-wrap">
           <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-600 uppercase tracking-wider">
@@ -334,7 +334,7 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Dokumentasi fasad bangunan megah, keindahan lingkungan sekitar, dan tata ruang dari udara.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start md:self-auto">
+      <div class="flex items-center gap-2">
         <div class="text-xs font-medium text-appleGray bg-white border border-appleBorder px-3.5 py-1.5 rounded-full shadow-xs">
           <span id="droneProjectCount" class="font-semibold text-appleDark">0</span> Proyek Aerial
         </div>
@@ -1381,21 +1381,104 @@
       showToast(`Mengambil screenshot ${titleLabel || 'section'}...`);
 
       try {
-        // Hilangkan atribut loading="lazy" sementara agar gambar tidak kosong di canvas
-        const imgs = section.querySelectorAll('img');
-        imgs.forEach(img => {
+        // 1. Pastikan font selesai dimuat agar tidak terjadi salah ukur tinggi huruf
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        // 2. Pastikan semua gambar dalam section sudah dimuat sempurna
+        const imgs = Array.from(section.querySelectorAll('img'));
+        await Promise.all(imgs.map(img => {
           img.removeAttribute('loading');
           img.setAttribute('crossorigin', 'anonymous');
-        });
+          if (img.complete) return Promise.resolve();
+          return new Promise(resolve => {
+            img.onload = resolve;
+            img.onerror = resolve;
+            setTimeout(resolve, 1500);
+          });
+        }));
+
+        // Jeda singkat agar rendering browser stabil
+        await new Promise(r => setTimeout(r, 120));
 
         const canvas = await html2canvas(section, {
-          scale: 2, // Kualitas Retina tinggi
+          scale: 2, // Kualitas Retina 2x tajam
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#F5F5F7',
           logging: false,
+          windowWidth: Math.max(window.innerWidth, 1280), // Menghindari breakpoint sempit yang menyebabkan tumpukan
           ignoreElements: (element) => {
             return element.getAttribute('data-html2canvas-ignore') === 'true';
+          },
+          onclone: (clonedDoc, clonedElement) => {
+            // A. Kunci section agar berada di tengah tanpa tergeser
+            clonedElement.style.maxWidth = '1280px';
+            clonedElement.style.width = '100%';
+            clonedElement.style.margin = '0 auto';
+            clonedElement.style.paddingTop = '24px';
+            clonedElement.style.paddingBottom = '36px';
+
+            // B. Tata ulang header agar judul di kiri dan jumlah proyek di kanan
+            const headerFlex = clonedElement.querySelector('.section-header-flex');
+            if (headerFlex) {
+              headerFlex.style.display = 'flex';
+              headerFlex.style.flexDirection = 'row';
+              headerFlex.style.justifyContent = 'space-between';
+              headerFlex.style.alignItems = 'flex-end';
+              headerFlex.style.width = '100%';
+            }
+
+            // C. Kunci tinggi media container secara presisi (mengatasi bug CSS aspect-ratio di html2canvas)
+            const origWraps = section.querySelectorAll('.project-media-wrap');
+            const clonedWraps = clonedElement.querySelectorAll('.project-media-wrap');
+            origWraps.forEach((orig, idx) => {
+              const cloned = clonedWraps[idx];
+              if (cloned) {
+                const rect = orig.getBoundingClientRect();
+                if (rect.height > 0) {
+                  cloned.style.height = `${rect.height}px`;
+                  cloned.style.width = `${rect.width}px`;
+                  cloned.style.aspectRatio = 'unset';
+                }
+              }
+            });
+
+            // D. Kunci ukuran gambar kartu
+            const origImgs = section.querySelectorAll('.project-media-wrap img');
+            const clonedImgs = clonedElement.querySelectorAll('.project-media-wrap img');
+            origImgs.forEach((orig, idx) => {
+              const cloned = clonedImgs[idx];
+              if (cloned) {
+                const rect = orig.getBoundingClientRect();
+                if (rect.height > 0) {
+                  cloned.style.height = `${rect.height}px`;
+                  cloned.style.width = `${rect.width}px`;
+                }
+              }
+            });
+
+            // E. Hilangkan pemotongan vertikal pada teks (line-clamp dan overflow)
+            const titles = clonedElement.querySelectorAll('.project-card-title');
+            titles.forEach(t => {
+              t.classList.remove('line-clamp-1', 'truncate');
+              t.style.display = 'block';
+              t.style.overflow = 'visible';
+              t.style.webkitLineClamp = 'unset';
+              t.style.webkitBoxOrient = 'unset';
+              t.style.lineHeight = '1.4';
+              t.style.whiteSpace = 'normal';
+              t.style.paddingBottom = '4px';
+            });
+
+            const locs = clonedElement.querySelectorAll('.project-card-location');
+            locs.forEach(l => {
+              l.classList.remove('truncate');
+              l.style.overflow = 'visible';
+              l.style.whiteSpace = 'normal';
+              l.style.lineHeight = '1.3';
+            });
           }
         });
 
@@ -1490,7 +1573,7 @@
           onkeydown="if(event.key==='Enter') openProjectLightbox('${item.id}')"
           class="group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
           
-          <div class="relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-100">
+          <div class="project-media-wrap relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-100">
             <img 
               src="${item.image}" 
               alt="${item.title}" 
@@ -1516,9 +1599,9 @@
             </div>
           </div>
 
-          <div class="pt-3 pb-1 px-1">
+          <div class="pt-3 pb-2.5 px-1.5">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1">
+              <h3 class="project-card-title text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1">
                 ${item.title}
               </h3>
               <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
@@ -1526,9 +1609,9 @@
               </span>
             </div>
 
-            <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+            <div class="mt-1.5 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
               <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
-              <span class="truncate">${item.location || 'Indonesia'}</span>
+              <span class="project-card-location truncate">${item.location || 'Indonesia'}</span>
             </div>
           </div>
         </div>
@@ -1576,7 +1659,7 @@
           onclick="openVideoModal('${item.id}')"
           class="group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
           
-          <div class="relative w-full aspect-video rounded-[20px] overflow-hidden bg-neutral-100">
+          <div class="project-media-wrap relative w-full aspect-video rounded-[20px] overflow-hidden bg-neutral-100">
             <img 
               src="${item.image}" 
               alt="${item.title}" 
@@ -1605,9 +1688,9 @@
             </div>
           </div>
 
-          <div class="pt-3 pb-1 px-1">
+          <div class="pt-3 pb-2.5 px-1.5">
             <div class="flex items-center justify-between">
-              <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-rose-600 transition-colors line-clamp-1">
+              <h3 class="project-card-title text-sm font-semibold tracking-tight text-appleDark group-hover:text-rose-600 transition-colors line-clamp-1">
                 ${item.title}
               </h3>
               <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
@@ -1615,9 +1698,99 @@
               </span>
             </div>
 
-            <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+            <div class="mt-1.5 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
               <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
-              <span class="truncate">${item.location || 'Indonesia'}</span>
+              <span class="project-card-location truncate">${item.location || 'Indonesia'}</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // ================= RENDER DRONE SECTION =================
+    function renderDroneSection() {
+      const grid = document.getElementById("dronePortfolioGrid");
+      const emptyState = document.getElementById("emptyDroneState");
+      const loadMoreContainer = document.getElementById("droneLoadMoreContainer");
+      if (!grid) return;
+      const droneProjects = projects.filter(p => p.type === 'drone');
+
+      const toDisplay = droneProjects.slice(0, droneLimit);
+
+      const countEl = document.getElementById("droneProjectCount");
+      if (countEl) countEl.textContent = droneProjects.length;
+
+      if (droneProjects.length === 0) {
+        grid.innerHTML = "";
+        if (emptyState) emptyState.classList.remove("hidden");
+        if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add("hidden");
+
+      if (loadMoreContainer) {
+        if (droneProjects.length > toDisplay.length) {
+          loadMoreContainer.classList.remove("hidden");
+          const remaining = droneProjects.length - toDisplay.length;
+          const textEl = document.getElementById("droneLoadMoreText");
+          if (textEl) textEl.textContent = `Tampilkan Lebih Banyak Drone (+${remaining})`;
+        } else {
+          loadMoreContainer.classList.add("hidden");
+        }
+      }
+
+      grid.innerHTML = toDisplay.map(item => `
+        <div 
+          role="button"
+          tabindex="0"
+          onclick="openProjectLightbox('${item.id}')"
+          class="group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+          
+          <div class="project-media-wrap relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-neutral-100">
+            <img 
+              src="${item.image}" 
+              alt="${item.title}" 
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              onerror="this.src='https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=800&auto=format&fit=crop'"
+            />
+
+            <div class="absolute top-3.5 right-3.5 flex items-center gap-1.5">
+              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-sky-600/90 backdrop-blur-md text-white shadow-xs">
+                <i data-lucide="navigation" class="w-2.5 h-2.5"></i> Aerial
+              </span>
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-medium bg-white/85 backdrop-blur-md text-appleDark shadow-xs border border-white/30">
+                ${item.category || 'Drone'}
+              </span>
+            </div>
+
+            <!-- Tombol Play Tengah Drone Tanpa Overlay Gelap -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-sky-600 group-hover:text-white">
+                <i data-lucide="maximize-2" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <div class="absolute bottom-3 left-3">
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-black/65 backdrop-blur-md text-white border border-white/20">
+                <i data-lucide="layers" class="w-2.5 h-2.5"></i> Foto Aerial
+              </span>
+            </div>
+          </div>
+
+          <div class="pt-3 pb-2.5 px-1.5">
+            <div class="flex items-center justify-between">
+              <h3 class="project-card-title text-sm font-semibold tracking-tight text-appleDark group-hover:text-sky-600 transition-colors line-clamp-1">
+                ${item.title}
+              </h3>
+              <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
+                Lihat <i data-lucide="chevron-right" class="w-3 h-3"></i>
+              </span>
+            </div>
+
+            <div class="mt-1.5 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+              <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
+              <span class="project-card-location truncate">${item.location || 'Indonesia'}</span>
             </div>
           </div>
         </div>
