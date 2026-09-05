@@ -46,20 +46,10 @@
   </script>
 
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
-  <script>
-    // Guard: bila CDN ikon gagal dimuat (jaringan HP/daerah tertentu), pasang no-op
-    // agar tidak ada ReferenceError yang membuat seluruh halaman blank.
-    if (typeof window.lucide === "undefined") {
-      window.lucide = { createIcons: function () {} };
-    }
-  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- html2canvas Library untuk Screenshot -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-  <!-- heic2any: konversi foto HEIC/HEIF dari iPhone agar bisa diproses browser -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
 
   <!-- Firebase App & Firestore SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1118,9 +1108,9 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 max-w-[92vw]">
-    <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-    <span id="toastMsg" class="leading-snug">Perubahan berhasil disimpan</span>
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toastMsg">Perubahan berhasil disimpan</span>
   </div>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
@@ -1302,33 +1292,18 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // Jaring pengaman: apa pun error tak terduga, jangan biarkan halaman blank/terkunci di skeleton.
-    window.addEventListener("error", (e) => {
-      console.warn("Runtime error tertangkap:", e.message);
-      try { hideAllLoadingSkeletons(); } catch (_) {}
-    });
-    window.addEventListener("unhandledrejection", (e) => {
-      console.warn("Promise rejection tertangkap:", e.reason);
-      try { hideAllLoadingSkeletons(); } catch (_) {}
-    });
-
     document.addEventListener("DOMContentLoaded", () => {
-      try {
-        renderCategoryFilters();
-        renderCategorySelectOptions();
-        checkAuthStatus();
+      renderCategoryFilters();
+      renderCategorySelectOptions();
+      checkAuthStatus();
+      
+      // Cek apakah ada cache lokal sebelumnya
+      loadInitialCache();
 
-        // Cek apakah ada cache lokal sebelumnya
-        loadInitialCache();
-
-        // Sambungkan ke Firestore
-        initFirebaseConnection();
-        setupLightboxKeyboardAndSwipe();
-        lucide.createIcons();
-      } catch (err) {
-        console.error("Init gagal sebagian:", err);
-        try { hideAllLoadingSkeletons(); } catch (_) {}
-      }
+      // Sambungkan ke Firestore
+      initFirebaseConnection();
+      setupLightboxKeyboardAndSwipe();
+      lucide.createIcons();
     });
 
     function loadInitialCache() {
@@ -2237,82 +2212,57 @@
       document.body.removeChild(textArea);
     }
 
-    // Muat file gambar menjadi elemen <img>. Menangani HEIC/HEIF (iPhone) + error baca file.
-    // Melempar error yang bermakna agar pemanggil bisa menampilkan pesan jujur ke pengguna.
-    async function loadImageElementFromFile(file) {
-      const isHeic = /heic|heif/i.test(file.type || "") || /\.(heic|heif)$/i.test(file.name || "");
-      let workingBlob = file;
-
-      if (isHeic) {
-        if (typeof heic2any === "undefined") {
-          throw new Error("HEIC_UNSUPPORTED");
-        }
-        try {
-          const converted = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
-          workingBlob = Array.isArray(converted) ? converted[0] : converted;
-        } catch (e) {
-          throw new Error("HEIC_CONVERT_FAILED");
-        }
-      }
-
-      return await new Promise((resolve, reject) => {
+    function compressImageFile(file, minDimension = 960, maxDimension = 1800, maxBytes = 850000) {
+      return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onerror = () => reject(new Error("READ_FAILED"));
+        reader.readAsDataURL(file);
         reader.onload = (event) => {
           const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = () => reject(new Error("DECODE_FAILED"));
           img.src = event.target.result;
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            const longestSide = Math.max(width, height);
+            
+            if (longestSide > maxDimension) {
+              const ratio = maxDimension / longestSide;
+              width = Math.round(width * ratio);
+              height = Math.round(height * ratio);
+            }
+
+            const minAllowed = Math.min(minDimension, longestSide);
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext("2d");
+            
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = "high";
+            ctx.drawImage(img, 0, 0, width, height);
+
+            let quality = 0.88;
+            let result = canvas.toDataURL("image/jpeg", quality);
+
+            while (result.length > maxBytes && quality > 0.65) {
+              quality -= 0.06;
+              result = canvas.toDataURL("image/jpeg", quality);
+            }
+
+            if (result.length > maxBytes && Math.max(width, height) > minAllowed) {
+              const scaleDown = Math.max(minAllowed / Math.max(width, height), 0.82);
+              width = Math.max(Math.round(width * scaleDown), minAllowed);
+              height = Math.max(Math.round(height * scaleDown), Math.round((height / width) * minAllowed));
+              canvas.width = width;
+              canvas.height = height;
+              ctx.drawImage(img, 0, 0, width, height);
+              result = canvas.toDataURL("image/jpeg", Math.max(quality, 0.72));
+            }
+
+            resolve(result);
+          };
+          img.onerror = () => resolve(event.target.result);
         };
-        try {
-          reader.readAsDataURL(workingBlob);
-        } catch (e) {
-          reject(new Error("READ_FAILED"));
-        }
       });
-    }
-
-    // Kompres gambar dan JAMIN hasil (data URL) berada di bawah maxBytes.
-    // Turunkan kualitas dulu, lalu dimensi, hingga muat. Selalu berhasil masuk budget.
-    async function compressImageFile(file, minDimension = 960, maxDimension = 1800, maxBytes = 850000) {
-      const img = await loadImageElementFromFile(file);
-
-      let width = img.width || 1200;
-      let height = img.height || 900;
-      const longestSide = Math.max(width, height);
-
-      if (longestSide > maxDimension) {
-        const ratio = maxDimension / longestSide;
-        width = Math.round(width * ratio);
-        height = Math.round(height * ratio);
-      }
-
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      let quality = 0.85;
-      let result = "";
-
-      for (let attempt = 0; attempt < 16; attempt++) {
-        canvas.width = Math.max(width, 1);
-        canvas.height = Math.max(height, 1);
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        result = canvas.toDataURL("image/jpeg", quality);
-
-        if (result.length <= maxBytes) return result;
-
-        if (quality > 0.5) {
-          quality = Math.max(quality - 0.1, 0.5);
-        } else if (Math.max(width, height) > 500) {
-          width = Math.round(width * 0.85);
-          height = Math.round(height * 0.85);
-        } else {
-          // Sudah upaya maksimal; kembalikan hasil terkecil yang bisa dibuat.
-          return result;
-        }
-      }
-      return result;
     }
 
     function toggleFormTypeFields() {
@@ -2393,33 +2343,11 @@
       lucide.createIcons();
     }
 
-    // Batas aman ukuran 1 dokumen Firestore (limit keras 1.048.576 byte).
-    // Sisakan ruang untuk metadata & overhead Firestore.
-    const FIRESTORE_SAFE_DOC_BYTES = 950000;   // total JSON dokumen maksimal
-    const IMAGE_TOTAL_BUDGET = 820000;         // total anggaran untuk semua gambar (base64)
-
-    // Terjemahkan kode error proses gambar menjadi pesan yang jelas.
-    function describeImageError(err) {
-      const code = err && err.message ? err.message : "";
-      switch (code) {
-        case "HEIC_UNSUPPORTED":
-          return "Foto HEIC (iPhone) belum bisa dikonversi. Coba muat ulang halaman, atau ubah foto ke JPG dulu.";
-        case "HEIC_CONVERT_FAILED":
-          return "Gagal mengonversi foto HEIC iPhone. Silakan ubah ke JPG/PNG lalu unggah ulang.";
-        case "READ_FAILED":
-          return "Gagal membaca file gambar. Pastikan file tidak rusak lalu coba lagi.";
-        case "DECODE_FAILED":
-          return "Format gambar tidak didukung. Gunakan JPG, PNG, atau WEBP.";
-        default:
-          return "Terjadi kendala saat memproses gambar. Coba lagi dengan foto lain.";
-      }
-    }
-
     async function handleSaveProject(event) {
       event.preventDefault();
       const submitBtn = document.getElementById("submitBtn");
       const submitText = document.getElementById("btnSubmitText");
-
+      
       submitBtn.disabled = true;
       submitText.textContent = "Mengompresi & menyimpan...";
 
@@ -2431,15 +2359,14 @@
       const link = document.getElementById("inputLink").value.trim();
       let image = document.getElementById("inputImageUrl").value.trim();
 
-      const totalImagesToSave = 1 + (type === 'video' ? 0 : pendingGalleryItems.filter(i => i.type === 'file').length);
-      // Bagi rata anggaran gambar tanpa lantai besar (penyebab dokumen membengkak > 1MB).
-      const perImageBudget = Math.max(Math.floor(IMAGE_TOTAL_BUDGET / Math.max(totalImagesToSave, 1)), 30000);
+      const totalImagesToSave = (pendingCoverFile ? 1 : 1) + (type === 'video' ? 0 : pendingGalleryItems.length);
+      const perImageBudget = Math.max(Math.floor(900000 / Math.max(totalImagesToSave, 1)), 160000);
 
       try {
         if (pendingCoverFile) {
           image = await compressImageFile(pendingCoverFile, 960, 1800, perImageBudget);
         } else if (!image) {
-          image = type === 'video'
+          image = type === 'video' 
             ? "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
             : "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
         }
@@ -2467,47 +2394,23 @@
           timestamp: Date.now()
         };
 
-        // Penjaga ukuran: pastikan dokumen aman di bawah batas Firestore 1MB.
-        const docBytes = JSON.stringify(projectData).length;
-        if (docBytes > FIRESTORE_SAFE_DOC_BYTES) {
-          const totalFoto = 1 + finalGallery.length;
-          showToast(
-            `Total foto proyek ini terlalu besar (± ${(docBytes / 1024 / 1024).toFixed(2)} MB, batas 1 MB). ` +
-            `Kurangi jumlah foto (sekarang ${totalFoto}) atau pisah jadi beberapa proyek.`,
-            "error"
-          );
-          return; // Jangan simpan; jangan pura-pura sukses.
-        }
-
         if (isCloudConnected && dbInstance) {
-          const docId = editId || (type + "-" + Date.now());
           try {
+            const docId = editId || (type + "-" + Date.now());
             await dbInstance.collection("showcase_projects").doc(docId).set(projectData, { merge: true });
             showToast(editId ? "Portofolio berhasil diperbarui di Cloud!" : "Portofolio baru dipublikasikan ke Cloud!");
-            resetForm();
           } catch (err) {
             console.error("Firestore save error:", err);
-            const code = (err && err.code) ? err.code : "";
-            let msg;
-            if (code === "permission-denied") {
-              msg = "Gagal menyimpan: izin Firestore ditolak. Periksa aturan keamanan (rules) database.";
-            } else if (code === "unavailable" || code === "deadline-exceeded") {
-              msg = "Gagal menyimpan: koneksi ke Cloud terputus. Cek internet lalu coba lagi.";
-            } else if (/exceeds the maximum allowed size|too large|invalid-argument/i.test((err && err.message) || "")) {
-              msg = "Gagal menyimpan: foto proyek melebihi batas 1 MB Firestore. Kurangi jumlah/ukuran foto.";
-            } else {
-              msg = "Gagal menyimpan ke Cloud. Perubahan TIDAK tersimpan. Silakan coba lagi.";
-            }
-            showToast(msg, "error");
-            // Jangan diam-diam simpan lokal seolah sukses. Form dibiarkan agar bisa dicoba ulang.
+            saveLocally(editId, projectData);
           }
         } else {
-          // Cloud memang tidak terhubung -> simpan lokal dengan peringatan jujur.
           saveLocally(editId, projectData);
         }
+
+        resetForm();
       } catch (error) {
-        console.error("Kesalahan proses gambar:", error);
-        showToast(describeImageError(error), "error");
+        console.error("Kesalahan kompresi foto:", error);
+        showToast("Terjadi kendala saat memproses gambar");
       } finally {
         submitBtn.disabled = false;
         submitText.textContent = "Simpan & Publikasikan";
@@ -2524,8 +2427,7 @@
       localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
       renderAllSections();
       renderAdminList();
-      resetForm();
-      showToast("Cloud offline — tersimpan LOKAL di perangkat ini saja (belum tampil di HP/browser lain).", "error");
+      showToast("Tersimpan dalam mode lokal");
     }
 
     function editProject(id) {
@@ -2842,30 +2744,16 @@
       lucide.createIcons();
     }
 
-    function showToast(message, type = "success") {
+    function showToast(message) {
       const toast = document.getElementById("toast");
-      const icon = document.getElementById("toastIcon");
       document.getElementById("toastMsg").textContent = message;
-
-      if (icon) {
-        if (type === "error") {
-          icon.setAttribute("data-lucide", "alert-triangle");
-          icon.className = "w-4 h-4 text-rose-400 shrink-0";
-        } else {
-          icon.setAttribute("data-lucide", "check-circle-2");
-          icon.className = "w-4 h-4 text-emerald-400 shrink-0";
-        }
-        if (window.lucide) lucide.createIcons();
-      }
-
       toast.classList.remove("opacity-0", "pointer-events-none", "translate-y-4");
       toast.classList.add("opacity-100", "translate-y-0");
 
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => {
+      setTimeout(() => {
         toast.classList.remove("opacity-100", "translate-y-0");
         toast.classList.add("opacity-0", "pointer-events-none", "translate-y-4");
-      }, type === "error" ? 5200 : 2600);
+      }, 2600);
     }
   </script>
 
