@@ -197,6 +197,17 @@
       <!-- Cards proyek foto dimuat dinamis -->
     </div>
 
+    <!-- Tombol Load More Foto -->
+    <div id="photoLoadMoreContainer" class="mt-10 sm:mt-12 text-center hidden">
+      <button 
+        type="button" 
+        onclick="loadMorePhotos()" 
+        class="inline-flex items-center gap-2 bg-white hover:bg-neutral-100 active:scale-95 text-appleDark border border-appleBorder text-xs sm:text-sm font-semibold px-6 py-2.5 sm:py-3 rounded-full shadow-xs hover:shadow-md transition-all cursor-pointer">
+        <span id="photoLoadMoreText">Tampilkan Lebih Banyak Foto</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-appleGray"></i>
+      </button>
+    </div>
+
     <!-- Loading Skeleton Foto -->
     <div id="loadingGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse">
@@ -253,6 +264,17 @@
       <!-- Video cards dimuat dinamis -->
     </div>
 
+    <!-- Tombol Load More Video -->
+    <div id="videoLoadMoreContainer" class="mt-10 sm:mt-12 text-center hidden">
+      <button 
+        type="button" 
+        onclick="loadMoreVideos()" 
+        class="inline-flex items-center gap-2 bg-white hover:bg-neutral-100 active:scale-95 text-appleDark border border-appleBorder text-xs sm:text-sm font-semibold px-6 py-2.5 sm:py-3 rounded-full shadow-xs hover:shadow-md transition-all cursor-pointer">
+        <span id="videoLoadMoreText">Tampilkan Lebih Banyak Video</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-appleGray"></i>
+      </button>
+    </div>
+
     <!-- Empty State Video -->
     <div id="emptyVideoState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
       <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-3">
@@ -288,6 +310,17 @@
     <!-- Grid Drone -->
     <div id="dronePortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <!-- Drone cards dimuat dinamis -->
+    </div>
+
+    <!-- Tombol Load More Drone -->
+    <div id="droneLoadMoreContainer" class="mt-10 sm:mt-12 text-center hidden">
+      <button 
+        type="button" 
+        onclick="loadMoreDrones()" 
+        class="inline-flex items-center gap-2 bg-white hover:bg-neutral-100 active:scale-95 text-appleDark border border-appleBorder text-xs sm:text-sm font-semibold px-6 py-2.5 sm:py-3 rounded-full shadow-xs hover:shadow-md transition-all cursor-pointer">
+        <span id="droneLoadMoreText">Tampilkan Lebih Banyak Drone</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-appleGray"></i>
+      </button>
     </div>
 
     <!-- Empty State Drone -->
@@ -1004,6 +1037,11 @@
     let dbInstance = null;
     let pendingDeleteId = null;
 
+    const ITEMS_PER_PAGE = 9;
+    let photoLimit = ITEMS_PER_PAGE;
+    let videoLimit = ITEMS_PER_PAGE;
+    let droneLimit = ITEMS_PER_PAGE;
+
     let activeLightboxProject = null;
     let currentLightboxPhotos = [];
     let currentLightboxIndex = 0;
@@ -1218,6 +1256,7 @@
 
     function setCategoryFilter(category) {
       activeCategory = category;
+      photoLimit = ITEMS_PER_PAGE; // Reset ke 9 saat ganti kategori
       renderCategoryFilters();
       renderPhotoSection();
       lucide.createIcons();
@@ -1239,23 +1278,43 @@
     function renderPhotoSection() {
       const grid = document.getElementById("photoPortfolioGrid");
       const emptyState = document.getElementById("emptyPhotoState");
+      const loadMoreContainer = document.getElementById("photoLoadMoreContainer");
       
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
       const filtered = activeCategory === "Semua" 
         ? photoProjects 
         : photoProjects.filter(p => (p.category || '').toLowerCase() === activeCategory.toLowerCase());
 
-      document.getElementById("photoProjectCount").textContent = filtered.length;
+      const toDisplay = filtered.slice(0, photoLimit);
+      
+      // Update badge jumlah foto
+      const countEl = document.getElementById("photoProjectCount");
+      if (filtered.length > toDisplay.length) {
+        countEl.textContent = `${toDisplay.length} dari ${filtered.length}`;
+      } else {
+        countEl.textContent = filtered.length;
+      }
 
       if (filtered.length === 0) {
         grid.innerHTML = "";
         emptyState.classList.remove("hidden");
+        if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
         return;
       }
 
       emptyState.classList.add("hidden");
 
-      grid.innerHTML = filtered.map(item => {
+      if (loadMoreContainer) {
+        if (filtered.length > toDisplay.length) {
+          loadMoreContainer.classList.remove("hidden");
+          const remaining = filtered.length - toDisplay.length;
+          document.getElementById("photoLoadMoreText").textContent = `Tampilkan Lebih Banyak Foto (+${remaining})`;
+        } else {
+          loadMoreContainer.classList.add("hidden");
+        }
+      }
+
+      grid.innerHTML = toDisplay.map(item => {
         const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
         return `
         <div 
@@ -1316,19 +1375,38 @@
     function renderVideoSection() {
       const grid = document.getElementById("videoPortfolioGrid");
       const emptyState = document.getElementById("emptyVideoState");
+      const loadMoreContainer = document.getElementById("videoLoadMoreContainer");
       const videoProjects = projects.filter(p => p.type === 'video');
 
-      document.getElementById("videoProjectCount").textContent = videoProjects.length;
+      const toDisplay = videoProjects.slice(0, videoLimit);
+
+      const countEl = document.getElementById("videoProjectCount");
+      if (videoProjects.length > toDisplay.length) {
+        countEl.textContent = `${toDisplay.length} dari ${videoProjects.length}`;
+      } else {
+        countEl.textContent = videoProjects.length;
+      }
 
       if (videoProjects.length === 0) {
         grid.innerHTML = "";
         emptyState.classList.remove("hidden");
+        if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
         return;
       }
 
       emptyState.classList.add("hidden");
 
-      grid.innerHTML = videoProjects.map(item => `
+      if (loadMoreContainer) {
+        if (videoProjects.length > toDisplay.length) {
+          loadMoreContainer.classList.remove("hidden");
+          const remaining = videoProjects.length - toDisplay.length;
+          document.getElementById("videoLoadMoreText").textContent = `Tampilkan Lebih Banyak Video (+${remaining})`;
+        } else {
+          loadMoreContainer.classList.add("hidden");
+        }
+      }
+
+      grid.innerHTML = toDisplay.map(item => `
         <div 
           role="button"
           tabindex="0"
@@ -1390,19 +1468,38 @@
     function renderDroneSection() {
       const grid = document.getElementById("dronePortfolioGrid");
       const emptyState = document.getElementById("emptyDroneState");
+      const loadMoreContainer = document.getElementById("droneLoadMoreContainer");
       const droneProjects = projects.filter(p => p.type === 'drone');
 
-      document.getElementById("droneProjectCount").textContent = droneProjects.length;
+      const toDisplay = droneProjects.slice(0, droneLimit);
+
+      const countEl = document.getElementById("droneProjectCount");
+      if (droneProjects.length > toDisplay.length) {
+        countEl.textContent = `${toDisplay.length} dari ${droneProjects.length}`;
+      } else {
+        countEl.textContent = droneProjects.length;
+      }
 
       if (droneProjects.length === 0) {
         grid.innerHTML = "";
         emptyState.classList.remove("hidden");
+        if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
         return;
       }
 
       emptyState.classList.add("hidden");
 
-      grid.innerHTML = droneProjects.map(item => {
+      if (loadMoreContainer) {
+        if (droneProjects.length > toDisplay.length) {
+          loadMoreContainer.classList.remove("hidden");
+          const remaining = droneProjects.length - toDisplay.length;
+          document.getElementById("droneLoadMoreText").textContent = `Tampilkan Lebih Banyak Drone (+${remaining})`;
+        } else {
+          loadMoreContainer.classList.add("hidden");
+        }
+      }
+
+      grid.innerHTML = toDisplay.map(item => {
         const isVideo = item.link && (item.link.includes("youtube.com") || item.link.includes("youtu.be") || item.link.endsWith(".mp4"));
         return `
         <div 
@@ -1463,6 +1560,24 @@
         </div>
       `;
       }).join("");
+    }
+
+    function loadMorePhotos() {
+      photoLimit += ITEMS_PER_PAGE;
+      renderPhotoSection();
+      lucide.createIcons();
+    }
+
+    function loadMoreVideos() {
+      videoLimit += ITEMS_PER_PAGE;
+      renderVideoSection();
+      lucide.createIcons();
+    }
+
+    function loadMoreDrones() {
+      droneLimit += ITEMS_PER_PAGE;
+      renderDroneSection();
+      lucide.createIcons();
     }
 
     function handleDroneCardClick(id) {
