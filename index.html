@@ -1372,6 +1372,18 @@
         }
         dbInstance = firebase.firestore();
         
+        // Optimasi khusus Safari / iOS agar langsung terhubung seketika tanpa tertahan buffering WebKit
+        try {
+          const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
+          if (isSafari) {
+            dbInstance.settings({
+              experimentalForceLongPolling: true
+            });
+          }
+        } catch (settingsErr) {
+          console.debug("Firestore settings note:", settingsErr);
+        }
+
         dbInstance.collection("showcase_projects").onSnapshot((snapshot) => {
           clearTimeout(timeoutGuard);
           isCloudConnected = true;
