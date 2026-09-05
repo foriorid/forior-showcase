@@ -54,9 +54,6 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- html2canvas Library for Full-Page Screenshot -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
   <!-- Firebase App & Firestore SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
@@ -107,17 +104,6 @@
           <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
           <span id="cloudStatusText">Menghubungkan...</span>
         </div>
-
-        <!-- Tombol Screenshot Satu Halaman Penuh -->
-        <button 
-          id="screenshotBtn"
-          type="button"
-          onclick="captureFullPageScreenshot()" 
-          title="Ambil Screenshot Satu Halaman Penuh"
-          class="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-appleDark text-xs font-medium px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full border border-appleBorder active:scale-95 transition-all shadow-xs whitespace-nowrap shrink-0 cursor-pointer">
-          <i data-lucide="camera" class="w-3.5 h-3.5 text-foriorBrand" id="screenshotIcon"></i>
-          <span class="hidden sm:inline" id="screenshotLabel">Screenshot Web</span>
-        </button>
         
         <!-- Tombol Akses Kelola Portofolio -->
         <button 
@@ -410,9 +396,76 @@
       <div class="relative max-w-full max-h-full flex items-center justify-center">
         <img 
           id="lightboxMainImage" 
-      <!-- Video Screen Frame (16:9) -->
+          src="" 
+          alt="Portofolio FORIOR" 
+          class="max-h-[64vh] sm:max-h-[74vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
+        />
+        <div class="sm:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono text-white shadow-md">
+          <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
+        </div>
+      </div>
+
+      <button 
+        id="lightboxNextBtn"
+        type="button"
+        onclick="navigateLightbox(1)" 
+        aria-label="Foto Berikutnya"
+        class="absolute right-3 sm:right-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
+        <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+      </button>
+    </div>
+
+    <!-- Thumbnails Tray -->
+    <div class="p-3 sm:p-4 bg-black/50 border-t border-white/10 flex flex-col items-center gap-2">
+      <div id="lightboxThumbnails" class="flex items-center gap-2 overflow-x-auto no-scrollbar max-w-full py-1 px-2"></div>
+      <p class="text-[11px] text-neutral-300 font-light hidden sm:block">
+        Gunakan tombol panah ◀ ▶ pada keyboard atau geser layar untuk navigasi
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ================= SECTION 6: MODAL VIDEO PLAYER ================= -->
+  <div 
+    id="videoModal" 
+    class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl">
+    
+    <div onclick="closeVideoModal()" class="absolute inset-0"></div>
+
+    <div class="relative w-full max-w-4xl bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col">
+      <!-- Video Header -->
+      <div class="px-5 py-4 flex items-center justify-between border-b border-white/10 bg-neutral-950/80">
+        <div class="min-w-0 pr-3">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30">Video Showcase</span>
+            <h4 id="videoModalTitle" class="text-sm sm:text-base font-semibold text-white truncate">Judul Video</h4>
+          </div>
+          <p id="videoModalLocation" class="text-xs text-neutral-400 mt-0.5 flex items-center gap-1">
+            <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400"></i>
+            <span>Lokasi</span>
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" onclick="closeVideoModal()" title="Tutup Video (Esc)" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Video Screen Frame (16:9) dengan Clean Clipping (Menyembunyikan Judul & Watermark YouTube) -->
       <div class="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
-        <iframe id="videoModalIframe" src="" class="w-full h-full border-0 hidden" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div id="videoModalIframeContainer" class="relative w-full h-full overflow-hidden hidden">
+          <iframe 
+            id="videoModalIframe" 
+            src="" 
+            class="absolute top-[-52px] sm:top-[-60px] left-0 w-full h-[calc(100%+52px)] sm:h-[calc(100%+60px)] border-0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+          <!-- Shield pelindung klik logo YouTube pojok kanan bawah -->
+          <div class="absolute bottom-0 right-8 w-24 h-11 pointer-events-auto z-10"></div>
+        </div>
         <video id="videoModalPlayer" src="" controls class="w-full h-full object-contain hidden"></video>
         <div id="videoModalFallback" class="text-center p-6 space-y-3 hidden">
           <div class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center mx-auto">
@@ -423,73 +476,6 @@
             <span>Tonton Video di Tab Baru</span>
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
           </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= SECTION 7: MODAL PREVIEW SCREENSHOT ================= -->
-  <div 
-    id="screenshotModal" 
-    class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-200 ease-out flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl">
-    
-    <div onclick="closeScreenshotModal()" class="absolute inset-0"></div>
-
-    <div class="relative w-full max-w-4xl max-h-[92vh] bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col">
-      <!-- Screenshot Modal Header -->
-      <div class="px-5 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/10 bg-neutral-950/80">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shrink-0">
-            <i data-lucide="image" class="w-4 h-4"></i>
-          </div>
-          <div class="min-w-0">
-            <h4 class="text-xs sm:text-sm font-semibold text-white truncate">Hasil Screenshot Satu Halaman Penuh</h4>
-            <p class="text-[10px] sm:text-[11px] text-neutral-400 truncate">Resolusi penuh dari atas sampai bawah siap diunduh</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 shrink-0">
-          <button 
-            type="button" 
-            onclick="downloadCurrentScreenshot()" 
-            class="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 active:scale-95 text-appleDark text-xs font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md transition-all cursor-pointer">
-            <i data-lucide="download" class="w-3.5 h-3.5 text-foriorBrand"></i>
-            <span class="hidden sm:inline">Unduh PNG</span>
-          </button>
-          <button 
-            type="button" 
-            onclick="closeScreenshotModal()" 
-            title="Tutup Preview" 
-            class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors cursor-pointer">
-            <i data-lucide="x" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Screenshot Scrollable Viewport -->
-      <div class="flex-1 overflow-y-auto p-3 sm:p-6 bg-neutral-950 flex justify-center">
-        <div class="max-w-2xl w-full border border-white/10 rounded-2xl overflow-hidden shadow-2xl bg-white">
-          <img id="screenshotPreviewImage" src="" alt="Full Page Screenshot FORIOR" class="w-full h-auto object-top block" />
-        </div>
-      </div>
-
-      <!-- Screenshot Modal Footer -->
-      <div class="px-5 py-3 border-t border-white/10 bg-neutral-950/90 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs text-neutral-400">
-        <span>Pratinjau tangkapan layar beresolusi tinggi (PNG).</span>
-        <div class="flex items-center gap-2">
-          <button 
-            type="button" 
-            onclick="closeScreenshotModal()" 
-            class="text-neutral-400 hover:text-white px-3 py-1.5 rounded-lg transition-colors cursor-pointer">
-            Tutup
-          </button>
-          <button 
-            type="button" 
-            onclick="downloadCurrentScreenshot()" 
-            class="bg-foriorBrand text-white font-medium px-4 py-1.5 rounded-full hover:opacity-90 transition-all flex items-center gap-1.5 cursor-pointer">
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
-            <span>Simpan Gambar</span>
-          </button>
         </div>
       </div>
     </div>
@@ -1064,7 +1050,6 @@
     let pendingGalleryItems = [];
     let touchStartX = 0;
     let touchEndX = 0;
-    let currentScreenshotDataUrl = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       renderCategoryFilters();
@@ -2267,123 +2252,6 @@
         seedInitialDataToCloud();
         showToast("Data dummy berhasil di-reset");
       }
-    }
-
-    // ================= FULL-PAGE SCREENSHOT HANDLER =================
-    async function captureFullPageScreenshot() {
-      const btn = document.getElementById("screenshotBtn");
-      const label = document.getElementById("screenshotLabel");
-      const icon = document.getElementById("screenshotIcon");
-
-      if (typeof html2canvas === "undefined") {
-        showToast("Modul screenshot sedang dimuat, silakan coba lagi.");
-        return;
-      }
-
-      btn.disabled = true;
-      if (label) label.textContent = "Memproses...";
-      if (icon) icon.setAttribute("data-lucide", "loader-2");
-      icon.classList.add("animate-spin");
-      lucide.createIcons();
-
-      showToast("Sedang mengambil screenshot seluruh halaman web...");
-
-      // Simpan posisi scroll sebelum proses tangkap
-      const originalScrollY = window.scrollY;
-      const header = document.querySelector("header");
-      const originalHeaderPosition = header ? header.style.position : "";
-
-      try {
-        // Scroll ke paling atas agar perenderan canvas presisi
-        window.scrollTo(0, 0);
-        if (header) {
-          header.style.position = "absolute"; // Mencegah fixed header berulang di kanvas panjang
-        }
-
-        // Berikan jeda singkat agar reflow selesai
-        await new Promise((resolve) => setTimeout(resolve, 250));
-
-        const canvas = await html2canvas(document.body, {
-          useCORS: true,
-          allowTaint: false,
-          scale: 1.5, // Kualitas tinggi tanpa membebani memori browser
-          scrollY: 0,
-          scrollX: 0,
-          windowWidth: document.documentElement.offsetWidth,
-          windowHeight: document.documentElement.scrollHeight,
-          logging: false,
-          ignoreElements: (el) => {
-            // Abaikan jendela modal dan notifikasi toast saat capture
-            return [
-              "lightboxModal",
-              "videoModal",
-              "loginModal",
-              "adminModal",
-              "confirmModal",
-              "screenshotModal",
-              "toast"
-            ].includes(el.id);
-          }
-        });
-
-        // Kembalikan header dan posisi scroll asli
-        if (header) header.style.position = originalHeaderPosition;
-        window.scrollTo(0, originalScrollY);
-
-        currentScreenshotDataUrl = canvas.toDataURL("image/png");
-
-        // Buka jendela preview
-        openScreenshotModal(currentScreenshotDataUrl);
-        showToast("Screenshot satu halaman penuh berhasil diambil!");
-
-      } catch (err) {
-        console.error("Gagal mengambil screenshot:", err);
-        if (header) header.style.position = originalHeaderPosition;
-        window.scrollTo(0, originalScrollY);
-        showToast("Terjadi kendala saat mengambil screenshot: " + (err.message || ""));
-      } finally {
-        btn.disabled = false;
-        if (label) label.textContent = "Screenshot Web";
-        if (icon) {
-          icon.setAttribute("data-lucide", "camera");
-          icon.classList.remove("animate-spin");
-        }
-        lucide.createIcons();
-      }
-    }
-
-    function openScreenshotModal(dataUrl) {
-      const modal = document.getElementById("screenshotModal");
-      const img = document.getElementById("screenshotPreviewImage");
-      if (!modal || !img) return;
-
-      img.src = dataUrl;
-      modal.classList.remove("opacity-0", "pointer-events-none");
-      modal.classList.add("opacity-100", "pointer-events-auto");
-      document.body.style.overflow = "hidden";
-      lucide.createIcons();
-    }
-
-    function closeScreenshotModal() {
-      const modal = document.getElementById("screenshotModal");
-      if (!modal) return;
-      modal.classList.remove("opacity-100", "pointer-events-auto");
-      modal.classList.add("opacity-0", "pointer-events-none");
-      document.body.style.overflow = "";
-    }
-
-    function downloadCurrentScreenshot() {
-      if (!currentScreenshotDataUrl) return;
-
-      const dateStr = new Date().toISOString().slice(0, 10);
-      const link = document.createElement("a");
-      link.download = `FORIOR-Showcase-Fullpage-${dateStr}.png`;
-      link.href = currentScreenshotDataUrl;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      showToast("Tangkapan layar sedang diunduh (PNG)...");
     }
 
     function showToast(message) {
