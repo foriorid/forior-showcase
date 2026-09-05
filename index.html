@@ -31,12 +31,6 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              DEFAULT: '#000000',
-              accent: '#2563eb',
-            }
           }
         }
       }
@@ -79,7 +73,6 @@
       vertical-align: middle !important;
     }
 
-    /* Skeleton pulse animation */
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.45; }
@@ -88,7 +81,6 @@
       animation: pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
-    /* Hide scrollbar */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -100,10 +92,10 @@
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       <span class="flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
-        Menampilkan Mode Kurasi Khusus: <strong id="focusSectionName" class="font-semibold ml-1">Section</strong>
+        Mode Kurasi Terfokus: <strong id="focusSectionName" class="font-semibold ml-1">Section</strong>
       </span>
       <button onclick="exitFocusMode()" class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white transition text-xs font-medium">
-        Tampilkan Semua Halaman <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        Tampilkan Seluruh Halaman <i data-lucide="arrow-right" class="w-3 h-3"></i>
       </button>
     </div>
   </div>
@@ -155,14 +147,43 @@
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-16">
+  <!-- ========================================== -->
+  <!-- HERO SECTION -->
+  <!-- ========================================== -->
+  <section id="heroSection" class="relative overflow-hidden pt-12 pb-10 border-b border-neutral-200/60 bg-gradient-to-b from-white to-[#fafafa]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-[11px] font-semibold text-neutral-700 mb-5">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        Dokumentasi Visual Properti & Arsitektur
+      </div>
+      
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 tracking-tight leading-tight sm:leading-none max-w-4xl mx-auto">
+        Presisi Estetika Visual <br class="hidden sm:inline" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neutral-900 via-neutral-700 to-neutral-500">Ruang & Arsitektur.</span>
+      </h1>
+
+      <p class="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto mt-4 font-normal leading-relaxed">
+        Kurasi portofolio fotografi arsitektur interior, cinematic video tour, dan sudut pandang aerial drone untuk hotel, vila, residensial, hingga ruang komersial.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 mt-7">
+        <a href="#section-foto" class="px-5 py-2.5 rounded-full text-xs font-semibold bg-neutral-900 text-white hover:bg-neutral-800 shadow-sm transition">
+          Eksplorasi Karya
+        </a>
+        <a href="https://wa.me/6281234567890" target="_blank" class="px-5 py-2.5 rounded-full text-xs font-semibold bg-white border border-neutral-300 text-neutral-700 hover:bg-neutral-50 shadow-sm transition inline-flex items-center gap-1.5">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Hubungi Studio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 space-y-16">
 
     <!-- ========================================== -->
     <!-- SECTION 1: PORTOFOLIO FOTOGRAFI -->
     <!-- ========================================== -->
     <section id="section-foto" class="scroll-mt-24">
       
-      <!-- Section Header -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6">
         <div>
           <div class="flex items-center gap-2 mb-1.5">
@@ -170,12 +191,10 @@
               <i data-lucide="camera" class="w-3.5 h-3.5"></i> Portofolio Fotografi
             </span>
             
-            <!-- Tombol Share Section -->
-            <button onclick="shareSection('foto')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link khusus foto">
+            <button onclick="shareSection('foto')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link section">
               <i data-lucide="share" class="w-3 h-3"></i> Share
             </button>
 
-            <!-- Tombol Screenshot Section (Ikon Kamera Bulat) -->
             <button onclick="takeSectionScreenshot('section-foto', 'Portofolio-Fotografi')" data-html2canvas-ignore="true" class="w-6 h-6 rounded-full inline-flex items-center justify-center bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-neutral-700 transition" title="Screenshot Section Foto">
               <i data-lucide="camera" class="w-3 h-3"></i>
             </button>
@@ -184,7 +203,6 @@
           <p class="text-xs sm:text-sm text-neutral-500 mt-1">Pilih kategori untuk memfilter. Klik kartu proyek untuk membuka galeri foto pop-up.</p>
         </div>
 
-        <!-- Project Counter Badge -->
         <div class="self-start sm:self-auto">
           <span id="fotoCounter" class="project-count-badge px-3.5 rounded-full text-xs font-semibold text-neutral-600 bg-white border border-neutral-200/80 shadow-sm">
             Menampilkan ... Proyek Foto
@@ -193,16 +211,10 @@
       </div>
 
       <!-- Category Filter Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar pt-1" id="categoryFilterContainer">
-        <!-- Akan diisi tombol kategori secara dinamis -->
-      </div>
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar pt-1" id="categoryFilterContainer"></div>
 
       <!-- Grid Foto Cards -->
       <div id="fotoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-        <!-- Loading Skeletons awal -->
-        <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
-        <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
-        <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[4/3]"></div>
@@ -222,7 +234,6 @@
     <!-- ========================================== -->
     <section id="section-video" class="scroll-mt-24 pt-4 border-t border-neutral-200/60">
       
-      <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6">
         <div>
           <div class="flex items-center gap-2 mb-1.5">
@@ -230,7 +241,7 @@
               <i data-lucide="video" class="w-3.5 h-3.5"></i> Cinema & Video Walkthrough
             </span>
             
-            <button onclick="shareSection('video')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link khusus video">
+            <button onclick="shareSection('video')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link section">
               <i data-lucide="share" class="w-3 h-3"></i> Share
             </button>
 
@@ -249,7 +260,7 @@
         </div>
       </div>
 
-      <!-- Grid Video Cards (100% Bright, NO Dark Overlay) -->
+      <!-- Grid Video Cards (100% Brightness) -->
       <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[16/9]"></div>
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[16/9]"></div>
@@ -270,7 +281,6 @@
     <!-- ========================================== -->
     <section id="section-drone" class="scroll-mt-24 pt-4 border-t border-neutral-200/60">
       
-      <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6">
         <div>
           <div class="flex items-center gap-2 mb-1.5">
@@ -278,7 +288,7 @@
               <i data-lucide="send" class="w-3.5 h-3.5"></i> Drone & Aerial Perspective
             </span>
             
-            <button onclick="shareSection('drone')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link khusus drone">
+            <button onclick="shareSection('drone')" data-html2canvas-ignore="true" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-neutral-100 hover:bg-neutral-200 border border-neutral-200/80 text-[11px] font-medium text-neutral-700 transition" title="Bagikan link section">
               <i data-lucide="share" class="w-3 h-3"></i> Share
             </button>
 
@@ -297,7 +307,7 @@
         </div>
       </div>
 
-      <!-- Grid Drone Cards (100% Bright, NO Dark Overlay) -->
+      <!-- Grid Drone Cards (100% Brightness) -->
       <div id="droneGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[16/10]"></div>
         <div class="skeleton-box bg-neutral-200/70 rounded-2xl aspect-[16/10]"></div>
@@ -324,7 +334,7 @@
   </footer>
 
   <!-- ========================================== -->
-  <!-- MODAL 1: GALERI POPUP / LIGHTBOX -->
+  <!-- MODAL 1: GALERI LIGHTBOX -->
   <!-- ========================================== -->
   <div id="galleryModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6 transition-all duration-300">
     <div class="flex items-center justify-between text-white pb-3 border-b border-white/10">
@@ -343,11 +353,9 @@
       </div>
     </div>
 
-    <!-- Main Viewport -->
     <div class="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
       <img id="modalMainImage" src="" alt="Gallery Image" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl transition-all duration-300">
       
-      <!-- Prev & Next Arrow Buttons -->
       <button onclick="prevGalleryImage()" class="absolute left-2 sm:left-4 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition">
         <i data-lucide="chevron-left" class="w-6 h-6"></i>
       </button>
@@ -356,14 +364,11 @@
       </button>
     </div>
 
-    <!-- Thumbnails Bar -->
-    <div id="modalThumbnailsBar" class="flex items-center justify-center gap-2 overflow-x-auto py-2 no-scrollbar">
-      <!-- Generated dynamic thumbnails -->
-    </div>
+    <div id="modalThumbnailsBar" class="flex items-center justify-center gap-2 overflow-x-auto py-2 no-scrollbar"></div>
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL 2: PEMUTAR VIDEO POPUP (AUTOPLAY) -->
+  <!-- MODAL 2: PEMUTAR VIDEO (AUTOPLAY) -->
   <!-- ========================================== -->
   <div id="videoModal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex items-center justify-center p-4 transition-all">
     <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10">
@@ -377,7 +382,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!-- MODAL 3: SCREENSHOT PREVIEW MODAL -->
+  <!-- MODAL 3: SCREENSHOT PREVIEW -->
   <!-- ========================================== -->
   <div id="screenshotPreviewModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
@@ -408,23 +413,20 @@
   <!-- MODAL 4: PANEL KELOLA PORTOFOLIO (ADMIN) -->
   <!-- ========================================== -->
   <div id="adminModal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex justify-end">
-    <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col overflow-hidden animate-slide-left">
+    <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col overflow-hidden">
       
-      <!-- Drawer Header -->
       <div class="p-5 border-b border-neutral-100 flex items-center justify-between">
         <div>
           <h3 class="font-bold text-neutral-900 text-base">Kelola Portofolio</h3>
-          <p class="text-xs text-neutral-400" id="adminAuthStatus">Login sebagai Pengelola</p>
+          <p class="text-xs text-neutral-400">Login: forior.id@gmail.com</p>
         </div>
         <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-500 flex items-center justify-center transition">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
-      <!-- Drawer Content Scrollable -->
       <div class="flex-1 overflow-y-auto p-5 space-y-5">
         
-        <!-- Form Proyek Baru / Edit -->
         <form id="portfolioForm" onsubmit="handleSaveProject(event)" class="space-y-4 bg-neutral-50 p-4 rounded-2xl border border-neutral-200/80">
           <input type="hidden" id="formProjectId" value="">
           
@@ -447,10 +449,7 @@
               <label class="block text-xs font-semibold text-neutral-700">Kategori (Bisa pilih lebih dari satu)</label>
               <span class="text-[10px] text-neutral-400">Klik untuk memilih</span>
             </div>
-            <!-- Multi-Category Selectable Pills -->
-            <div id="formCategoryPillsContainer" class="flex flex-wrap gap-1.5 p-2 bg-white rounded-xl border border-neutral-200">
-              <!-- Rendered via JS -->
-            </div>
+            <div id="formCategoryPillsContainer" class="flex flex-wrap gap-1.5 p-2 bg-white rounded-xl border border-neutral-200"></div>
           </div>
 
           <div>
@@ -459,22 +458,20 @@
           </div>
 
           <div>
-            <label class="block text-xs font-semibold text-neutral-700 mb-1">Tautan Video / Album Eksternal</label>
+            <label class="block text-xs font-semibold text-neutral-700 mb-1">Tautan Album Google Photos / Video YouTube</label>
             <input type="url" id="formLink" placeholder="https://youtube.com/watch?v=... atau https://photos.app.goo.gl/..." class="w-full text-xs rounded-xl border border-neutral-200 p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-neutral-900">
           </div>
 
-          <!-- Cover Image -->
           <div>
-            <label class="block text-xs font-semibold text-neutral-700 mb-1">URL Cover / Unggah Foto</label>
-            <input type="url" id="formCoverUrl" placeholder="Paste URL gambar cover (https://...)" class="w-full text-xs rounded-xl border border-neutral-200 p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-neutral-900 mb-1.5">
+            <label class="block text-xs font-semibold text-neutral-700 mb-1">Foto Cover (Thumbnail)</label>
+            <input type="url" id="formCoverUrl" placeholder="Paste URL cover (https://...)" class="w-full text-xs rounded-xl border border-neutral-200 p-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-neutral-900 mb-1.5">
             <input type="file" id="formCoverFile" accept="image/*" class="text-xs text-neutral-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-neutral-200 hover:file:bg-neutral-300">
           </div>
 
-          <!-- Galeri Tambahan (Lightbox) -->
           <div id="formGallerySection" class="pt-2 border-t border-neutral-200">
             <div class="flex items-center justify-between mb-1">
-              <label class="block text-xs font-semibold text-neutral-700">Foto Galeri Tambahan (Lightbox)</label>
-              <span id="formGalleryCount" class="text-[10px] text-neutral-400">0 foto tersimpan</span>
+              <label class="block text-xs font-semibold text-neutral-700">Galeri Foto Tambahan (Lightbox)</label>
+              <span id="formGalleryCount" class="text-[10px] text-neutral-400">0 foto ditambahkan</span>
             </div>
             <input type="file" id="formGalleryFiles" multiple accept="image/*" class="text-xs text-neutral-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-neutral-200 hover:file:bg-neutral-300 w-full">
             <div id="formGalleryPreview" class="flex flex-wrap gap-1.5 mt-2"></div>
@@ -482,17 +479,17 @@
 
           <div class="pt-2">
             <button type="submit" id="btnSaveProject" class="w-full py-2.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-semibold text-xs transition shadow-sm flex items-center justify-center gap-1.5">
-              <i data-lucide="check" class="w-4 h-4"></i> Simpan Portofolio
+              <i data-lucide="check" class="w-4 h-4"></i> Simpan & Publikasikan
             </button>
           </div>
         </form>
 
-        <!-- List Daftar Portofolio Aktif -->
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">Daftar Portofolio Aktif</h4>
-          <div id="adminProjectList" class="space-y-2">
-            <!-- Rendered via JS -->
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-neutral-500">Daftar Portofolio Aktif</h4>
+            <span id="adminListCount" class="text-[10px] text-neutral-400"></span>
           </div>
+          <div id="adminProjectList" class="space-y-2"></div>
         </div>
 
       </div>
@@ -509,9 +506,6 @@
   <!-- JAVASCRIPT LOGIC & ENGINE -->
   <!-- ========================================== -->
   <script>
-    // -------------------------------------------------------------
-    // 1. DATA MASTER & INISIALISASI
-    // -------------------------------------------------------------
     const ALL_CATEGORIES = [
       "Semua", "Komersial", "Rumah", "Apartemen", "Hotel", "Vila", 
       "Kost", "Co-Living", "Resto", "Store", "Gym Studio", "Klinik", "Office", "Lainnya"
@@ -526,10 +520,10 @@
     let formGalleryImages = [];
     let currentModalGallery = [];
     let currentModalIndex = 0;
-    let isLoading = true;
+    let currentProjects = [];
 
-    // Default Sample Data (Muncul otomatis saat cloud offline / pertama buka)
-    const DEFAULT_PROJECTS = [
+    // Fallback data hanya jika Cloud & LocalStorage benar-benar kosong
+    const DEFAULT_FALLBACK_PROJECTS = [
       {
         id: "sample-1",
         title: "Bawal Exclusive Jakarta",
@@ -538,106 +532,30 @@
         location: "Jakarta",
         image: "https://images.unsplash.com/photo-1555529771-7888783a18d3?auto=format&fit=crop&w=800&q=80",
         link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1555529771-7888783a18d3?auto=format&fit=crop&w=1200&q=80",
-          "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
-        ]
+        gallery: []
       },
       {
         id: "sample-2",
-        title: "PERP. Burger & Kitchen",
+        title: "PERP. Burger",
         type: "foto",
         categories: ["Komersial", "Resto"],
         location: "Cipete, Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
         link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
-        ]
+        gallery: []
       },
       {
         id: "sample-3",
-        title: "FTL Gym Outlet Pamulang",
-        type: "foto",
-        categories: ["Gym Studio", "Komersial"],
-        location: "Tangerang Selatan",
-        image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
-        link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80"
-        ]
-      },
-      {
-        id: "sample-4",
         title: "Kirei Castle Villa",
         type: "foto",
         categories: ["Vila"],
         location: "Lembang, Bandung",
         image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80",
         link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80"
-        ]
-      },
-      {
-        id: "sample-5",
-        title: "Villa Mariposa Tropical",
-        type: "foto",
-        categories: ["Vila"],
-        location: "Bandung, Jawa Barat",
-        image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
-        link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80"
-        ]
-      },
-      {
-        id: "sample-6",
-        title: "Pine Breeze Loft House",
-        type: "foto",
-        categories: ["Rumah"],
-        location: "Serang, Banten",
-        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-        link: "",
-        gallery: [
-          "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80"
-        ]
-      },
-      {
-        id: "sample-v1",
-        title: "Cinematic Walkthrough Vila Mariposa",
-        type: "video",
-        categories: ["Vila"],
-        location: "Lembang, Bandung",
-        image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
-        link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        gallery: []
-      },
-      {
-        id: "sample-v2",
-        title: "Modern Penthouse Interior Walkthrough",
-        type: "video",
-        categories: ["Apartemen"],
-        location: "SCBD, Jakarta Selatan",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
-        link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        gallery: []
-      },
-      {
-        id: "sample-d1",
-        title: "BINUS University Dago Bandung Aerial",
-        type: "drone",
-        categories: ["Komersial"],
-        location: "Dago, Bandung",
-        image: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80",
-        link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         gallery: []
       }
     ];
 
-    let currentProjects = [];
-
-    // Helper: Ekstraksi Kategori Fleksibel (Mendukung Array dan String Legacy)
     function getProjectCategories(p) {
       if (!p) return ['Lainnya'];
       if (Array.isArray(p.categories) && p.categories.length > 0) return p.categories;
@@ -651,14 +569,12 @@
       return ['Lainnya'];
     }
 
-    // Helper: Pengecekan Filter Kategori
     function projectMatchesCategory(p, catFilter) {
       if (!catFilter || catFilter.toLowerCase() === 'semua') return true;
       const cats = getProjectCategories(p).map(c => String(c).toLowerCase());
       return cats.includes(catFilter.toLowerCase());
     }
 
-    // Helper: Escape HTML string
     function escapeHtml(str) {
       if (!str) return '';
       return String(str)
@@ -669,7 +585,6 @@
         .replace(/'/g, '&#039;');
     }
 
-    // Helper: YouTube Embed ID extractor
     function getYouTubeEmbedUrl(url) {
       if (!url) return '';
       let videoId = '';
@@ -682,10 +597,11 @@
     }
 
     // -------------------------------------------------------------
-    // 2. FIREBASE & CLOUD INITIALIZATION
+    // 2. FIREBASE & CLOUD CONFIGURATION
     // -------------------------------------------------------------
+    // === MASUKKAN KREDENSIAL FIREBASE ASLI KAMU DI BAWAH INI ===
     const firebaseConfig = {
-      apiKey: "AIzaSyDummyKeyForiorShowcase2026",
+      apiKey: "AIzaSyDummyKeyForiorShowcase2026", // <- ganti dengan API Key asli
       authDomain: "forior-showcase.firebaseapp.com",
       projectId: "forior-showcase",
       storageBucket: "forior-showcase.appspot.com",
@@ -696,61 +612,68 @@
     let db = null;
 
     function initFirebase() {
+      // 1. Baca cache lokal terlebih dahulu agar transisi instan
+      const cached = localStorage.getItem('forior_cached_projects') || localStorage.getItem('forior_portfolio_data');
+      if (cached) {
+        try {
+          currentProjects = JSON.parse(cached);
+          renderAll();
+        } catch(e) {}
+      }
+
       try {
         if (!firebase.apps.length) {
           firebase.initializeApp(firebaseConfig);
         }
         db = firebase.firestore();
 
-        // Optimasi khusus WebKit / Safari untuk menghindari buffer delay
         const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent) && !window.MSStream;
         if (isAppleDevice && db.settings) {
           try {
             db.settings({ experimentalForceLongPolling: true, merge: true });
-          } catch(e) {
-            console.log("Firestore settings notice:", e);
-          }
+          } catch(e) {}
         }
 
-        // Listener Real-time Firestore
+        // Listener Real-time Cloud Firestore
         db.collection("showcase").doc("portfolio").onSnapshot(
           (docSnap) => {
             setCloudIndicator('connected');
-            isLoading = false;
-            
-            // Periksa kompatibilitas exists baik method atau boolean
             const doesExist = typeof docSnap.exists === 'function' ? docSnap.exists() : docSnap.exists;
             
             if (doesExist) {
               const data = docSnap.data();
-              if (data && Array.isArray(data.projects) && data.projects.length > 0) {
+              if (data && Array.isArray(data.projects)) {
                 currentProjects = data.projects.map(p => ({
                   ...p,
                   type: p.type || 'foto',
                   categories: getProjectCategories(p)
                 }));
                 localStorage.setItem('forior_cached_projects', JSON.stringify(currentProjects));
-              }
-            } else {
-              // Jika dokumen belum ada, inisialisasi dengan data default
-              if (currentProjects.length === 0) {
-                currentProjects = [...DEFAULT_PROJECTS];
+                renderAll();
+                return;
               }
             }
-            renderAll();
+            if (currentProjects.length === 0) {
+              currentProjects = [...DEFAULT_FALLBACK_PROJECTS];
+              renderAll();
+            }
           },
           (error) => {
-            console.warn("Koneksi Firestore dialihkan ke cache/lokal:", error);
+            console.warn("Koneksi Firestore dialihkan ke cache lokal:", error);
             setCloudIndicator('offline');
-            isLoading = false;
-            loadFallbackData();
+            if (currentProjects.length === 0) {
+              currentProjects = [...DEFAULT_FALLBACK_PROJECTS];
+              renderAll();
+            }
           }
         );
       } catch (err) {
-        console.warn("Inisialisasi Firestore gagal, beralih ke offline mode:", err);
+        console.warn("Inisialisasi Firebase gagal:", err);
         setCloudIndicator('offline');
-        isLoading = false;
-        loadFallbackData();
+        if (currentProjects.length === 0) {
+          currentProjects = [...DEFAULT_FALLBACK_PROJECTS];
+          renderAll();
+        }
       }
     }
 
@@ -767,28 +690,6 @@
         dot.className = "w-2 h-2 rounded-full bg-amber-400";
       }
     }
-
-    function loadFallbackData() {
-      const cached = localStorage.getItem('forior_cached_projects');
-      if (cached) {
-        try {
-          currentProjects = JSON.parse(cached);
-        } catch(e) {
-          currentProjects = [...DEFAULT_PROJECTS];
-        }
-      } else {
-        currentProjects = [...DEFAULT_PROJECTS];
-      }
-      renderAll();
-    }
-
-    // Safety timeout: jika dalam 2.8 detik cloud belum merespons, render data agar skeleton tidak stuck
-    setTimeout(() => {
-      if (isLoading) {
-        isLoading = false;
-        loadFallbackData();
-      }
-    }, 2800);
 
     // -------------------------------------------------------------
     // 3. RENDERING ENGINE
@@ -810,7 +711,7 @@
 
     function setCategoryFilter(cat) {
       activeCategory = cat;
-      fotoLimit = 9; // Reset pagination ke 9 item saat filter berganti
+      fotoLimit = 9;
       renderCategoryPills();
       renderFotoGrid();
     }
@@ -850,11 +751,6 @@
         `).join('');
 
         const galleryCount = (p.gallery && p.gallery.length > 0) ? p.gallery.length : 1;
-        const countBadge = `
-          <span class="badge-counter px-2.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md gap-1">
-            <i data-lucide="layers" class="w-3 h-3"></i> ${galleryCount} Foto
-          </span>
-        `;
 
         return `
           <div onclick="openGalleryModal('${p.id}')" class="group bg-white rounded-2xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col">
@@ -864,7 +760,9 @@
                 ${badgesHtml}
               </div>
               <div class="absolute bottom-3 left-3">
-                ${countBadge}
+                <span class="badge-counter px-2.5 rounded-full text-[11px] font-medium bg-black/60 text-white backdrop-blur-md gap-1">
+                  <i data-lucide="layers" class="w-3 h-3"></i> ${galleryCount} Foto
+                </span>
               </div>
             </div>
             <div class="p-4 flex items-center justify-between flex-1">
@@ -928,11 +826,9 @@
 
         return `
           <div onclick="openVideoModal('${escapeHtml(p.link)}')" class="group bg-white rounded-2xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col">
-            <!-- 100% Brightness Thumbnail (No dark overlay) -->
             <div class="relative aspect-video overflow-hidden bg-neutral-100">
               <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               
-              <!-- Clean Play Button -->
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-900 shadow-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <i data-lucide="play" class="w-5 h-5 fill-neutral-900 translate-x-0.5"></i>
@@ -1009,7 +905,6 @@
 
         return `
           <div onclick="openVideoModal('${escapeHtml(p.link)}')" class="group bg-white rounded-2xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col">
-            <!-- 100% Brightness Thumbnail -->
             <div class="relative aspect-[16/10] overflow-hidden bg-neutral-100">
               <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               
@@ -1103,7 +998,7 @@
         }).catch(() => {});
       } else {
         navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast(`Tautan section ${sectionType.toUpperCase()} berhasil disalin ke clipboard!`);
+          showToast(`Tautan section ${sectionType.toUpperCase()} berhasil disalin!`);
         });
       }
     }
@@ -1111,8 +1006,13 @@
     function checkUrlFocusMode() {
       const params = new URLSearchParams(window.location.search);
       const section = params.get('section');
-      if (!section) return;
+      const hero = document.getElementById('heroSection');
+      if (!section) {
+        hero?.classList.remove('hidden');
+        return;
+      }
 
+      hero?.classList.add('hidden');
       const secFoto = document.getElementById('section-foto');
       const secVideo = document.getElementById('section-video');
       const secDrone = document.getElementById('section-drone');
@@ -1142,6 +1042,7 @@
       url.searchParams.delete('section');
       window.history.replaceState({}, '', url.pathname);
 
+      document.getElementById('heroSection')?.classList.remove('hidden');
       document.getElementById('section-foto')?.classList.remove('hidden');
       document.getElementById('section-video')?.classList.remove('hidden');
       document.getElementById('section-drone')?.classList.remove('hidden');
@@ -1149,7 +1050,7 @@
     }
 
     // -------------------------------------------------------------
-    // 5. SCREENSHOT ENGINE (FULL & SECTION)
+    // 5. SCREENSHOT ENGINE
     // -------------------------------------------------------------
     function takeSectionScreenshot(sectionId, fileNamePrefix) {
       const target = document.getElementById(sectionId);
@@ -1387,7 +1288,6 @@
       renderFormCategoryPills();
     }
 
-    // Kompresi Gambar Cerdas (Target Payload Dokumen < 700 KB)
     async function compressImageFile(file, maxWidth = 1200, quality = 0.75) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -1416,7 +1316,6 @@
       });
     }
 
-    // Handle Upload File Galeri di Form
     document.getElementById('formGalleryFiles')?.addEventListener('change', async (e) => {
       const files = Array.from(e.target.files);
       if (files.length === 0) return;
@@ -1490,7 +1389,6 @@
           currentProjects.unshift(projectData);
         }
 
-        // Sinkronisasi ke Firestore Cloud
         if (db) {
           await db.collection("showcase").doc("portfolio").set({
             projects: currentProjects,
@@ -1510,7 +1408,7 @@
         showToast("Error saat menyimpan: " + err.message);
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Simpan Portofolio`;
+        btn.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i> Simpan & Publikasikan`;
         lucide.createIcons();
       }
     }
@@ -1569,7 +1467,10 @@
 
     function renderAdminProjectList() {
       const container = document.getElementById('adminProjectList');
+      const countEl = document.getElementById('adminListCount');
       if (!container) return;
+
+      if (countEl) countEl.textContent = `${currentProjects.length} Proyek`;
 
       if (currentProjects.length === 0) {
         container.innerHTML = `<p class="text-xs text-neutral-400">Belum ada portofolio.</p>`;
@@ -1620,9 +1521,6 @@
       lucide.createIcons();
     }
 
-    // -------------------------------------------------------------
-    // RUN ON LOAD
-    // -------------------------------------------------------------
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       initFirebase();
