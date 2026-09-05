@@ -46,7 +46,7 @@
   </script>
 
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.js"></script>
 
   <!-- html2canvas Library untuk Screenshot -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -1292,18 +1292,39 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    document.addEventListener("DOMContentLoaded", () => {
-      renderCategoryFilters();
-      renderCategorySelectOptions();
-      checkAuthStatus();
-      
-      // Cek apakah ada cache lokal sebelumnya
-      loadInitialCache();
+    // Wrapper aman untuk lucide.createIcons().
+    // Jika CDN icon (unpkg.com) gagal/lambat dimuat -- lebih sering terjadi di
+    // jaringan mobile/seluler dibanding wifi desktop -- pemanggilan langsung
+    // "lucide.createIcons()" akan melempar error dan MENGHENTIKAN seluruh kode
+    // JS setelahnya (termasuk pemuatan data Firestore). Wrapper ini mencegah itu:
+    // ikon boleh gagal, tapi konten utama (foto/video/drone) tetap harus tampil.
+    function safeIcons() {
+      try {
+        if (window.lucide && typeof lucide.createIcons === "function") {
+          lucide.createIcons();
+        }
+      } catch (err) {
+        console.warn("Lucide icons gagal dimuat, ikon dilewati (tidak fatal):", err);
+      }
+    }
 
-      // Sambungkan ke Firestore
-      initFirebaseConnection();
-      setupLightboxKeyboardAndSwipe();
-      lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        renderCategoryFilters();
+        renderCategorySelectOptions();
+
+        // Muat data (cache lokal lalu Firestore) LEBIH DULU, sebelum apa pun
+        // yang bergantung pada library eksternal seperti lucide -- supaya
+        // portofolio tetap tampil walau ikon gagal/telat dimuat.
+        loadInitialCache();
+        initFirebaseConnection();
+
+        checkAuthStatus();
+        setupLightboxKeyboardAndSwipe();
+        safeIcons();
+      } catch (err) {
+        console.error("Inisialisasi halaman bermasalah sebagian:", err);
+      }
     });
 
     function loadInitialCache() {
@@ -1504,7 +1525,7 @@
       photoDisplayLimit = 9;
       renderCategoryFilters();
       renderPhotoSection();
-      lucide.createIcons();
+      safeIcons();
     }
 
     function renderCategorySelectOptions() {
@@ -1518,7 +1539,7 @@
       renderPhotoSection();
       renderVideoSection();
       renderDroneSection();
-      lucide.createIcons();
+      safeIcons();
     }
 
     function renderPhotoSection() {
@@ -1614,7 +1635,7 @@
     function loadMorePhotos() {
       photoDisplayLimit += 9;
       renderPhotoSection();
-      lucide.createIcons();
+      safeIcons();
     }
 
     function renderVideoSection() {
@@ -1705,7 +1726,7 @@
     function loadMoreVideos() {
       videoDisplayLimit += 9;
       renderVideoSection();
-      lucide.createIcons();
+      safeIcons();
     }
 
     function renderDroneSection() {
@@ -1797,7 +1818,7 @@
     function loadMoreDrones() {
       droneDisplayLimit += 9;
       renderDroneSection();
-      lucide.createIcons();
+      safeIcons();
     }
 
     function handleDroneClick(id) {
@@ -1837,7 +1858,7 @@
       modal.classList.add("opacity-100", "pointer-events-auto");
       document.body.style.overflow = "hidden";
 
-      lucide.createIcons();
+      safeIcons();
     }
 
     function closeProjectLightbox() {
@@ -1972,7 +1993,7 @@
       modal.classList.remove("opacity-0", "pointer-events-none");
       modal.classList.add("opacity-100", "pointer-events-auto");
       document.body.style.overflow = "hidden";
-      lucide.createIcons();
+      safeIcons();
     }
 
     function closeVideoModal() {
@@ -2086,7 +2107,7 @@
         btn.disabled = false;
         btnText.textContent = "Screenshot Web";
         iconBox.innerHTML = `<i data-lucide="camera" class="w-3.5 h-3.5 text-appleGray"></i>`;
-        lucide.createIcons();
+        safeIcons();
       }
     }
 
@@ -2161,7 +2182,7 @@
 
       modal.classList.remove("opacity-0", "pointer-events-none");
       modal.classList.add("opacity-100", "pointer-events-auto");
-      lucide.createIcons();
+      safeIcons();
     }
 
     function closeScreenshotPreview() {
@@ -2357,7 +2378,7 @@
       `;
       }).join("");
 
-      lucide.createIcons();
+      safeIcons();
     }
 
     function updateLocalProjectCache(docId, projectData) {
@@ -2611,7 +2632,7 @@
         </div>
       `).join("");
 
-      lucide.createIcons();
+      safeIcons();
     }
 
     function promptDeleteProject(id) {
@@ -2621,7 +2642,7 @@
         modal.classList.remove("invisible", "opacity-0");
         modal.classList.add("opacity-100");
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     function closeConfirmModal() {
@@ -2665,7 +2686,7 @@
         modal.classList.remove("invisible", "opacity-0");
         modal.classList.add("opacity-100");
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     function closeResetModal() {
@@ -2706,7 +2727,7 @@
         modal.classList.add("opacity-0");
         modal.classList.add("invisible");
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     function selectQuickEmail(email) {
@@ -2724,7 +2745,7 @@
         input.type = "password";
         icon.setAttribute("data-lucide", "eye");
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     function handleAdminLogin(event) {
@@ -2774,7 +2795,7 @@
         navBtn.classList.remove("bg-foriorBrand");
         navBtn.classList.add("bg-appleDark");
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     window.addEventListener("resize", checkAuthStatus);
@@ -2796,7 +2817,7 @@
         modal.classList.add("invisible");
         resetForm();
       }
-      lucide.createIcons();
+      safeIcons();
     }
 
     function showToast(message) {
