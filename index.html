@@ -205,7 +205,8 @@
           </span>
           <!-- Tombol Share Section Foto -->
           <button type="button" onclick="shareSection('foto')" title="Bagikan Section Foto" class="text-appleGray hover:text-foriorBrand p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
-            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+            <svg class="w-3 h-3 inline-block -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span>Share</span>
           </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Interior & Arsitektur</h2>
@@ -280,7 +281,8 @@
           </span>
           <!-- Tombol Share Section Video -->
           <button type="button" onclick="shareSection('video')" title="Bagikan Section Video" class="text-appleGray hover:text-rose-600 p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
-            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+            <svg class="w-3 h-3 inline-block -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span>Share</span>
           </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Portofolio Video Sinematik</h2>
@@ -328,7 +330,8 @@
           </span>
           <!-- Tombol Share Section Drone -->
           <button type="button" onclick="shareSection('drone')" title="Bagikan Section Drone" class="text-appleGray hover:text-sky-600 p-1 rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 text-[11px] bg-white border border-appleBorder px-2.5 py-0.5 shadow-xs">
-            <i data-lucide="share-2" class="w-3 h-3"></i> Bagikan
+            <svg class="w-3 h-3 inline-block -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span>Share</span>
           </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Portofolio Drone & Aerial</h2>
@@ -1154,16 +1157,11 @@
       const saved = localStorage.getItem("forior_portfolio_projects");
       if (saved) {
         try {
-          projects = JSON.parse(saved);
-          const hasVideo = projects.some(p => p.type === 'video');
-          const hasDrone = projects.some(p => p.type === 'drone');
-          if (!hasVideo || !hasDrone) {
-            const missing = INITIAL_PROJECTS.filter(item => 
-              (item.type === 'video' && !hasVideo) || (item.type === 'drone' && !hasDrone)
-            );
-            projects.push(...missing);
-            localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
-          }
+          const parsed = JSON.parse(saved);
+          projects = parsed.map(item => ({
+            type: "foto", // Normalisasi data lama tanpa field type agar masuk ke section foto
+            ...item
+          }));
         } catch(e) {
           projects = [...INITIAL_PROJECTS];
         }
@@ -1197,35 +1195,13 @@
             const cloudData = [];
             snapshot.forEach((doc) => {
               const data = doc.data();
+              // Normalisasi data lama di Firestore yang belum punya 'type' menjadi 'foto'
               cloudData.push({ 
                 id: doc.id, 
                 type: data.type || "foto", 
                 ...data 
               });
             });
-
-            const hasVideo = cloudData.some(p => p.type === 'video');
-            const hasDrone = cloudData.some(p => p.type === 'drone');
-
-            if (!hasVideo || !hasDrone) {
-              const missingItems = INITIAL_PROJECTS.filter(item => 
-                (item.type === 'video' && !hasVideo) || (item.type === 'drone' && !hasDrone)
-              );
-
-              if (missingItems.length > 0) {
-                const batch = dbInstance.batch();
-                missingItems.forEach((item, index) => {
-                  const docRef = dbInstance.collection("showcase_projects").doc(item.id);
-                  const itemWithTime = {
-                    ...item,
-                    timestamp: Date.now() - ((cloudData.length + index) * 1000)
-                  };
-                  batch.set(docRef, itemWithTime);
-                  cloudData.push(itemWithTime);
-                });
-                batch.commit().catch(e => console.warn("Auto-sync error:", e));
-              }
-            }
 
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
             hideLoadingSkeleton();
@@ -1269,16 +1245,8 @@
       const saved = localStorage.getItem("forior_portfolio_projects");
       if (saved) {
         try { 
-          projects = JSON.parse(saved); 
-          const hasVideo = projects.some(p => p.type === 'video');
-          const hasDrone = projects.some(p => p.type === 'drone');
-          if (!hasVideo || !hasDrone) {
-            const missing = INITIAL_PROJECTS.filter(item => 
-              (item.type === 'video' && !hasVideo) || (item.type === 'drone' && !hasDrone)
-            );
-            projects.push(...missing);
-            localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
-          }
+          const parsed = JSON.parse(saved);
+          projects = parsed.map(item => ({ type: "foto", ...item }));
         } catch(e) { 
           projects = [...INITIAL_PROJECTS]; 
         }
@@ -1373,7 +1341,7 @@
       };
       const text = `Lihat kurasi ${titles[sectionType] || 'Portofolio FORIOR'}:`;
 
-      if (navigator.share) {
+      if (navigator.share && window.innerWidth < 768) {
         navigator.share({
           title: titles[sectionType],
           text: text,
