@@ -1067,9 +1067,12 @@
 
       </div>
 
-      <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray">
-        <span>FORIOR Showcase System</span>
-        <button onclick="promptResetData()" class="hover:text-appleDark underline transition-colors cursor-pointer">
+      <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray gap-2">
+        <button onclick="restoreFromDeviceCache()" data-testid="restore-device-cache-btn" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors cursor-pointer">
+          <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+          Pulihkan Proyek dari Perangkat Ini
+        </button>
+        <button onclick="promptResetData()" class="hover:text-appleDark underline transition-colors cursor-pointer shrink-0">
           Reset Data Dummy
         </button>
       </div>
@@ -1281,6 +1284,7 @@
     ];
 
     let projects = [];
+    let deviceCacheBackup = [];
     let isDataLoaded = false;
     let activeCategory = "Semua";
     let adminFilterType = "all";
@@ -1337,6 +1341,9 @@
         try {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
+            // Simpan salinan cache perangkat SEBELUM ditimpa oleh sinkronisasi cloud.
+            // Dipakai fitur "Pulihkan Proyek dari Perangkat Ini".
+            deviceCacheBackup = JSON.parse(JSON.stringify(parsed));
             projects = parsed.map(p => ({ ...p, type: p.type || "foto" }));
             isDataLoaded = true;
             hideAllLoadingSkeletons();
@@ -2723,6 +2730,54 @@
       closeResetModal();
       seedInitialDataToCloud();
       showToast("Data dummy berhasil di-reset");
+    }
+
+    // Pulihkan proyek yang tersimpan di cache perangkat ini (localStorage) tetapi
+    // belum ada di Cloud. Aman: hanya MENAMBAH yang hilang, tidak menghapus apa pun.
+    async function restoreFromDeviceCache() {
+      if (!isCloudConnected || !dbInstance) {
+        showToast("Cloud belum terhubung. Coba lagi setelah status Cloud aktif (hijau).", "error");
+        return;
+      }
+      if (!Array.isArray(deviceCacheBackup) || deviceCacheBackup.length === 0) {
+        showToast("Tidak ada cadangan proyek di perangkat ini untuk dipulihkan.", "error");
+        return;
+      }
+
+      const cloudIds = new Set(projects.map(p => p.id));
+      const missing = deviceCacheBackup.filter(p => p && p.id && !cloudIds.has(p.id));
+
+      if (missing.length === 0) {
+        showToast("Semua proyek di perangkat ini sudah ada di Cloud. Tidak ada yang perlu dipulihkan.");
+        return;
+      }
+
+      showToast(`Memulihkan ${missing.length} proyek ke Cloud...`);
+      let restored = 0;
+      const skipped = [];
+
+      for (const item of missing) {
+        const { id, ...data } = item;
+        if (typeof data.timestamp !== "number") data.timestamp = Date.now();
+        const bytes = JSON.stringify(data).length;
+        if (bytes > FIRESTORE_SAFE_DOC_BYTES) {
+          skipped.push(`${data.title || id} (foto terlalu besar)`);
+          continue;
+        }
+        try {
+          await dbInstance.collection("showcase_projects").doc(id).set(data, { merge: true });
+          restored++;
+        } catch (err) {
+          console.error("Restore gagal untuk", id, err);
+          skipped.push(data.title || id);
+        }
+      }
+
+      if (skipped.length > 0) {
+        showToast(`Dipulihkan ${restored} proyek. ${skipped.length} gagal: ${skipped.join(", ")}.`, "error");
+      } else {
+        showToast(`Berhasil! ${restored} proyek dipulihkan ke Cloud dan kini tampil di semua device.`);
+      }
     }
 
     function handleAdminNavClick() {
