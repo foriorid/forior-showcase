@@ -1335,6 +1335,16 @@
       }
     });
 
+    // Simpan cache lokal dengan aman. JANGAN pernah menggagalkan render bila storage penuh
+    // (QuotaExceededError) atau diblokir — inilah penyebab halaman blank meski cloud aktif.
+    function cacheProjectsSafely(data) {
+      try {
+        localStorage.setItem("forior_portfolio_projects", JSON.stringify(data));
+      } catch (e) {
+        console.warn("Cache lokal dilewati (storage penuh / diblokir):", e && e.name);
+      }
+    }
+
     function loadInitialCache() {
       const saved = localStorage.getItem("forior_portfolio_projects");
       if (saved) {
@@ -1432,15 +1442,17 @@
               });
             });
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-            localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
           } else {
             seedInitialDataToCloud();
           }
 
+          // Render DULU sebelum caching, agar halaman tidak pernah blank walau caching gagal.
           isDataLoaded = true;
           hideAllLoadingSkeletons();
           renderAllSections();
           renderAdminList();
+
+          if (!snapshot.empty) cacheProjectsSafely(projects);
         }, (err) => {
           clearTimeout(timeoutGuard);
           console.warn("Koneksi Firestore dialihkan ke lokal:", err.message);
@@ -2528,7 +2540,7 @@
       } else {
         projects.unshift({ id: (projectData.type || 'foto') + "-" + Date.now(), ...projectData });
       }
-      localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
+      cacheProjectsSafely(projects);
       renderAllSections();
       renderAdminList();
       resetForm();
@@ -2703,7 +2715,7 @@
 
     function deleteLocally(id) {
       projects = projects.filter(p => p.id !== id);
-      localStorage.setItem("forior_portfolio_projects", JSON.stringify(projects));
+      cacheProjectsSafely(projects);
       renderAllSections();
       renderAdminList();
       showToast("Portofolio berhasil dihapus");
