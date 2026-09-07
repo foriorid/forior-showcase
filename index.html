@@ -773,11 +773,11 @@
           id="videoModalIframe" 
           src="" 
           class="yt-frame-full border-0 hidden" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
           allowfullscreen>
         </iframe>
 
-        <video id="videoModalPlayer" src="" controls class="w-full h-full object-contain hidden"></video>
+        <video id="videoModalPlayer" src="" controls playsinline webkit-playsinline class="w-full h-full object-contain hidden"></video>
         
         <div id="videoModalFallback" class="text-center p-6 space-y-3 hidden">
           <div class="w-12 h-12 rounded-full bg-white/10 text-white flex items-center justify-center mx-auto">
@@ -2502,12 +2502,26 @@
       const ytId = extractYouTubeId(rawLink);
 
       if (ytId) {
-        iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+        // Tambahkan playsinline=1 dan listener postMessage agar autoplay langsung aktif di mobile Safari/Chrome
+        iframe.onload = () => {
+          setTimeout(() => {
+            try {
+              iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+            } catch (_) {}
+          }, 80);
+        };
+        iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&enablejsapi=1&rel=0&modestbranding=1`;
         iframe.classList.remove("hidden");
       } else if (rawLink.endsWith(".mp4") || rawLink.endsWith(".webm")) {
         videoPlayer.src = rawLink;
         videoPlayer.classList.remove("hidden");
-        videoPlayer.play();
+        const playPromise = videoPlayer.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            videoPlayer.muted = true;
+            videoPlayer.play();
+          });
+        }
       } else {
         fallbackBtn.href = rawLink || "https://photos.google.com/";
         fallback.classList.remove("hidden");
