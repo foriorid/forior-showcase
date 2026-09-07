@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>FORIOR — Interior Photo Services</title>
-  <meta name="description" content="Showcase portofolio fotografi interior, arsitektur, video sinematik, dan drone profesional oleh FORIOR." />
+  <meta name="description" content="Showcase portofolio fotografi interior, arsitektur, video sinematik, social reels, dan drone profesional oleh FORIOR." />
   <link rel="canonical" href="https://showcase.forior.id/" />
 
   <!-- Open Graph & Social Media Preview Meta Tags -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://showcase.forior.id/" />
   <meta property="og:title" content="FORIOR — Interior Photo Services" />
-  <meta property="og:description" content="Showcase portofolio foto arsitektur, interior, video walkthrough, dan drone beresolusi tinggi oleh FORIOR." />
+  <meta property="og:description" content="Showcase portofolio foto arsitektur, interior, video walkthrough, social reels, dan drone beresolusi tinggi oleh FORIOR." />
   <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" />
 
   <!-- Favicon Logo FORIOR -->
@@ -48,8 +48,6 @@
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
   <script>
-    // Guard: bila CDN ikon gagal dimuat (jaringan HP/daerah tertentu), pasang no-op
-    // agar tidak ada ReferenceError yang membuat seluruh halaman blank.
     if (typeof window.lucide === "undefined") {
       window.lucide = { createIcons: function () {} };
     }
@@ -58,7 +56,7 @@
   <!-- html2canvas Library untuk Screenshot -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <!-- heic2any: konversi foto HEIC/HEIF dari iPhone agar bisa diproses browser -->
+  <!-- heic2any: konversi foto HEIC/HEIF dari iPhone -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
 
   <!-- Firebase App & Firestore SDK -->
@@ -155,18 +153,21 @@
   <header id="main-header" class="fixed top-0 left-0 right-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-3">
       
-      <!-- Brand Logo FORIOR (Teks Only Bersih Tanpa Ikon) -->
+      <!-- Brand Logo FORIOR -->
       <a href="#" class="group shrink-0 py-1">
         <span class="text-lg sm:text-xl font-black tracking-wider text-appleDark leading-none group-hover:text-foriorBrand transition-colors">FORIOR</span>
       </a>
 
-      <!-- Quick Anchor Menu (Foto / Video / Drone) -->
+      <!-- Quick Anchor Menu -->
       <nav class="hidden md:flex items-center gap-1 bg-neutral-100/80 p-1 rounded-full border border-appleBorder">
         <a href="#section-foto" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all">
           Foto
         </a>
         <a href="#section-video" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="play" class="w-3 h-3 text-rose-500 fill-rose-500"></i> Video Tour
+        </a>
+        <a href="#section-reels" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
+          <i data-lucide="smartphone" class="w-3 h-3 text-purple-600"></i> Reels & TikTok
         </a>
         <a href="#section-drone" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="plane" class="w-3 h-3 text-sky-500"></i> Drone Aerial
@@ -178,7 +179,7 @@
           forior.id ↗
         </a>
 
-        <!-- Status Cloud Indicator (Ikon Awan + Titik Lampu Status) -->
+        <!-- Status Cloud Indicator -->
         <div id="cloudStatusNav" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-neutral-100 border border-appleBorder shadow-2xs" title="Menghubungkan ke Cloud...">
           <i data-lucide="cloud" class="w-3.5 h-3.5 text-appleDark"></i>
           <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
@@ -228,7 +229,7 @@
         
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-medium tracking-wider uppercase text-neutral-200">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          SHOWCASE ARSITEKTUR &bull; INTERIOR &bull; VIDEO &bull; DRONE
+          SHOWCASE ARSITEKTUR &bull; INTERIOR &bull; VIDEO &bull; REELS &bull; DRONE
         </div>
         
         <h1 class="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-[1.12] text-white">
@@ -247,6 +248,10 @@
           <a href="#section-video" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
             <i data-lucide="play" class="w-3.5 h-3.5 text-rose-400 fill-rose-400"></i>
             <span>Video Sinematik</span>
+          </a>
+          <a href="#section-reels" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-300"></i>
+            <span>Reels 9:16</span>
           </a>
           <a href="#section-drone" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
             <i data-lucide="plane" class="w-3.5 h-3.5 text-sky-400"></i>
@@ -283,7 +288,7 @@
             <span class="underline underline-offset-2">Share</span>
           </button>
 
-          <!-- Tombol Screenshot Khusus Section Foto (Icon Only) -->
+          <!-- Tombol Screenshot Khusus Section Foto -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-foto', 'Portofolio-Fotografi')" 
@@ -308,12 +313,10 @@
 
     <!-- Filter Kategori Foto -->
     <div class="relative mb-8 md:mb-10">
-      <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-        <!-- Pills digenerate otomatis via JS -->
-      </div>
+      <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
     </div>
 
-    <!-- Loading Skeleton Grid Foto (Tampil saat data dimuat) -->
+    <!-- Loading Skeleton Grid Foto -->
     <div id="photoSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
         <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
@@ -330,27 +333,10 @@
         <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
         <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
       </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
-      </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden lg:block">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
-      </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden lg:block">
-        <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
-      </div>
     </div>
 
     <!-- Grid Foto Proyek Nyata -->
-    <div id="photoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-      <!-- Cards proyek foto dimuat dinamis -->
-    </div>
+    <div id="photoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8"></div>
 
     <!-- Load More Tombol Foto -->
     <div id="photoLoadMoreContainer" class="mt-8 text-center hidden">
@@ -374,7 +360,7 @@
 
   </section>
 
-  <!-- ================= SECTION 3: PORTOFOLIO VIDEO ================= -->
+  <!-- ================= SECTION 3: PORTOFOLIO VIDEO SINEMATIK ================= -->
   <section id="section-video" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
 
     <!-- Header Section Video -->
@@ -399,7 +385,7 @@
             <span class="underline underline-offset-2">Share</span>
           </button>
 
-          <!-- Tombol Screenshot Khusus Section Video (Icon Only) -->
+          <!-- Tombol Screenshot Section Video -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-video', 'Portofolio-Video')" 
@@ -410,7 +396,7 @@
           </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Portofolio Video Sinematik</h2>
-        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ruang dengan gerakan kamera halus, pencahayaan dramatis, dan transisi sinematik. Klik kartu untuk menonton langsung.</p>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ruang dengan gerakan kamera halus, pencahayaan dramatis, dan transisi sinematik 16:9.</p>
       </div>
 
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
@@ -433,17 +419,10 @@
         <div class="h-4 bg-neutral-200 rounded mt-3.5 w-2/3"></div>
         <div class="h-3 bg-neutral-100 rounded mt-2 w-1/4"></div>
       </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
-        <div class="w-full aspect-video rounded-[20px] bg-neutral-200/80"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-2/3"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/4"></div>
-      </div>
     </div>
 
     <!-- Grid Video Nyata -->
-    <div id="videoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      <!-- Video cards dimuat dinamis -->
-    </div>
+    <div id="videoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
 
     <!-- Load More Tombol Video -->
     <div id="videoLoadMoreContainer" class="mt-8 text-center hidden">
@@ -467,7 +446,95 @@
 
   </section>
 
-  <!-- ================= SECTION 4: PORTOFOLIO DRONE (AERIAL) ================= -->
+  <!-- ================= SECTION 4: PORTOFOLIO REELS & TIKTOK (VERTICAL 9:16) ================= -->
+  <section id="section-reels" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
+
+    <!-- Header Section Reels -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
+      <div>
+        <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
+          <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 uppercase tracking-wider">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+            <span>Social Reels & TikTok</span>
+          </div>
+
+          <!-- Tombol Share Section Reels -->
+          <button 
+            type="button" 
+            onclick="handleShareSection('reels')" 
+            data-html2canvas-ignore="true" 
+            class="inline-flex items-center gap-1 text-[11px] font-medium text-appleGray hover:text-appleDark bg-white border border-appleBorder px-2.5 py-1 rounded-full shadow-2xs hover:border-neutral-400 transition-all cursor-pointer"
+            title="Bagikan Section Reels">
+            <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M16 8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            <span class="underline underline-offset-2">Share</span>
+          </button>
+
+          <!-- Tombol Screenshot Section Reels -->
+          <button 
+            type="button" 
+            onclick="takeSectionScreenshot('section-reels', 'Portofolio-Reels')" 
+            data-html2canvas-ignore="true" 
+            title="Screenshot Section Reels"
+            class="w-7 h-7 inline-flex items-center justify-center text-appleGray hover:text-appleDark bg-white border border-appleBorder rounded-full shadow-2xs hover:border-neutral-400 transition-all cursor-pointer">
+            <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Vertical Cinema & Social Micro-Tours</h2>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik yang dioptimalkan untuk Instagram Reels, TikTok, dan YouTube Shorts.</p>
+      </div>
+
+      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+        <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
+          <span id="reelsProjectCount" class="font-semibold text-appleDark mr-1">...</span>
+          <span>Reels Tersedia</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Skeleton Grid Reels -->
+    <div id="reelsSkeletonGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-7">
+      <div class="bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
+        <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
+      </div>
+      <div class="bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm hidden lg:block">
+        <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
+      </div>
+    </div>
+
+    <!-- Grid Reels Nyata -->
+    <div id="reelsPortfolioGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-7"></div>
+
+    <!-- Load More Tombol Reels -->
+    <div id="reelsLoadMoreContainer" class="mt-8 text-center hidden">
+      <button 
+        type="button" 
+        onclick="loadMoreReels()" 
+        class="inline-flex items-center gap-2 text-xs font-semibold bg-white border border-appleBorder text-appleDark hover:bg-neutral-50 px-5 py-2.5 rounded-full shadow-xs transition-all active:scale-95 cursor-pointer">
+        <span id="reelsLoadMoreText">Tampilkan Lebih Banyak Reels</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Empty State Reels -->
+    <div id="emptyReelsState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
+      <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="smartphone" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-base font-semibold text-appleDark">Belum Ada Video Reels 9:16</h3>
+      <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan karya video vertikal untuk Instagram Reels atau TikTok melalui panel admin.</p>
+    </div>
+
+  </section>
+
+  <!-- ================= SECTION 5: PORTOFOLIO DRONE (AERIAL) ================= -->
   <section id="section-drone" class="max-w-7xl mx-auto px-4 sm:px-8 py-20 md:py-28">
 
     <!-- Header Section Drone -->
@@ -492,7 +559,7 @@
             <span class="underline underline-offset-2">Share</span>
           </button>
 
-          <!-- Tombol Screenshot Khusus Section Drone (Icon Only) -->
+          <!-- Tombol Screenshot Section Drone -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-drone', 'Portofolio-Drone')" 
@@ -526,17 +593,10 @@
         <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
         <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
       </div>
-      <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm hidden sm:block">
-        <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
-        <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
-        <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
-      </div>
     </div>
 
     <!-- Grid Drone Nyata -->
-    <div id="dronePortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      <!-- Drone cards dimuat dinamis -->
-    </div>
+    <div id="dronePortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
 
     <!-- Load More Tombol Drone -->
     <div id="droneLoadMoreContainer" class="mt-8 text-center hidden">
@@ -560,7 +620,7 @@
 
   </section>
 
-  <!-- ================= SECTION 5: MODAL LIGHTBOX FOTO (Apple Style) ================= -->
+  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO (Apple Style) ================= -->
   <div 
     id="lightboxModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex flex-col justify-between select-none bg-neutral-950 text-white"
@@ -573,9 +633,7 @@
           <h3 id="lightboxProjectTitle" class="text-sm sm:text-base md:text-lg font-bold tracking-tight text-white truncate drop-shadow-sm">
             Judul Proyek
           </h3>
-          <span id="lightboxProjectCategory" class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/20 text-white font-medium border border-white/20 shadow-xs">
-            Kategori
-          </span>
+          <div id="lightboxProjectCategories" class="flex flex-wrap gap-1"></div>
         </div>
         <p id="lightboxProjectLocation" class="text-xs text-neutral-300 mt-1 flex items-center gap-1.5 font-normal">
           <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
@@ -651,19 +709,18 @@
 
   </div>
 
-  <!-- ================= SECTION 6: MODAL VIDEO PLAYER ================= -->
+  <!-- ================= SECTION 7: MODAL VIDEO PLAYER (Mendukung 16:9 & 9:16) ================= -->
   <div 
     id="videoModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl">
     
     <div onclick="closeVideoModal()" class="absolute inset-0"></div>
 
-    <div class="relative w-full max-w-4xl bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col">
-      <!-- Video Header -->
+    <div id="videoModalDialog" class="relative w-full max-w-4xl bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300">
       <div class="px-5 py-3.5 flex items-center justify-between border-b border-white/10 bg-neutral-950/80">
         <div class="min-w-0 pr-3">
-          <div class="flex items-center gap-2">
-            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30">Video Showcase</span>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="videoModalBadge" class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30">Video Showcase</span>
             <h4 id="videoModalTitle" class="text-sm sm:text-base font-semibold text-white truncate">Judul Video</h4>
           </div>
           <p id="videoModalLocation" class="text-xs text-neutral-400 mt-0.5 flex items-center gap-1">
@@ -679,8 +736,7 @@
         </div>
       </div>
 
-      <!-- Video Screen Frame (16:9) dengan teknik pemotongan baris judul YouTube -->
-      <div class="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
+      <div id="videoScreenContainer" class="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden transition-all duration-300">
         <iframe 
           id="videoModalIframe" 
           src="" 
@@ -689,7 +745,6 @@
           allowfullscreen>
         </iframe>
         
-        <!-- Pelindung logo YouTube di kanan bawah -->
         <div class="absolute bottom-0 right-0 w-28 h-12 z-10 pointer-events-auto bg-transparent"></div>
 
         <video id="videoModalPlayer" src="" controls class="w-full h-full object-contain hidden"></video>
@@ -753,7 +808,7 @@
         <div class="space-y-2.5">
           <span class="font-black text-base tracking-wider text-appleDark block">FORIOR</span>
           <p class="text-xs text-appleGray leading-relaxed max-w-sm">
-            Layanan fotografi arsitektur, interior residensial, film sinematik & dokumentasi udara drone beresolusi tinggi dengan estetika visual simetris.
+            Layanan fotografi arsitektur, interior residensial, film sinematik, social micro-tours & dokumentasi udara drone beresolusi tinggi dengan estetika visual simetris.
           </p>
         </div>
 
@@ -768,6 +823,7 @@
           <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Akses Cepat</h4>
           <div><a href="#section-foto" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Foto</a></div>
           <div><a href="#section-video" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Video Tour</a></div>
+          <div><a href="#section-reels" class="text-appleGray hover:text-appleDark transition-colors">Social Reels & TikTok</a></div>
           <div><a href="#section-drone" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Drone Aerial</a></div>
           <div><button onclick="handleAdminNavClick()" class="text-appleGray hover:text-appleDark transition-colors cursor-pointer">Panel Masuk Admin</button></div>
           <div><a href="#" class="text-appleGray hover:text-appleDark transition-colors">Kembali ke Atas ↑</a></div>
@@ -909,25 +965,31 @@
           <form id="projectForm" onsubmit="handleSaveProject(event)" class="space-y-3.5">
             <input type="hidden" id="editProjectId" value="">
 
-            <!-- TIPE PORTOFOLIO (Foto / Video / Drone) -->
+            <!-- TIPE PORTOFOLIO (Foto / Video / Reels / Drone) -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Tipe Portofolio</label>
-              <div class="grid grid-cols-3 gap-2">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <label class="cursor-pointer">
                   <input type="radio" name="projectType" value="foto" checked onchange="toggleFormTypeFields()" class="hidden peer">
-                  <div class="text-center py-2 px-2.5 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-foriorBrand peer-checked:bg-foriorBrand peer-checked:text-white transition-all flex items-center justify-center gap-1.5">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-foriorBrand peer-checked:bg-foriorBrand peer-checked:text-white transition-all flex items-center justify-center gap-1">
                     <i data-lucide="camera" class="w-3.5 h-3.5"></i> <span>Foto</span>
                   </div>
                 </label>
                 <label class="cursor-pointer">
                   <input type="radio" name="projectType" value="video" onchange="toggleFormTypeFields()" class="hidden peer">
-                  <div class="text-center py-2 px-2.5 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-rose-600 peer-checked:bg-rose-600 peer-checked:text-white transition-all flex items-center justify-center gap-1.5">
-                    <i data-lucide="video" class="w-3.5 h-3.5"></i> <span>Video</span>
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-rose-600 peer-checked:bg-rose-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="play" class="w-3.5 h-3.5"></i> <span>Video 16:9</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="projectType" value="reels" onchange="toggleFormTypeFields()" class="hidden peer">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-purple-600 peer-checked:bg-purple-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> <span>Reels 9:16</span>
                   </div>
                 </label>
                 <label class="cursor-pointer">
                   <input type="radio" name="projectType" value="drone" onchange="toggleFormTypeFields()" class="hidden peer">
-                  <div class="text-center py-2 px-2.5 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-sky-600 peer-checked:bg-sky-600 peer-checked:text-white transition-all flex items-center justify-center gap-1.5">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-sky-600 peer-checked:bg-sky-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
                     <i data-lucide="plane" class="w-3.5 h-3.5"></i> <span>Drone</span>
                   </div>
                 </label>
@@ -946,31 +1008,28 @@
               />
             </div>
 
-            <!-- Kategori & Lokasi -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Kategori</label>
-                <select 
-                  id="inputCategory" 
-                  required
-                  class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
-                >
-                </select>
+            <!-- MULTI-KATEGORI SELECTOR -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-medium text-appleDark">Kategori (Bisa pilih lebih dari satu)</label>
+                <span class="text-[10px] text-appleGray">Klik untuk memilih</span>
               </div>
-
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Tag Lokasi Kota</label>
-                <input 
-                  type="text" 
-                  id="inputLocation" 
-                  required 
-                  placeholder="Contoh: Serang, Banten"
-                  class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
-                />
-              </div>
+              <div id="formCategoryPillsContainer" class="flex flex-wrap gap-1.5 p-2 bg-white rounded-xl border border-appleBorder min-h-[44px]"></div>
             </div>
 
-            <!-- Tautan Link Google Photos / Video -->
+            <!-- Lokasi -->
+            <div>
+              <label class="block text-xs font-medium text-appleDark mb-1">Tag Lokasi Kota</label>
+              <input 
+                type="text" 
+                id="inputLocation" 
+                required 
+                placeholder="Contoh: Serang, Banten"
+                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+              />
+            </div>
+
+            <!-- Tautan Link -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span id="linkFieldLabel">Tautan Album Google Photos</span>
@@ -1026,8 +1085,7 @@
                 </label>
               </div>
 
-              <div id="formGalleryPreviewContainer" class="mt-2.5 grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-48 overflow-y-auto p-1.5 rounded-xl bg-white border border-appleBorder empty:hidden">
-              </div>
+              <div id="formGalleryPreviewContainer" class="mt-2.5 grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-48 overflow-y-auto p-1.5 rounded-xl bg-white border border-appleBorder empty:hidden"></div>
             </div>
 
             <div class="flex items-center gap-2 pt-2">
@@ -1054,10 +1112,11 @@
         <div>
           <div class="flex items-center justify-between mb-3">
             <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider">Daftar Portofolio Aktif</h4>
-            <div class="flex items-center gap-1 bg-neutral-100 p-0.5 rounded-lg border border-appleBorder">
+            <div class="flex items-center gap-1 bg-neutral-100 p-0.5 rounded-lg border border-appleBorder flex-wrap">
               <button type="button" onclick="setAdminListFilter('all', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md bg-white shadow-xs text-appleDark">Semua</button>
               <button type="button" onclick="setAdminListFilter('foto', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Foto</button>
               <button type="button" onclick="setAdminListFilter('video', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Video</button>
+              <button type="button" onclick="setAdminListFilter('reels', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Reels</button>
               <button type="button" onclick="setAdminListFilter('drone', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Drone</button>
             </div>
           </div>
@@ -1068,9 +1127,9 @@
       </div>
 
       <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray gap-2">
-        <button onclick="restoreFromDeviceCache()" data-testid="restore-device-cache-btn" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors cursor-pointer">
+        <button onclick="restoreFromDeviceCache()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors cursor-pointer">
           <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
-          Pulihkan Proyek dari Perangkat Ini
+          Pulihkan Proyek dari Perangkat
         </button>
         <button onclick="promptResetData()" class="hover:text-appleDark underline transition-colors cursor-pointer shrink-0">
           Reset Data Dummy
@@ -1130,6 +1189,7 @@
   <script>
     const CATEGORIES = [
       "Semua",
+      "Komersial",
       "Rumah",
       "Apartemen",
       "Hotel",
@@ -1143,6 +1203,27 @@
       "Office",
       "Lainnya"
     ];
+
+    let selectedFormCategories = ["Komersial"];
+
+    function getProjectCategories(p) {
+      if (!p) return ["Lainnya"];
+      if (Array.isArray(p.categories) && p.categories.length > 0) return p.categories;
+      if (Array.isArray(p.category) && p.category.length > 0) return p.category;
+      if (typeof p.category === "string" && p.category.trim()) {
+        return p.category.split(",").map(c => c.trim()).filter(Boolean);
+      }
+      if (typeof p.categories === "string" && p.categories.trim()) {
+        return p.categories.split(",").map(c => c.trim()).filter(Boolean);
+      }
+      return ["Lainnya"];
+    }
+
+    function projectMatchesCategory(p, catFilter) {
+      if (!catFilter || catFilter.trim() === "" || catFilter.toLowerCase() === "semua") return true;
+      const cats = getProjectCategories(p).map(c => String(c).toLowerCase());
+      return cats.includes(catFilter.toLowerCase());
+    }
 
     const WHITELIST_EMAILS = [
       "foriorid@gmail.com",
@@ -1160,13 +1241,14 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
-    // Data Bawaan Awal (Hanya dipakai jika admin menekan 'Reset Data Dummy' atau inisialisasi cloud perdana)
+    // Data Bawaan Awal
     const INITIAL_PROJECTS = [
       {
         id: "foto-1",
         type: "foto",
         title: "Kirei Castle Villa",
         category: "Vila",
+        categories: ["Vila"],
         location: "Lembang, Bandung",
         image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
         gallery: [
@@ -1180,6 +1262,7 @@
         type: "foto",
         title: "Villa Mariposa Tropical",
         category: "Vila",
+        categories: ["Vila"],
         location: "Bandung, Jawa Barat",
         image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
         gallery: [
@@ -1192,6 +1275,7 @@
         type: "foto",
         title: "Pine Breeze Loft House",
         category: "Rumah",
+        categories: ["Rumah"],
         location: "Serang, Banten",
         image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
         gallery: [],
@@ -1201,7 +1285,8 @@
         id: "foto-4",
         type: "foto",
         title: "Dermashine Aesthetic Clinic",
-        category: "Klinik",
+        category: "Klinik, Komersial",
+        categories: ["Klinik", "Komersial"],
         location: "Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1200&auto=format&fit=crop",
         gallery: [],
@@ -1211,7 +1296,8 @@
         id: "foto-5",
         type: "foto",
         title: "Bawal Exclusive Jakarta",
-        category: "Store",
+        category: "Store, Komersial",
+        categories: ["Store", "Komersial"],
         location: "Jakarta",
         image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop",
         gallery: [],
@@ -1221,7 +1307,8 @@
         id: "foto-6",
         type: "foto",
         title: "PERP. Burger",
-        category: "Resto",
+        category: "Resto, Komersial",
+        categories: ["Resto", "Komersial"],
         location: "Cipete, Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1200&auto=format&fit=crop",
         gallery: [],
@@ -1231,7 +1318,8 @@
         id: "vid-1",
         type: "video",
         title: "Architectural Interior Film — PERP Burger",
-        category: "Resto",
+        category: "Resto, Komersial",
+        categories: ["Resto", "Komersial"],
         location: "Cipete, Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=4jnzf1yj48M"
@@ -1241,24 +1329,37 @@
         type: "video",
         title: "Cinematic Walkthrough Vila Mariposa Tropical",
         category: "Vila",
+        categories: ["Vila"],
         location: "Lembang, Bandung",
         image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=2v_7UH_nLv4"
       },
       {
-        id: "vid-3",
-        type: "video",
-        title: "Sunset Serenity Sanctuary Villa Tour",
+        id: "reels-1",
+        type: "reels",
+        title: "Golden Hour Micro-tour — Kirei Castle Villa",
         category: "Vila",
-        location: "Ubud, Bali",
-        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop",
-        link: "https://www.youtube.com/watch?v=ipmDgsh9cq0"
+        categories: ["Vila"],
+        location: "Lembang, Bandung",
+        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
+        link: "https://www.youtube.com/shorts/5qap5aO4i9A"
+      },
+      {
+        id: "reels-2",
+        type: "reels",
+        title: "Cafe Ambient Walkthrough & Bar Vibe",
+        category: "Resto, Komersial",
+        categories: ["Resto", "Komersial"],
+        location: "Cipete, Jakarta Selatan",
+        image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop",
+        link: "https://www.youtube.com/shorts/5qap5aO4i9A"
       },
       {
         id: "drone-1",
         type: "drone",
         title: "Epic FPV Drone One-Shot — Tokay Sanctuary",
         category: "Vila",
+        categories: ["Vila"],
         location: "Gili Air, Bali",
         image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=JFw4KcuzlTs"
@@ -1268,18 +1369,10 @@
         type: "drone",
         title: "Aerial Masterplan & Facade Pine Breeze",
         category: "Rumah",
+        categories: ["Rumah"],
         location: "Marbella & Serang",
         image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=wMo6QWWQKlI"
-      },
-      {
-        id: "drone-3",
-        type: "drone",
-        title: "Bird-Eye Perspective Resort & Spa",
-        category: "Hotel",
-        location: "Sanur, Bali",
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
-        link: "https://www.youtube.com/watch?v=XzHaI7jCgfo"
       }
     ];
 
@@ -1292,9 +1385,9 @@
     let dbInstance = null;
     let pendingDeleteId = null;
 
-    // Batasan Pagination Item per Grid
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 9;
+    let reelsDisplayLimit = 8;
     let droneDisplayLimit = 9;
 
     let activeLightboxProject = null;
@@ -1306,7 +1399,6 @@
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // Jaring pengaman: apa pun error tak terduga, jangan biarkan halaman blank/terkunci di skeleton.
     window.addEventListener("error", (e) => {
       console.warn("Runtime error tertangkap:", e.message);
       try { hideAllLoadingSkeletons(); } catch (_) {}
@@ -1319,13 +1411,9 @@
     document.addEventListener("DOMContentLoaded", () => {
       try {
         renderCategoryFilters();
-        renderCategorySelectOptions();
+        renderFormCategoryPills();
         checkAuthStatus();
-
-        // Cek apakah ada cache lokal sebelumnya
         loadInitialCache();
-
-        // Sambungkan ke Firestore
         initFirebaseConnection();
         setupLightboxKeyboardAndSwipe();
         lucide.createIcons();
@@ -1335,13 +1423,11 @@
       }
     });
 
-    // Simpan cache lokal dengan aman. JANGAN pernah menggagalkan render bila storage penuh
-    // (QuotaExceededError) atau diblokir — inilah penyebab halaman blank meski cloud aktif.
     function cacheProjectsSafely(data) {
       try {
         localStorage.setItem("forior_portfolio_projects", JSON.stringify(data));
       } catch (e) {
-        console.warn("Cache lokal dilewati (storage penuh / diblokir):", e && e.name);
+        console.warn("Cache lokal dilewati:", e && e.name);
       }
     }
 
@@ -1351,10 +1437,12 @@
         try {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            // Simpan salinan cache perangkat SEBELUM ditimpa oleh sinkronisasi cloud.
-            // Dipakai fitur "Pulihkan Proyek dari Perangkat Ini".
             deviceCacheBackup = JSON.parse(JSON.stringify(parsed));
-            projects = parsed.map(p => ({ ...p, type: p.type || "foto" }));
+            projects = parsed.map(p => ({
+              ...p,
+              type: p.type || "foto",
+              categories: getProjectCategories(p)
+            }));
             isDataLoaded = true;
             hideAllLoadingSkeletons();
             renderAllSections();
@@ -1362,42 +1450,33 @@
           }
         } catch(e) {}
       }
-      // Jika device baru / belum ada cache lokal, biarkan skeleton berdenyut (JANGAN tampilkan dummy!)
       showAllLoadingSkeletons();
     }
 
     function showAllLoadingSkeletons() {
-      const photoSkel = document.getElementById("photoSkeletonGrid");
-      const videoSkel = document.getElementById("videoSkeletonGrid");
-      const droneSkel = document.getElementById("droneSkeletonGrid");
-      
-      if (photoSkel) photoSkel.classList.remove("hidden");
-      if (videoSkel) videoSkel.classList.remove("hidden");
-      if (droneSkel) droneSkel.classList.remove("hidden");
+      document.getElementById("photoSkeletonGrid")?.classList.remove("hidden");
+      document.getElementById("videoSkeletonGrid")?.classList.remove("hidden");
+      document.getElementById("reelsSkeletonGrid")?.classList.remove("hidden");
+      document.getElementById("droneSkeletonGrid")?.classList.remove("hidden");
 
-      // Sembunyikan empty states selama skeleton aktif
       document.getElementById("emptyPhotoState")?.classList.add("hidden");
       document.getElementById("emptyVideoState")?.classList.add("hidden");
+      document.getElementById("emptyReelsState")?.classList.add("hidden");
       document.getElementById("emptyDroneState")?.classList.add("hidden");
     }
 
     function hideAllLoadingSkeletons() {
-      const photoSkel = document.getElementById("photoSkeletonGrid");
-      const videoSkel = document.getElementById("videoSkeletonGrid");
-      const droneSkel = document.getElementById("droneSkeletonGrid");
-      
-      if (photoSkel) photoSkel.classList.add("hidden");
-      if (videoSkel) videoSkel.classList.add("hidden");
-      if (droneSkel) droneSkel.classList.add("hidden");
+      document.getElementById("photoSkeletonGrid")?.classList.add("hidden");
+      document.getElementById("videoSkeletonGrid")?.classList.add("hidden");
+      document.getElementById("reelsSkeletonGrid")?.classList.add("hidden");
+      document.getElementById("droneSkeletonGrid")?.classList.add("hidden");
     }
 
     function initFirebaseConnection() {
-      // Safety timeout: jika dalam 6 detik cloud belum membalas dan device baru belum punya data
       const timeoutGuard = setTimeout(() => {
         if (!isDataLoaded) {
           isDataLoaded = true;
           hideAllLoadingSkeletons();
-          // Fallback lokal
           const saved = localStorage.getItem("forior_portfolio_projects");
           if (saved) {
             try { projects = JSON.parse(saved); } catch(e) { projects = [...INITIAL_PROJECTS]; }
@@ -1406,7 +1485,7 @@
           }
           renderAllSections();
         }
-      }, 6000);
+      }, 4500);
 
       try {
         if (!firebase.apps.length) {
@@ -1414,7 +1493,6 @@
         }
         dbInstance = firebase.firestore();
         
-        // Optimasi khusus Safari / iOS agar langsung terhubung seketika tanpa tertahan buffering WebKit
         try {
           const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || /iPad|iPhone|iPod/.test(navigator.userAgent);
           if (isSafari) {
@@ -1438,7 +1516,8 @@
               cloudData.push({ 
                 id: doc.id, 
                 type: data.type || "foto", 
-                ...data 
+                ...data,
+                categories: getProjectCategories(data)
               });
             });
             projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
@@ -1446,7 +1525,6 @@
             seedInitialDataToCloud();
           }
 
-          // Render DULU sebelum caching, agar halaman tidak pernah blank walau caching gagal.
           isDataLoaded = true;
           hideAllLoadingSkeletons();
           renderAllSections();
@@ -1526,10 +1604,10 @@
       if (!container) return;
 
       container.innerHTML = CATEGORIES.map(cat => {
-        const isActive = cat === activeCategory;
+        const isActive = cat.toLowerCase() === activeCategory.toLowerCase();
         const baseClass = "category-pill inline-flex items-center justify-center rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none";
         const activeClass = isActive 
-          ? "bg-appleDark text-white shadow-sm" 
+          ? "bg-appleDark text-white shadow-sm font-semibold" 
           : "bg-white text-appleGray border border-appleBorder hover:text-appleDark hover:border-neutral-400";
 
         return `
@@ -1551,16 +1629,46 @@
       lucide.createIcons();
     }
 
-    function renderCategorySelectOptions() {
-      const select = document.getElementById("inputCategory");
-      if (!select) return;
-      const options = CATEGORIES.filter(c => c !== "Semua");
-      select.innerHTML = options.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+    function renderFormCategoryPills() {
+      const container = document.getElementById("formCategoryPillsContainer");
+      if (!container) return;
+      const availableCats = CATEGORIES.filter(c => c !== "Semua");
+
+      container.innerHTML = availableCats.map(cat => {
+        const isSelected = selectedFormCategories.includes(cat);
+        const activeClass = isSelected
+          ? "bg-foriorBrand text-white shadow-xs font-semibold"
+          : "bg-neutral-100 text-appleGray hover:bg-neutral-200 hover:text-appleDark";
+
+        return `
+          <button 
+            type="button" 
+            onclick="toggleFormCategory('${cat}')" 
+            class="category-pill text-xs px-3 rounded-full transition-all cursor-pointer select-none ${activeClass}">
+            ${isSelected ? "✓ " : ""}${cat}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function toggleFormCategory(cat) {
+      if (selectedFormCategories.includes(cat)) {
+        if (selectedFormCategories.length > 1) {
+          selectedFormCategories = selectedFormCategories.filter(c => c !== cat);
+        } else {
+          showToast("Minimal pilih satu kategori!", "error");
+          return;
+        }
+      } else {
+        selectedFormCategories.push(cat);
+      }
+      renderFormCategoryPills();
     }
 
     function renderAllSections() {
       renderPhotoSection();
       renderVideoSection();
+      renderReelsSection();
       renderDroneSection();
       lucide.createIcons();
     }
@@ -1574,9 +1682,7 @@
       if (!isDataLoaded) return;
 
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
-      const filtered = activeCategory === "Semua" 
-        ? photoProjects 
-        : photoProjects.filter(p => (p.category || '').toLowerCase() === activeCategory.toLowerCase());
+      const filtered = photoProjects.filter(p => projectMatchesCategory(p, activeCategory));
 
       document.getElementById("photoProjectCount").textContent = filtered.length;
 
@@ -1593,6 +1699,13 @@
 
       grid.innerHTML = visibleItems.map(item => {
         const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[11px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
+            ${c}
+          </span>
+        `).join("");
+
         return `
         <div 
           role="button"
@@ -1609,10 +1722,8 @@
               onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
             />
 
-            <div class="absolute top-3.5 right-3.5">
-              <span class="badge-category inline-flex items-center justify-center rounded-full text-[11px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
-                ${item.category || 'Portofolio'}
-              </span>
+            <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              ${badgesHtml}
             </div>
 
             <div class="absolute bottom-3.5 left-3.5">
@@ -1683,7 +1794,15 @@
 
       const visibleItems = videoProjects.slice(0, videoDisplayLimit);
 
-      grid.innerHTML = visibleItems.map(item => `
+      grid.innerHTML = visibleItems.map(item => {
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-rose-600 text-white shadow-xs">
+            ${c}
+          </span>
+        `).join("");
+
+        return `
         <div 
           role="button"
           tabindex="0"
@@ -1698,14 +1817,10 @@
               onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop'"
             />
 
-            <!-- Badge Kategori Video -->
-            <div class="absolute top-3 right-3">
-              <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-rose-600 text-white shadow-xs">
-                ${item.category || 'Video'}
-              </span>
+            <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              ${badgesHtml}
             </div>
 
-            <!-- Tombol Play Tengah Sinematik -->
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-rose-600 group-hover:text-white">
                 <i data-lucide="play" class="w-5 h-5 fill-current"></i>
@@ -1735,7 +1850,8 @@
             </div>
           </div>
         </div>
-      `).join("");
+      `;
+      }).join("");
 
       if (videoProjects.length > videoDisplayLimit) {
         const remaining = videoProjects.length - videoDisplayLimit;
@@ -1749,6 +1865,92 @@
     function loadMoreVideos() {
       videoDisplayLimit += 9;
       renderVideoSection();
+      lucide.createIcons();
+    }
+
+    function renderReelsSection() {
+      const grid = document.getElementById("reelsPortfolioGrid");
+      const emptyState = document.getElementById("emptyReelsState");
+      const loadMoreContainer = document.getElementById("reelsLoadMoreContainer");
+      const loadMoreText = document.getElementById("reelsLoadMoreText");
+
+      if (!isDataLoaded) return;
+
+      const reelsProjects = projects.filter(p => p.type === 'reels');
+      document.getElementById("reelsProjectCount").textContent = reelsProjects.length;
+
+      if (reelsProjects.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        loadMoreContainer.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      const visibleItems = reelsProjects.slice(0, reelsDisplayLimit);
+
+      grid.innerHTML = visibleItems.map(item => {
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.slice(0, 1).map(c => `
+          <span class="badge-category px-2.5 rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-sm border border-white/40">
+            ${c}
+          </span>
+        `).join("");
+
+        return `
+        <div 
+          role="button"
+          tabindex="0"
+          onclick="openVideoModal('${item.id}')"
+          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none">
+          
+          <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+            <img 
+              src="${item.image}" 
+              alt="${item.title}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+            />
+            
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+
+            <div class="absolute top-3 right-3">
+              ${badgesHtml}
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </div>
+            </div>
+
+            <div class="absolute bottom-3 left-3 right-3 text-white">
+              <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-1">
+                <i data-lucide="smartphone" class="w-3 h-3"></i> Reels 9:16
+              </span>
+              <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">${item.title}</h3>
+              <p class="text-[11px] text-neutral-300 flex items-center gap-1 mt-1 truncate">
+                <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300 shrink-0"></i> ${item.location || 'Indonesia'}
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+      }).join("");
+
+      if (reelsProjects.length > reelsDisplayLimit) {
+        const remaining = reelsProjects.length - reelsDisplayLimit;
+        loadMoreText.textContent = `Tampilkan Lebih Banyak Reels (+${remaining})`;
+        loadMoreContainer.classList.remove("hidden");
+      } else {
+        loadMoreContainer.classList.add("hidden");
+      }
+    }
+
+    function loadMoreReels() {
+      reelsDisplayLimit += 8;
+      renderReelsSection();
       lucide.createIcons();
     }
 
@@ -1774,7 +1976,15 @@
 
       const visibleItems = droneProjects.slice(0, droneDisplayLimit);
 
-      grid.innerHTML = visibleItems.map(item => `
+      grid.innerHTML = visibleItems.map(item => {
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/30">
+            ${c}
+          </span>
+        `).join("");
+
+        return `
         <div 
           role="button"
           tabindex="0"
@@ -1789,13 +1999,11 @@
               onerror="this.src='https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=800&auto=format&fit=crop'"
             />
 
-            <div class="absolute top-3.5 right-3.5 flex items-center gap-1.5">
+            <div class="absolute top-3.5 right-3.5 flex items-center gap-1.5 flex-wrap justify-end max-w-[80%]">
               <span class="badge-counter inline-flex items-center justify-center gap-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-sky-600 text-white shadow-xs">
                 <i data-lucide="plane" class="w-2.5 h-2.5 shrink-0"></i> <span>Aerial</span>
               </span>
-              <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/30">
-                ${item.category || 'Drone'}
-              </span>
+              ${badgesHtml}
             </div>
 
             ${(item.link && (item.link.includes('youtube') || item.link.includes('youtu.be') || item.link.endsWith('.mp4'))) ? `
@@ -1827,7 +2035,8 @@
             </div>
           </div>
         </div>
-      `).join("");
+      `;
+      }).join("");
 
       if (droneProjects.length > droneDisplayLimit) {
         const remaining = droneProjects.length - droneDisplayLimit;
@@ -1867,7 +2076,14 @@
       currentLightboxIndex = 0;
 
       document.getElementById("lightboxProjectTitle").textContent = project.title;
-      document.getElementById("lightboxProjectCategory").textContent = project.category || "Portofolio";
+      
+      const cats = getProjectCategories(project);
+      document.getElementById("lightboxProjectCategories").innerHTML = cats.map(c => `
+        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/20 text-white font-medium border border-white/20 shadow-xs">
+          ${c}
+        </span>
+      `).join("");
+
       document.getElementById("lightboxProjectLocation").innerHTML = `
         <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
         <span>${project.location || 'Indonesia'}</span>
@@ -1967,6 +2183,9 @@
       if (clean.includes("youtu.be/")) {
         return clean.split("youtu.be/")[1]?.split("?")[0];
       }
+      if (clean.includes("youtube.com/shorts/")) {
+        return clean.split("youtube.com/shorts/")[1]?.split("?")[0];
+      }
       if (clean.includes("watch?v=")) {
         return clean.split("watch?v=")[1]?.split("&")[0];
       }
@@ -1979,6 +2198,23 @@
     function openVideoModal(id) {
       const item = projects.find(p => p.id === id);
       if (!item) return;
+
+      const isReels = item.type === 'reels';
+      const dialog = document.getElementById("videoModalDialog");
+      const screen = document.getElementById("videoScreenContainer");
+      const badge = document.getElementById("videoModalBadge");
+
+      if (isReels) {
+        dialog.className = "relative w-full max-w-sm sm:max-w-md bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300";
+        screen.className = "relative w-full aspect-[9/16] bg-black flex items-center justify-center overflow-hidden transition-all duration-300 max-h-[78vh]";
+        badge.className = "text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-400 border border-purple-500/30";
+        badge.textContent = "Social Reels 9:16";
+      } else {
+        dialog.className = "relative w-full max-w-4xl bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300";
+        screen.className = "relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden transition-all duration-300";
+        badge.className = "text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30";
+        badge.textContent = "Video Showcase";
+      }
 
       document.getElementById("videoModalTitle").textContent = item.title;
       document.getElementById("videoModalLocation").innerHTML = `
@@ -2089,7 +2325,7 @@
           allowTaint: true,
           logging: false,
           onclone: (clonedDoc) => {
-            clonedDoc.querySelectorAll('.line-clamp-1, .truncate').forEach(el => {
+            clonedDoc.querySelectorAll('.line-clamp-1, .line-clamp-2, .truncate').forEach(el => {
               el.style.webkitLineClamp = 'unset';
               el.style.overflow = 'visible';
               el.style.whiteSpace = 'normal';
@@ -2125,7 +2361,7 @@
         openScreenshotPreview(dataUrl, "Tangkapan Layar Satu Halaman Penuh", "FORIOR-Showcase-Fullpage.png");
       } catch (err) {
         console.error("Screenshot error:", err);
-        showToast("Gagal mengambil tangkapan layar.");
+        showToast("Gagal mengambil tangkapan layar.", "error");
       } finally {
         btn.disabled = false;
         btnText.textContent = "Screenshot Web";
@@ -2152,7 +2388,7 @@
           logging: false,
           backgroundColor: "#F5F5F7",
           onclone: (clonedDoc) => {
-            clonedDoc.querySelectorAll('.line-clamp-1, .truncate').forEach(el => {
+            clonedDoc.querySelectorAll('.line-clamp-1, .line-clamp-2, .truncate').forEach(el => {
               el.style.webkitLineClamp = 'unset';
               el.style.overflow = 'visible';
               el.style.whiteSpace = 'normal';
@@ -2188,7 +2424,7 @@
         openScreenshotPreview(dataUrl, `Tangkapan Layar: ${filenamePrefix}`, `FORIOR-${filenamePrefix}.png`);
       } catch (err) {
         console.error("Section screenshot error:", err);
-        showToast("Gagal mengambil tangkapan section.");
+        showToast("Gagal mengambil tangkapan section.", "error");
       }
     }
 
@@ -2216,9 +2452,9 @@
     }
 
     function handleShareSection(type) {
-      const targetHash = type === 'video' ? '#section-video' : (type === 'drone' ? '#section-drone' : '#section-foto');
+      const targetHash = type === 'video' ? '#section-video' : (type === 'reels' ? '#section-reels' : (type === 'drone' ? '#section-drone' : '#section-foto'));
       const shareUrl = `${window.location.origin}${window.location.pathname}${targetHash}`;
-      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR');
+      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'reels' ? 'Portofolio Social Reels & TikTok FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
 
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -2256,8 +2492,6 @@
       document.body.removeChild(textArea);
     }
 
-    // Muat file gambar menjadi elemen <img>. Menangani HEIC/HEIF (iPhone) + error baca file.
-    // Melempar error yang bermakna agar pemanggil bisa menampilkan pesan jujur ke pengguna.
     async function loadImageElementFromFile(file) {
       const isHeic = /heic|heif/i.test(file.type || "") || /\.(heic|heif)$/i.test(file.name || "");
       let workingBlob = file;
@@ -2291,8 +2525,6 @@
       });
     }
 
-    // Kompres gambar dan JAMIN hasil (data URL) berada di bawah maxBytes.
-    // Turunkan kualitas dulu, lalu dimensi, hingga muat. Selalu berhasil masuk budget.
     async function compressImageFile(file, minDimension = 960, maxDimension = 1800, maxBytes = 850000) {
       const img = await loadImageElementFromFile(file);
 
@@ -2327,7 +2559,6 @@
           width = Math.round(width * 0.85);
           height = Math.round(height * 0.85);
         } else {
-          // Sudah upaya maksimal; kembalikan hasil terkecil yang bisa dibuat.
           return result;
         }
       }
@@ -2340,10 +2571,14 @@
       const linkLabel = document.getElementById("linkFieldLabel");
       const linkHint = document.getElementById("linkFieldHint");
 
-      if (selectedType === 'video') {
+      if (selectedType === 'video' || selectedType === 'reels') {
         galleryWrapper.classList.add("hidden");
-        linkLabel.textContent = "Tautan Video (YouTube / Google Photos / MP4)";
-        linkHint.textContent = "Bisa URL YouTube atau link album";
+        linkLabel.textContent = selectedType === 'reels' 
+          ? "Tautan Reels / TikTok / YouTube Shorts" 
+          : "Tautan Video (YouTube / MP4)";
+        linkHint.textContent = selectedType === 'reels'
+          ? "URL Shorts / TikTok / Reels / MP4"
+          : "Bisa URL YouTube atau video link";
       } else {
         galleryWrapper.classList.remove("hidden");
         linkLabel.textContent = "Tautan Album Google Photos";
@@ -2368,9 +2603,11 @@
       const container = document.getElementById("adminProjectList");
       if (!container) return;
 
+      const listProjects = Array.isArray(projects) ? projects : [];
+
       const filtered = adminFilterType === "all" 
-        ? projects 
-        : projects.filter(p => (p.type || 'foto') === adminFilterType);
+        ? listProjects 
+        : listProjects.filter(p => (p.type || 'foto') === adminFilterType);
 
       if (filtered.length === 0) {
         container.innerHTML = `<p class="text-xs text-appleGray py-4 text-center">Belum ada portofolio tersimpan untuk tipe ini.</p>`;
@@ -2378,8 +2615,13 @@
       }
 
       container.innerHTML = filtered.map(item => {
-        const typeBadgeColor = item.type === 'video' ? 'bg-rose-100 text-rose-700' : (item.type === 'drone' ? 'bg-sky-100 text-sky-700' : 'bg-neutral-100 text-appleGray');
+        let typeBadgeColor = 'bg-neutral-100 text-appleGray';
+        if (item.type === 'video') typeBadgeColor = 'bg-rose-100 text-rose-700';
+        else if (item.type === 'reels') typeBadgeColor = 'bg-purple-100 text-purple-700';
+        else if (item.type === 'drone') typeBadgeColor = 'bg-sky-100 text-sky-700';
+
         const typeLabel = (item.type || 'foto').toUpperCase();
+        const cats = getProjectCategories(item).join(", ");
 
         return `
         <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-white border border-appleBorder hover:border-neutral-300 transition-all">
@@ -2389,7 +2631,7 @@
               <p class="text-xs font-semibold text-appleDark truncate">${item.title}</p>
               <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
                 <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${typeBadgeColor}">${typeLabel}</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-neutral-100 text-appleGray font-medium">${item.category || 'Portofolio'}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-neutral-100 text-appleGray font-medium truncate max-w-[150px]">${cats}</span>
                 <span class="text-[10px] text-neutral-400 flex items-center gap-0.5 truncate">
                   <i data-lucide="map-pin" class="w-2.5 h-2.5"></i> ${item.location || 'Indonesia'}
                 </span>
@@ -2412,12 +2654,9 @@
       lucide.createIcons();
     }
 
-    // Batas aman ukuran 1 dokumen Firestore (limit keras 1.048.576 byte).
-    // Sisakan ruang untuk metadata & overhead Firestore.
-    const FIRESTORE_SAFE_DOC_BYTES = 950000;   // total JSON dokumen maksimal
-    const IMAGE_TOTAL_BUDGET = 820000;         // total anggaran untuk semua gambar (base64)
+    const FIRESTORE_SAFE_DOC_BYTES = 950000;
+    const IMAGE_TOTAL_BUDGET = 820000;
 
-    // Terjemahkan kode error proses gambar menjadi pesan yang jelas.
     function describeImageError(err) {
       const code = err && err.message ? err.message : "";
       switch (code) {
@@ -2445,26 +2684,28 @@
       const editId = document.getElementById("editProjectId").value;
       const type = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
       const title = document.getElementById("inputTitle").value.trim();
-      const category = document.getElementById("inputCategory").value;
       const location = document.getElementById("inputLocation").value.trim();
       const link = document.getElementById("inputLink").value.trim();
       let image = document.getElementById("inputImageUrl").value.trim();
 
-      const totalImagesToSave = 1 + (type === 'video' ? 0 : pendingGalleryItems.filter(i => i.type === 'file').length);
-      // Bagi rata anggaran gambar tanpa lantai besar (penyebab dokumen membengkak > 1MB).
+      const totalImagesToSave = 1 + ((type === 'video' || type === 'reels') ? 0 : pendingGalleryItems.filter(i => i.type === 'file').length);
       const perImageBudget = Math.max(Math.floor(IMAGE_TOTAL_BUDGET / Math.max(totalImagesToSave, 1)), 30000);
 
       try {
         if (pendingCoverFile) {
           image = await compressImageFile(pendingCoverFile, 960, 1800, perImageBudget);
         } else if (!image) {
-          image = type === 'video'
-            ? "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop"
-            : "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
+          if (type === 'reels') {
+            image = "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop";
+          } else if (type === 'video') {
+            image = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop";
+          } else {
+            image = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
+          }
         }
 
         const finalGallery = [];
-        if (type !== 'video') {
+        if (type !== 'video' && type !== 'reels') {
           for (const item of pendingGalleryItems) {
             if (item.type === 'file' && item.file) {
               const compressed = await compressImageFile(item.file, 960, 1800, perImageBudget);
@@ -2478,7 +2719,8 @@
         const projectData = {
           type,
           title,
-          category,
+          category: selectedFormCategories.join(", "),
+          categories: [...selectedFormCategories],
           location,
           link,
           image,
@@ -2486,7 +2728,6 @@
           timestamp: Date.now()
         };
 
-        // Penjaga ukuran: pastikan dokumen aman di bawah batas Firestore 1MB.
         const docBytes = JSON.stringify(projectData).length;
         if (docBytes > FIRESTORE_SAFE_DOC_BYTES) {
           const totalFoto = 1 + finalGallery.length;
@@ -2495,7 +2736,7 @@
             `Kurangi jumlah foto (sekarang ${totalFoto}) atau pisah jadi beberapa proyek.`,
             "error"
           );
-          return; // Jangan simpan; jangan pura-pura sukses.
+          return;
         }
 
         if (isCloudConnected && dbInstance) {
@@ -2509,19 +2750,15 @@
             const code = (err && err.code) ? err.code : "";
             let msg;
             if (code === "permission-denied") {
-              msg = "Gagal menyimpan: izin Firestore ditolak. Periksa aturan keamanan (rules) database.";
+              msg = "Gagal menyimpan: izin Firestore ditolak. Periksa aturan keamanan database.";
             } else if (code === "unavailable" || code === "deadline-exceeded") {
               msg = "Gagal menyimpan: koneksi ke Cloud terputus. Cek internet lalu coba lagi.";
-            } else if (/exceeds the maximum allowed size|too large|invalid-argument/i.test((err && err.message) || "")) {
-              msg = "Gagal menyimpan: foto proyek melebihi batas 1 MB Firestore. Kurangi jumlah/ukuran foto.";
             } else {
-              msg = "Gagal menyimpan ke Cloud. Perubahan TIDAK tersimpan. Silakan coba lagi.";
+              msg = "Gagal menyimpan ke Cloud. Silakan coba lagi.";
             }
             showToast(msg, "error");
-            // Jangan diam-diam simpan lokal seolah sukses. Form dibiarkan agar bisa dicoba ulang.
           }
         } else {
-          // Cloud memang tidak terhubung -> simpan lokal dengan peringatan jujur.
           saveLocally(editId, projectData);
         }
       } catch (error) {
@@ -2544,7 +2781,7 @@
       renderAllSections();
       renderAdminList();
       resetForm();
-      showToast("Cloud offline — tersimpan LOKAL di perangkat ini saja (belum tampil di HP/browser lain).", "error");
+      showToast("Cloud offline — tersimpan LOKAL di perangkat ini saja.", "error");
     }
 
     function editProject(id) {
@@ -2558,11 +2795,13 @@
       toggleFormTypeFields();
 
       document.getElementById("inputTitle").value = item.title;
-      document.getElementById("inputCategory").value = item.category;
       document.getElementById("inputLocation").value = item.location || "";
       document.getElementById("inputLink").value = item.link;
       document.getElementById("inputImageUrl").value = item.image;
       
+      selectedFormCategories = getProjectCategories(item);
+      renderFormCategoryPills();
+
       pendingCoverFile = null;
       document.getElementById("coverFileNameDisplay").textContent = "";
       previewImageUrl(item.image);
@@ -2590,6 +2829,9 @@
       const defaultTypeRadio = document.querySelector('input[name="projectType"][value="foto"]');
       if (defaultTypeRadio) defaultTypeRadio.checked = true;
       toggleFormTypeFields();
+
+      selectedFormCategories = ["Komersial"];
+      renderFormCategoryPills();
 
       pendingCoverFile = null;
       pendingGalleryItems = [];
@@ -2744,15 +2986,13 @@
       showToast("Data dummy berhasil di-reset");
     }
 
-    // Pulihkan proyek yang tersimpan di cache perangkat ini (localStorage) tetapi
-    // belum ada di Cloud. Aman: hanya MENAMBAH yang hilang, tidak menghapus apa pun.
     async function restoreFromDeviceCache() {
       if (!isCloudConnected || !dbInstance) {
-        showToast("Cloud belum terhubung. Coba lagi setelah status Cloud aktif (hijau).", "error");
+        showToast("Cloud belum terhubung. Coba lagi saat status Cloud aktif.", "error");
         return;
       }
       if (!Array.isArray(deviceCacheBackup) || deviceCacheBackup.length === 0) {
-        showToast("Tidak ada cadangan proyek di perangkat ini untuk dipulihkan.", "error");
+        showToast("Tidak ada cadangan proyek di perangkat ini.", "error");
         return;
       }
 
@@ -2760,7 +3000,7 @@
       const missing = deviceCacheBackup.filter(p => p && p.id && !cloudIds.has(p.id));
 
       if (missing.length === 0) {
-        showToast("Semua proyek di perangkat ini sudah ada di Cloud. Tidak ada yang perlu dipulihkan.");
+        showToast("Semua proyek di perangkat ini sudah ada di Cloud.");
         return;
       }
 
@@ -2788,7 +3028,7 @@
       if (skipped.length > 0) {
         showToast(`Dipulihkan ${restored} proyek. ${skipped.length} gagal: ${skipped.join(", ")}.`, "error");
       } else {
-        showToast(`Berhasil! ${restored} proyek dipulihkan ke Cloud dan kini tampil di semua device.`);
+        showToast(`Berhasil! ${restored} proyek dipulihkan ke Cloud.`);
       }
     }
 
