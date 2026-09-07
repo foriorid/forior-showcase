@@ -72,19 +72,13 @@
       scrollbar-width: none;
     }
     
-    /* Frame clipping untuk memotong judul video YouTube */
-    .yt-clean-frame {
+    /* Frame video 100% utuh tanpa crop (video tampil natural) */
+    .yt-frame-full {
       position: absolute;
-      top: -55px;
+      top: 0;
       left: 0;
       width: 100%;
-      height: calc(100% + 55px);
-    }
-    @media (max-width: 640px) {
-      .yt-clean-frame {
-        top: -46px;
-        height: calc(100% + 46px);
-      }
+      height: 100%;
     }
 
     /* Standardized pill & badge vertical centering with exact line-height */
@@ -740,12 +734,10 @@
         <iframe 
           id="videoModalIframe" 
           src="" 
-          class="yt-clean-frame border-0 hidden" 
+          class="yt-frame-full border-0 hidden" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
         </iframe>
-        
-        <div class="absolute bottom-0 right-0 w-28 h-12 z-10 pointer-events-auto bg-transparent"></div>
 
         <video id="videoModalPlayer" src="" controls class="w-full h-full object-contain hidden"></video>
         
@@ -1041,22 +1033,40 @@
                 required 
                 placeholder="https://photos.app.goo.gl/... atau https://youtube.com/..."
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+                onchange="handleVideoLinkChange(this.value)"
               />
             </div>
 
-            <!-- Cover Thumbnail -->
+            <!-- Cover Thumbnail (Bisa Otomatis dari Video atau Unggah Manual) -->
             <div>
-              <label class="block text-xs font-medium text-appleDark mb-1">Foto Cover (Thumbnail Proyek)</label>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-medium text-appleDark">Foto Cover (Thumbnail Proyek)</label>
+                <span class="text-[10px] text-appleGray">2 Opsi: Ambil dari Video / Unggah Manual</span>
+              </div>
+
+              <!-- Tombol Opsi Ambil Thumbnail dari Video -->
+              <div id="videoThumbExtractBox" class="mb-2 flex items-center gap-2">
+                <button 
+                  type="button" 
+                  id="btnExtractVideoCover" 
+                  onclick="handleFetchVideoCover()" 
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-appleBorder bg-white hover:bg-neutral-50 hover:border-foriorBrand text-appleDark text-xs font-medium transition-all shadow-2xs cursor-pointer">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>Gunakan Thumbnail dari Video</span>
+                </button>
+                <span class="text-[10px] text-appleGray">Otomatis ekstrak cover YouTube/Shorts</span>
+              </div>
+
               <input 
                 type="url" 
                 id="inputImageUrl" 
-                placeholder="Paste URL gambar cover (https://...)"
+                placeholder="URL cover (atau klik tombol di atas)"
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all mb-2"
                 oninput="handleCoverUrlInput(this.value)"
               />
               
               <div class="flex items-center gap-2">
-                <span class="text-[10px] text-appleGray">Atau unggah berkas:</span>
+                <span class="text-[10px] text-appleGray">Atau unggah berkas manual:</span>
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1 rounded-lg hover:bg-neutral-100 transition-colors">
                   Pilih Berkas
                   <input type="file" id="inputFileUpload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
@@ -1066,6 +1076,13 @@
 
               <div id="imagePreviewContainer" class="mt-2.5 h-36 rounded-xl border border-appleBorder bg-neutral-200 overflow-hidden relative hidden">
                 <img id="imagePreview" src="" alt="Preview" class="w-full h-full object-cover">
+                <button 
+                  type="button" 
+                  onclick="clearCoverImage()" 
+                  title="Hapus Cover" 
+                  class="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center transition-all cursor-pointer shadow-sm">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
               </div>
             </div>
 
@@ -2195,6 +2212,77 @@
       return null;
     }
 
+    // Ekstraksi thumbnail YouTube resolusi tinggi (maxresdefault dengan fallback hqdefault)
+    async function getYouTubeThumbnail(url) {
+      const id = extractYouTubeId(url);
+      if (!id) return null;
+      const maxRes = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+      const hqRes = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          // YouTube mengembalikan placeholder 120x90 bila maxresdefault tidak tersedia
+          if (img.naturalWidth === 120 && img.naturalHeight === 90) {
+            resolve(hqRes);
+          } else {
+            resolve(maxRes);
+          }
+        };
+        img.onerror = () => resolve(hqRes);
+        img.src = maxRes;
+      });
+    }
+
+    async function handleFetchVideoCover() {
+      const link = document.getElementById("inputLink").value.trim();
+      if (!link) {
+        showToast("Masukkan tautan video YouTube/Shorts terlebih dahulu!", "error");
+        document.getElementById("inputLink").focus();
+        return;
+      }
+
+      const ytId = extractYouTubeId(link);
+      if (!ytId) {
+        showToast("Tautan bukan video YouTube/Shorts yang didukung.", "error");
+        return;
+      }
+
+      showToast("Mengambil thumbnail dari video...");
+      const thumbUrl = await getYouTubeThumbnail(link);
+      if (thumbUrl) {
+        pendingCoverFile = null;
+        document.getElementById("coverFileNameDisplay").textContent = "";
+        document.getElementById("inputImageUrl").value = thumbUrl;
+        previewImageUrl(thumbUrl);
+        showToast("Cover berhasil diambil dari video!");
+      } else {
+        showToast("Gagal mengambil cover video.", "error");
+      }
+    }
+
+    function handleVideoLinkChange(val) {
+      // Jika user memasukkan link video dan belum ada cover yang diset, beri petunjuk visual
+      const ytId = extractYouTubeId(val);
+      const currentImg = document.getElementById("inputImageUrl").value.trim();
+      if (ytId && !currentImg && !pendingCoverFile) {
+        const extractBtn = document.getElementById("btnExtractVideoCover");
+        if (extractBtn) {
+          extractBtn.classList.add("ring-2", "ring-foriorBrand/40", "animate-pulse");
+          setTimeout(() => extractBtn.classList.remove("ring-2", "ring-foriorBrand/40", "animate-pulse"), 2500);
+        }
+      }
+    }
+
+    function clearCoverImage() {
+      pendingCoverFile = null;
+      document.getElementById("coverFileNameDisplay").textContent = "";
+      document.getElementById("inputImageUrl").value = "";
+      document.getElementById("inputFileUpload").value = "";
+      document.getElementById("imagePreviewContainer").classList.add("hidden");
+      document.getElementById("imagePreview").src = "";
+    }
+
     function openVideoModal(id) {
       const item = projects.find(p => p.id === id);
       if (!item) return;
@@ -2203,6 +2291,7 @@
       const dialog = document.getElementById("videoModalDialog");
       const screen = document.getElementById("videoScreenContainer");
       const badge = document.getElementById("videoModalBadge");
+      const iframe = document.getElementById("videoModalIframe");
 
       if (isReels) {
         dialog.className = "relative w-full max-w-sm sm:max-w-md bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300";
@@ -2222,7 +2311,6 @@
         <span>${item.location || 'Indonesia'}</span>
       `;
 
-      const iframe = document.getElementById("videoModalIframe");
       const videoPlayer = document.getElementById("videoModalPlayer");
       const fallback = document.getElementById("videoModalFallback");
       const fallbackBtn = document.getElementById("videoModalFallbackBtn");
@@ -2695,7 +2783,10 @@
         if (pendingCoverFile) {
           image = await compressImageFile(pendingCoverFile, 960, 1800, perImageBudget);
         } else if (!image) {
-          if (type === 'reels') {
+          const ytId = extractYouTubeId(link);
+          if (ytId) {
+            image = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+          } else if (type === 'reels') {
             image = "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop";
           } else if (type === 'video') {
             image = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop";
