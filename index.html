@@ -475,18 +475,18 @@
             <i data-lucide="camera" class="w-3.5 h-3.5"></i>
           </button>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Vertical Cinema & Social Micro-Tours</h2>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Vertical Cinema & Social Media</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik yang dioptimalkan untuk Instagram Reels, TikTok, dan YouTube Shorts.</p>
       </div>
 
-      <!-- Navigasi Panah dan Counter Ditaruh di Luar Grid (Rapi di Header) -->
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
-        <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
+      <!-- Navigasi Panah dan Counter Ditaruh di Luar Grid (Rapi di Header, Tidak Menumpuk di Mobile) -->
+      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
+        <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs whitespace-nowrap">
           <span id="reelsProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Reels Tersedia</span>
         </div>
 
-        <div id="reelsNavControls" class="hidden sm:flex items-center gap-1">
+        <div id="reelsNavControls" class="flex flex-row items-center gap-1 shrink-0">
           <button 
             id="reelsPrevBtn"
             type="button"
@@ -494,7 +494,7 @@
             aria-label="Geser ke kiri"
             data-html2canvas-ignore="true"
             title="Geser Reels Sebelumnya"
-            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer disabled:opacity-30 disabled:pointer-events-none">
+            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer shrink-0">
             <i data-lucide="chevron-left" class="w-4 h-4 text-appleDark"></i>
           </button>
           <button 
@@ -504,35 +504,35 @@
             aria-label="Geser ke kanan"
             data-html2canvas-ignore="true"
             title="Geser Reels Berikutnya"
-            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer disabled:opacity-30 disabled:pointer-events-none">
+            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer shrink-0">
             <i data-lucide="chevron-right" class="w-4 h-4 text-appleDark"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Carousel Stage Container (Bersih Tanpa Tombol Mengambang Menutupi Gambar) -->
+    <!-- Carousel Stage Container -->
     <div class="relative">
       <!-- Loading Skeleton Reels -->
       <div id="reelsSkeletonGrid" class="flex items-center gap-4 sm:gap-6 overflow-hidden py-1">
-        <div class="w-[72vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
         </div>
-        <div class="w-[72vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
         </div>
-        <div class="w-[72vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
         </div>
-        <div class="w-[72vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[9/16] rounded-[20px] bg-neutral-200/80"></div>
         </div>
       </div>
 
-      <!-- Horizontal Carousel Slider Track (Maksimal 4 kartu pas di Desktop) -->
+      <!-- Horizontal Carousel Slider Track -->
       <div 
         id="reelsPortfolioGrid" 
-        class="flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1"
+        class="flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1"
         onmouseenter="pauseReelsAutoplay()"
         onmouseleave="resumeReelsAutoplay()"
         ontouchstart="pauseReelsAutoplay()"
@@ -590,14 +590,14 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Dokumentasi udara fasad bangunan megah, keindahan lanskap, dan tata ruang dari sudut pandang luas.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
-        <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
+      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
+        <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs whitespace-nowrap">
           <span id="droneProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Proyek Aerial</span>
         </div>
 
-        <!-- Kontrol Tombol Navigasi Panah Carousel Drone (Sama dengan Reels) -->
-        <div id="droneNavControls" class="hidden sm:flex items-center gap-1">
+        <!-- Kontrol Tombol Navigasi Panah Carousel Drone (Sejajar dan Tidak Menumpuk) -->
+        <div id="droneNavControls" class="flex flex-row items-center gap-1 shrink-0">
           <button 
             id="dronePrevBtn"
             type="button"
@@ -605,7 +605,7 @@
             aria-label="Geser ke kiri"
             data-html2canvas-ignore="true"
             title="Geser Drone Sebelumnya"
-            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer disabled:opacity-30 disabled:pointer-events-none">
+            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer shrink-0">
             <i data-lucide="chevron-left" class="w-4 h-4 text-appleDark"></i>
           </button>
           <button 
@@ -615,7 +615,7 @@
             aria-label="Geser ke kanan"
             data-html2canvas-ignore="true"
             title="Geser Drone Berikutnya"
-            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer disabled:opacity-30 disabled:pointer-events-none">
+            class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer shrink-0">
             <i data-lucide="chevron-right" class="w-4 h-4 text-appleDark"></i>
           </button>
         </div>
@@ -626,27 +626,27 @@
     <div class="relative">
       <!-- Loading Skeleton Drone Slider -->
       <div id="droneSkeletonGrid" class="flex items-center gap-4 sm:gap-6 overflow-hidden py-1">
-        <div class="w-[84vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
           <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
           <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
         </div>
-        <div class="w-[84vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
           <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
           <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
         </div>
-        <div class="w-[84vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
+        <div class="w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
           <div class="w-full aspect-[16/10] rounded-[20px] bg-neutral-200/80"></div>
           <div class="h-4 bg-neutral-200 rounded mt-3.5 w-3/4"></div>
           <div class="h-3 bg-neutral-100 rounded mt-2 w-1/3"></div>
         </div>
       </div>
 
-      <!-- Horizontal Carousel Slider Track Drone (Maksimal 3 kartu pas di Desktop) -->
+      <!-- Horizontal Carousel Slider Track Drone -->
       <div 
         id="dronePortfolioGrid" 
-        class="flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1"
+        class="flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1"
         onmouseenter="pauseDroneAutoplay()"
         onmouseleave="resumeDroneAutoplay()"
         ontouchstart="pauseDroneAutoplay()"
@@ -1961,11 +1961,10 @@
 
       emptyState.classList.add("hidden");
 
-      // Kartu 9:16 Utuh (Judul & Lokasi di dalam Frame, Gambar Terang Alami)
       track.innerHTML = reelsProjects.map(item => {
         const cats = getProjectCategories(item);
-        const badgesHtml = cats.slice(0, 1).map(c => `
-          <span class="badge-category px-2.5 rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
             ${c}
           </span>
         `).join("");
@@ -1975,42 +1974,38 @@
           role="button"
           tabindex="0"
           onclick="openVideoModal('${item.id}')"
-          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none shrink-0 w-[72vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start">
+          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start">
           
-          <!-- Kontainer Frame 9:16 Terang Bersih -->
-          <div class="project-img-container relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+          <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
             <img 
               src="${item.image}" 
               alt="${item.title}" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
             />
+            
+            <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
 
-            <!-- Gradasi Tipis Hanya di Bagian Bawah Agar Teks Terbaca Jelas Tanpa Menggelapkan Foto -->
-            <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none"></div>
-
-            <!-- Badge Kategori Pojok Kanan Atas -->
-            <div class="absolute top-3 right-3">
+            <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
               ${badgesHtml}
             </div>
 
-            <!-- Tombol Putar Tengah -->
             <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-11 h-11 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-purple-600 group-hover:text-white">
+              <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
                 <i data-lucide="play" class="w-4 h-4 fill-current"></i>
               </div>
             </div>
 
-            <!-- Keterangan Judul & Lokasi di Dalam Frame Video -->
-            <div class="absolute bottom-3 left-3 right-3 text-white">
-              <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-1">
-                <i data-lucide="smartphone" class="w-2.5 h-2.5"></i> Reels 9:16
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+              <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5 drop-shadow-xs">
+                <i data-lucide="smartphone" class="w-3 h-3"></i> <span>Reels 9:16</span>
               </span>
-              <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 text-white drop-shadow-sm">
+              <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 drop-shadow-sm">
                 ${item.title}
               </h3>
-              <p class="text-[11px] text-neutral-200 flex items-center gap-1 mt-1 font-normal drop-shadow-sm">
-                <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300"></i> ${item.location || 'Indonesia'}
+              <p class="text-[11px] text-neutral-200 flex items-center gap-1 mt-1 font-normal drop-shadow-xs">
+                <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300 shrink-0"></i>
+                <span class="truncate">${item.location || 'Indonesia'}</span>
               </p>
             </div>
           </div>
@@ -2018,8 +2013,7 @@
       `;
       }).join("");
 
-      // Kendali tombol panah di Header (muncul bila reels > 4)
-      if (reelsProjects.length > 4) {
+      if (reelsProjects.length > 1) {
         if (navControls) navControls.classList.remove("hidden");
         startReelsAutoplay();
       } else {
@@ -2028,18 +2022,26 @@
       }
     }
 
+    function getCarouselScrollStep(track) {
+      if (!track) return 300;
+      const cards = track.querySelectorAll(".snap-start");
+      if (cards.length >= 2) {
+        const step = cards[1].offsetLeft - cards[0].offsetLeft;
+        if (step > 0) return step;
+      }
+      return cards[0] ? cards[0].getBoundingClientRect().width + 16 : 300;
+    }
+
     function slideReels(direction) {
       const track = document.getElementById("reelsPortfolioGrid");
       if (!track) return;
 
-      const firstCard = track.querySelector(".snap-start");
-      const scrollStep = firstCard ? (firstCard.getBoundingClientRect().width + 24) : 280;
+      const scrollStep = getCarouselScrollStep(track);
+      const maxScrollLeft = track.scrollWidth - track.clientWidth - 15;
 
-      // Cek apakah mencapai ujung saat slide ke kanan
-      const maxScrollLeft = track.scrollWidth - track.clientWidth - 10;
       if (direction === 1 && track.scrollLeft >= maxScrollLeft) {
         track.scrollTo({ left: 0, behavior: "smooth" });
-      } else if (direction === -1 && track.scrollLeft <= 10) {
+      } else if (direction === -1 && track.scrollLeft <= 15) {
         track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
       } else {
         track.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
@@ -2048,11 +2050,12 @@
 
     function startReelsAutoplay() {
       stopReelsAutoplay();
+      if (window.innerWidth < 640) return;
       reelsAutoplayTimer = setInterval(() => {
         if (!isReelsAutoplayPaused) {
           slideReels(1);
         }
-      }, 4000); // Bergeser halus setiap 4 detik
+      }, 4000);
     }
 
     function stopReelsAutoplay() {
@@ -2073,7 +2076,7 @@
     function resumeReelsAutoplayDelay() {
       setTimeout(() => {
         isReelsAutoplayPaused = false;
-      }, 2000);
+      }, 2500);
     }
 
     function renderDroneSection() {
@@ -2096,7 +2099,6 @@
 
       emptyState.classList.add("hidden");
 
-      // Kartu Drone Slider: Maksimal 3 pas di desktop (lg:w-[calc((100%-3rem)/3)])
       track.innerHTML = droneProjects.map(item => {
         const cats = getProjectCategories(item);
         const badgesHtml = cats.map(c => `
@@ -2110,7 +2112,7 @@
           role="button"
           tabindex="0"
           onclick="handleDroneClick('${item.id}')"
-          class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none shrink-0 w-[84vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] snap-start">
+          class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none shrink-0 w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] snap-start">
           
           <div class="project-img-container relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-neutral-900">
             <img 
@@ -2159,8 +2161,7 @@
       `;
       }).join("");
 
-      // Kendali tombol panah di Header (muncul bila drone > 3)
-      if (droneProjects.length > 3) {
+      if (droneProjects.length > 1) {
         if (navControls) navControls.classList.remove("hidden");
         startDroneAutoplay();
       } else {
@@ -2173,13 +2174,12 @@
       const track = document.getElementById("dronePortfolioGrid");
       if (!track) return;
 
-      const firstCard = track.querySelector(".snap-start");
-      const scrollStep = firstCard ? (firstCard.getBoundingClientRect().width + 24) : 360;
+      const scrollStep = getCarouselScrollStep(track);
+      const maxScrollLeft = track.scrollWidth - track.clientWidth - 15;
 
-      const maxScrollLeft = track.scrollWidth - track.clientWidth - 10;
       if (direction === 1 && track.scrollLeft >= maxScrollLeft) {
         track.scrollTo({ left: 0, behavior: "smooth" });
-      } else if (direction === -1 && track.scrollLeft <= 10) {
+      } else if (direction === -1 && track.scrollLeft <= 15) {
         track.scrollTo({ left: track.scrollWidth, behavior: "smooth" });
       } else {
         track.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
@@ -2188,11 +2188,12 @@
 
     function startDroneAutoplay() {
       stopDroneAutoplay();
+      if (window.innerWidth < 640) return;
       droneAutoplayTimer = setInterval(() => {
         if (!isDroneAutoplayPaused) {
           slideDrone(1);
         }
-      }, 4500); // Bergeser otomatis setiap 4.5 detik
+      }, 4500);
     }
 
     function stopDroneAutoplay() {
@@ -2213,7 +2214,7 @@
     function resumeDroneAutoplayDelay() {
       setTimeout(() => {
         isDroneAutoplayPaused = false;
-      }, 2000);
+      }, 2500);
     }
 
     function handleDroneClick(id) {
