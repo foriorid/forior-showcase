@@ -744,7 +744,8 @@
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex flex-col justify-between select-none bg-neutral-950 text-white"
     style="background-color: rgba(10, 10, 14, 0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
     
-    <div class="px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md">
+    <!-- Topbar Modal -->
+    <div class="px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md shrink-0">
       <div class="min-w-0">
         <div class="flex items-center gap-2 flex-wrap">
           <h3 id="lightboxProjectTitle" class="text-sm sm:text-base md:text-lg font-bold tracking-tight text-white truncate drop-shadow-sm">
@@ -768,8 +769,8 @@
           href="#" 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-xs font-medium text-white border border-white/25 transition-all shadow-sm">
-          <span class="hidden sm:inline">Buka Album</span> Google Photos
+          class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
+          <span>Buka Album Google Photos</span>
           <i data-lucide="external-link" class="w-3.5 h-3.5 ml-0.5"></i>
         </a>
 
@@ -783,6 +784,7 @@
       </div>
     </div>
 
+    <!-- Stage Foto & Overlay End-Card -->
     <div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
       <button 
         id="lightboxPrevBtn"
@@ -798,8 +800,31 @@
           id="lightboxMainImage" 
           src="" 
           alt="Portofolio FORIOR" 
-          class="max-h-[64vh] sm:max-h-[74vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
+          class="max-h-[60vh] sm:max-h-[72vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
         />
+
+        <!-- End-Card Overlay (Muncul saat tiba di foto terakhir) -->
+        <div 
+          id="lightboxEndCardOverlay" 
+          class="hidden absolute inset-0 rounded-2xl bg-black/80 backdrop-blur-md p-6 flex flex-col items-center justify-center text-center border border-white/20 animate-fade-in">
+          <div class="w-12 h-12 rounded-full bg-white/15 border border-white/25 flex items-center justify-center mb-3">
+            <i data-lucide="images" class="w-6 h-6 text-white"></i>
+          </div>
+          <h4 class="text-base sm:text-lg font-bold text-white mb-1">Dokumentasi Lengkap Tersedia</h4>
+          <p class="text-xs text-neutral-300 max-w-xs mb-4">
+            Lihat seluruh koleksi foto arsitektur dan detail ruang beresolusi penuh langsung di Google Photos.
+          </p>
+          <a 
+            id="lightboxEndCardBtn" 
+            href="#" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
+            <span>Buka Album Google Photos</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
+        </div>
+
         <div class="sm:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono text-white shadow-md">
           <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
         </div>
@@ -815,7 +840,21 @@
       </button>
     </div>
 
-    <div class="p-3 sm:p-4 bg-black/50 border-t border-white/10 flex flex-col items-center gap-2">
+    <!-- Floating Pill Khusus Mobile (Dekat jangkauan jempol) -->
+    <div class="sm:hidden px-4 pb-2 text-center">
+      <a 
+        id="lightboxMobilePillBtn" 
+        href="#" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-full bg-white text-appleDark text-xs font-semibold shadow-md active:scale-95 transition-all">
+        <span>Buka Album Lengkap di Google Photos</span>
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>
+
+    <!-- Bottom Thumbnail Bar -->
+    <div class="p-3 sm:p-4 bg-black/50 border-t border-white/10 flex flex-col items-center gap-2 shrink-0">
       <div id="lightboxThumbnails" class="flex items-center gap-2 overflow-x-auto no-scrollbar max-w-full py-1 px-2"></div>
       <p class="text-[11px] text-neutral-300 font-light hidden sm:block">
         Gunakan tombol panah ◀ ▶ pada keyboard atau geser layar untuk navigasi
@@ -2632,7 +2671,11 @@
         <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
         <span>${project.location || 'Indonesia'}</span>
       `;
-      document.getElementById("lightboxExternalBtn").href = project.link || "https://photos.google.com/";
+
+      const targetLink = project.link || "https://photos.google.com/";
+      document.getElementById("lightboxExternalBtn").href = targetLink;
+      document.getElementById("lightboxEndCardBtn").href = targetLink;
+      document.getElementById("lightboxMobilePillBtn").href = targetLink;
 
       updateLightboxDisplay();
 
@@ -2675,7 +2718,10 @@
 
     function updateLightboxDisplay() {
       const mainImg = document.getElementById("lightboxMainImage");
+      const endCard = document.getElementById("lightboxEndCardOverlay");
       const currentUrl = currentLightboxPhotos[currentLightboxIndex];
+      const total = currentLightboxPhotos.length;
+      const current = currentLightboxIndex + 1;
 
       mainImg.style.opacity = "0.4";
       mainImg.src = currentUrl;
@@ -2683,32 +2729,51 @@
         mainImg.style.opacity = "1";
       };
 
-      const total = currentLightboxPhotos.length;
-      const current = currentLightboxIndex + 1;
+      // Tampilkan End-Card overlay jika pengunjung berada di foto terakhir
+      if (current === total && total > 1) {
+        endCard.classList.remove("hidden");
+      } else {
+        endCard.classList.add("hidden");
+      }
+
       document.getElementById("lightboxIndexDisplay").textContent = current;
       document.getElementById("lightboxTotalDisplay").textContent = total;
       document.getElementById("lightboxMobileIndex").textContent = current;
       document.getElementById("lightboxMobileTotal").textContent = total;
 
       const thumbContainer = document.getElementById("lightboxThumbnails");
-      if (total <= 1) {
-        thumbContainer.innerHTML = "";
-      } else {
-        thumbContainer.innerHTML = currentLightboxPhotos.map((url, idx) => {
-          const isActive = idx === currentLightboxIndex;
-          const borderClass = isActive 
-            ? "border-2 border-white scale-105 shadow-md brightness-110" 
-            : "border border-white/20 opacity-50 hover:opacity-90";
-          return `
-            <button 
-              type="button" 
-              onclick="setLightboxPhotoIndex(${idx})" 
-              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-200 ${borderClass} cursor-pointer">
-              <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
-            </button>
-          `;
-        }).join("");
-      }
+      const targetLink = (activeLightboxProject && activeLightboxProject.link) || "https://photos.google.com/";
+
+      // Render thumbnail foto + 1 slot khusus shortcut album di ujung baris
+      let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
+        const isActive = idx === currentLightboxIndex;
+        const borderClass = isActive 
+          ? "border-2 border-white scale-105 shadow-md brightness-110" 
+          : "border border-white/20 opacity-50 hover:opacity-90";
+        return `
+          <button 
+            type="button" 
+            onclick="setLightboxPhotoIndex(${idx})" 
+            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-200 ${borderClass} cursor-pointer">
+            <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
+          </button>
+        `;
+      }).join("");
+
+      // Slot ekstra shortcut album di thumbnail strip
+      thumbsHtml += `
+        <a 
+          href="${targetLink}" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          title="Buka Album Lengkap"
+          class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/15 hover:bg-white/25 border border-dashed border-white/40 shrink-0 flex flex-col items-center justify-center text-white text-[9px] font-semibold text-center transition-all p-1 leading-tight">
+          <i data-lucide="external-link" class="w-3.5 h-3.5 mb-0.5"></i>
+          <span>Album</span>
+        </a>
+      `;
+
+      thumbContainer.innerHTML = thumbsHtml;
 
       const prevBtn = document.getElementById("lightboxPrevBtn");
       const nextBtn = document.getElementById("lightboxNextBtn");
@@ -2719,6 +2784,8 @@
         prevBtn.classList.remove("hidden");
         nextBtn.classList.remove("hidden");
       }
+
+      lucide.createIcons();
     }
 
     function extractYouTubeId(url) {
