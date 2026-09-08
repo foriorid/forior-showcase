@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>FORIOR — Interior Photo Services</title>
+  <title id="pageMetaTitle">FORIOR — Interior Photo Services</title>
   <meta name="description" content="Showcase portofolio fotografi interior, arsitektur, video sinematik, social reels, dan drone profesional oleh FORIOR." />
   <link rel="canonical" href="https://showcase.forior.id/" />
 
@@ -98,6 +98,16 @@
       vertical-align: middle !important;
       box-sizing: border-box !important;
     }
+    .cta-pill-btn {
+      height: 32px !important;
+      padding: 0 15px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      line-height: 32px !important;
+      vertical-align: middle !important;
+      box-sizing: border-box !important;
+    }
     .category-pill {
       height: 32px !important;
       padding: 0 16px !important;
@@ -128,29 +138,36 @@
       vertical-align: middle !important;
       box-sizing: border-box !important;
     }
+    .badge-counter svg,
+    .badge-counter i {
+      margin-top: -1px;
+    }
   </style>
 </head>
 
 <body class="bg-appleBg text-appleDark antialiased selection:bg-foriorBrand selection:text-white">
 
+  <!-- ================= NAVBAR ================= -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-3">
       
-      <a href="#" class="group shrink-0 py-1">
+      <!-- Brand Logo FORIOR -->
+      <a href="#/" onclick="handleNavRoute(event, '/')" class="group shrink-0 py-1">
         <span class="text-lg sm:text-xl font-black tracking-wider text-appleDark leading-none group-hover:text-foriorBrand transition-colors">FORIOR</span>
       </a>
 
+      <!-- Quick SPA Route Menu -->
       <nav class="hidden md:flex items-center gap-1 bg-neutral-100/80 p-1 rounded-full border border-appleBorder">
-        <a href="#section-foto" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all">
+        <a href="#/foto" id="navLinkFoto" onclick="handleNavRoute(event, '/foto')" class="nav-route-btn text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all">
           Foto
         </a>
-        <a href="#section-video" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
+        <a href="#/video" id="navLinkVideo" onclick="handleNavRoute(event, '/video')" class="nav-route-btn text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="play" class="w-3 h-3 text-rose-500 fill-rose-500"></i> Video Tour
         </a>
-        <a href="#section-reels" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
+        <a href="#/sosmed" id="navLinkSosmed" onclick="handleNavRoute(event, '/sosmed')" class="nav-route-btn text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="smartphone" class="w-3 h-3 text-purple-600"></i> Reels & TikTok
         </a>
-        <a href="#section-drone" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
+        <a href="#/drone" id="navLinkDrone" onclick="handleNavRoute(event, '/drone')" class="nav-route-btn text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="plane" class="w-3 h-3 text-sky-500"></i> Drone Aerial
         </a>
       </nav>
@@ -160,11 +177,13 @@
           forior.id ↗
         </a>
 
+        <!-- Status Cloud Indicator (Firestore + Storage) -->
         <div id="cloudStatusNav" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-neutral-100 border border-appleBorder shadow-2xs" title="Menghubungkan ke Cloud...">
           <i data-lucide="cloud" class="w-3.5 h-3.5 text-appleDark"></i>
           <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
         </div>
 
+        <!-- Tombol Screenshot Halaman Penuh -->
         <button 
           id="btnScreenshotFull"
           type="button" 
@@ -178,6 +197,7 @@
           <span id="screenshotBtnText" class="hidden sm:inline">Screenshot Web</span>
         </button>
         
+        <!-- Tombol Akses Kelola Portofolio -->
         <button 
           id="navAdminBtn"
           type="button"
@@ -191,7 +211,48 @@
     </div>
   </header>
 
-  <section class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
+  <!-- ================= DEDICATED CATEGORY HEADER (FOR /drone, /sosmed, /video, /foto) ================= -->
+  <section id="dedicatedHeader" class="hidden pt-24 pb-8 md:pt-28 md:pb-10 bg-white border-b border-appleBorder transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8">
+      
+      <div class="flex items-center justify-between mb-4">
+        <a 
+          href="#/" 
+          onclick="handleNavRoute(event, '/')" 
+          class="inline-flex items-center gap-2 text-xs font-semibold text-appleGray hover:text-appleDark bg-neutral-100 hover:bg-neutral-200/80 px-3.5 py-1.5 rounded-full transition-all cursor-pointer">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Kembali ke Semua Showcase</span>
+        </a>
+
+        <button 
+          type="button" 
+          onclick="shareCurrentPage()" 
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-appleGray hover:text-appleDark bg-neutral-50 border border-appleBorder px-3 py-1.5 rounded-full shadow-2xs hover:bg-neutral-100 transition-all cursor-pointer">
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>Bagikan Tautan</span>
+        </button>
+      </div>
+
+      <div class="space-y-2">
+        <div id="dedicatedBadgeBox" class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+          <i id="dedicatedBadgeIcon" class="w-3.5 h-3.5"></i>
+          <span id="dedicatedBadgeText">LAYANAN</span>
+        </div>
+
+        <h1 id="dedicatedTitle" class="text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-appleDark">
+          Judul Kategori
+        </h1>
+
+        <p id="dedicatedDesc" class="text-xs sm:text-sm md:text-base text-appleGray max-w-2xl font-normal leading-relaxed">
+          Deskripsi singkat portofolio kategori terpilih.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 1: HERO CINEMATIC (HOME ONLY) ================= -->
+  <section id="heroSection" class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
     <img 
       src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
       alt="FORIOR Interior Photography Showcase" 
@@ -218,19 +279,19 @@
         </p>
 
         <div class="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
-          <a href="#section-foto" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md">
+          <a href="#/foto" onclick="handleNavRoute(event, '/foto')" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md cursor-pointer">
             <span>Foto Interior</span>
-            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </a>
-          <a href="#section-video" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
+          <a href="#/video" onclick="handleNavRoute(event, '/video')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all cursor-pointer">
             <i data-lucide="play" class="w-3.5 h-3.5 text-rose-400 fill-rose-400"></i>
             <span>Video Sinematik</span>
           </a>
-          <a href="#section-reels" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
+          <a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all cursor-pointer">
             <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-300"></i>
             <span>Reels 9:16</span>
           </a>
-          <a href="#section-drone" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
+          <a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all cursor-pointer">
             <i data-lucide="plane" class="w-3.5 h-3.5 text-sky-400"></i>
             <span>Aerial Drone</span>
           </a>
@@ -240,7 +301,10 @@
     </div>
   </section>
 
-  <section id="section-foto" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24">
+  <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
+  <section id="section-foto" class="max-w-7xl mx-auto px-4 sm:px-8 pt-14 md:pt-20">
+
+    <!-- Header Section Foto -->
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 md:mb-8 gap-3">
       <div>
         <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
@@ -249,18 +313,20 @@
             <span>Portofolio Fotografi</span>
           </div>
 
+          <!-- Tombol Share Section Foto -->
           <button 
             type="button" 
             onclick="handleShareSection('foto')" 
             data-html2canvas-ignore="true" 
             class="inline-flex items-center gap-1 text-[11px] font-medium text-appleGray hover:text-appleDark bg-white border border-appleBorder px-2.5 py-1 rounded-full shadow-2xs hover:border-neutral-400 transition-all cursor-pointer"
-            title="Bagikan Section Foto">
+            title="Bagikan Halaman Foto">
             <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M16 8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span class="underline underline-offset-2">Share</span>
           </button>
 
+          <!-- Tombol Screenshot Khusus Section Foto -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-foto', 'Portofolio-Fotografi')" 
@@ -274,7 +340,16 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Pilih kategori untuk memfilter. Klik kartu proyek untuk membuka galeri foto.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+      <div class="flex items-center gap-2.5 self-start sm:self-auto shrink-0">
+        <!-- Tombol Kontras & Mencolok: Lihat Semua Foto -->
+        <a 
+          id="btnDedicatedFoto" 
+          href="#/foto" 
+          onclick="handleNavRoute(event, '/foto')" 
+          class="cta-pill-btn inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-foriorBrand hover:bg-[#1e105e] active:scale-95 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer">
+          <span>Lihat Semua Foto</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
           <span>Menampilkan</span>
           <span id="photoProjectCount" class="font-semibold text-appleDark mx-1">...</span>
@@ -283,10 +358,12 @@
       </div>
     </div>
 
+    <!-- Filter Kategori Foto -->
     <div class="relative mb-8 md:mb-10">
       <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
     </div>
 
+    <!-- Loading Skeleton Grid Foto -->
     <div id="photoSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
       <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
         <div class="w-full aspect-[4/3] rounded-[20px] bg-neutral-200/80"></div>
@@ -305,8 +382,10 @@
       </div>
     </div>
 
+    <!-- Grid Foto Proyek Nyata -->
     <div id="photoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8"></div>
 
+    <!-- Load More Tombol Foto -->
     <div id="photoLoadMoreContainer" class="mt-8 text-center hidden">
       <button 
         type="button" 
@@ -317,6 +396,7 @@
       </button>
     </div>
 
+    <!-- Empty State Foto -->
     <div id="emptyPhotoState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8 mt-6">
       <div class="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-appleGray mb-3">
         <i data-lucide="image-off" class="w-6 h-6"></i>
@@ -324,9 +404,13 @@
       <h3 class="text-base font-semibold text-appleDark">Belum Ada Proyek Foto</h3>
       <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tidak ada portofolio pada kategori ini. Tambahkan karya baru melalui panel admin.</p>
     </div>
+
   </section>
 
+  <!-- ================= SECTION 3: PORTOFOLIO VIDEO SINEMATIK ================= -->
   <section id="section-video" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
+
+    <!-- Header Section Video -->
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
       <div>
         <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
@@ -335,18 +419,20 @@
             <span>Cinema & Video Walkthrough</span>
           </div>
 
+          <!-- Tombol Share Section Video -->
           <button 
             type="button" 
             onclick="handleShareSection('video')" 
             data-html2canvas-ignore="true" 
             class="inline-flex items-center gap-1 text-[11px] font-medium text-appleGray hover:text-appleDark bg-white border border-appleBorder px-2.5 py-1 rounded-full shadow-2xs hover:border-neutral-400 transition-all cursor-pointer"
-            title="Bagikan Section Video">
+            title="Bagikan Halaman Video">
             <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M16 8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span class="underline underline-offset-2">Share</span>
           </button>
 
+          <!-- Tombol Screenshot Section Video -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-video', 'Portofolio-Video')" 
@@ -360,7 +446,16 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ruang dengan gerakan kamera halus, pencahayaan dramatis, dan transisi sinematik 16:9.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+      <div class="flex items-center gap-2.5 self-start sm:self-auto shrink-0">
+        <!-- Tombol Kontras & Mencolok: Lihat Semua Video -->
+        <a 
+          id="btnDedicatedVideo" 
+          href="#/video" 
+          onclick="handleNavRoute(event, '/video')" 
+          class="cta-pill-btn inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-rose-600 hover:bg-rose-700 active:scale-95 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer">
+          <span>Lihat Semua Video</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs">
           <span id="videoProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Video Tersedia</span>
@@ -368,6 +463,7 @@
       </div>
     </div>
 
+    <!-- Loading Skeleton Grid Video -->
     <div id="videoSkeletonGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
       <div class="bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
         <div class="w-full aspect-video rounded-[20px] bg-neutral-200/80"></div>
@@ -381,8 +477,10 @@
       </div>
     </div>
 
+    <!-- Grid Video Nyata -->
     <div id="videoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
 
+    <!-- Load More Tombol Video -->
     <div id="videoLoadMoreContainer" class="mt-8 text-center hidden">
       <button 
         type="button" 
@@ -393,6 +491,7 @@
       </button>
     </div>
 
+    <!-- Empty State Video -->
     <div id="emptyVideoState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
       <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-3">
         <i data-lucide="video-off" class="w-6 h-6"></i>
@@ -400,9 +499,13 @@
       <h3 class="text-base font-semibold text-appleDark">Belum Ada Portofolio Video</h3>
       <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan karya video atau walkthrough sinematik melalui panel admin.</p>
     </div>
+
   </section>
 
+  <!-- ================= SECTION 4: PORTOFOLIO REELS & TIKTOK (VERTICAL 9:16) ================= -->
   <section id="section-reels" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
+
+    <!-- Header Section Reels -->
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
       <div>
         <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
@@ -411,18 +514,20 @@
             <span>Social Reels & TikTok</span>
           </div>
 
+          <!-- Tombol Share Section Reels -->
           <button 
             type="button" 
-            onclick="handleShareSection('reels')" 
+            onclick="handleShareSection('sosmed')" 
             data-html2canvas-ignore="true" 
             class="inline-flex items-center gap-1 text-[11px] font-medium text-appleGray hover:text-appleDark bg-white border border-appleBorder px-2.5 py-1 rounded-full shadow-2xs hover:border-neutral-400 transition-all cursor-pointer"
-            title="Bagikan Section Reels">
+            title="Bagikan Halaman Reels">
             <svg class="w-3.5 h-3.5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M16 8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             <span class="underline underline-offset-2">Share</span>
           </button>
 
+          <!-- Tombol Screenshot Section Reels -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-reels', 'Portofolio-Reels')" 
@@ -436,7 +541,17 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik yang dioptimalkan untuk Instagram Reels, TikTok, dan YouTube Shorts.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
+      <!-- Navigasi Panah dan Counter -->
+      <div class="flex items-center gap-2.5 self-start sm:self-auto shrink-0 flex-nowrap">
+        <!-- Tombol Kontras & Mencolok: Lihat Semua Reels -->
+        <a 
+          id="btnDedicatedSosmed" 
+          href="#/sosmed" 
+          onclick="handleNavRoute(event, '/sosmed')" 
+          class="cta-pill-btn inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 active:scale-95 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer">
+          <span>Lihat Semua Reels</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs whitespace-nowrap">
           <span id="reelsProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Reels Tersedia</span>
@@ -467,6 +582,7 @@
       </div>
     </div>
 
+    <!-- Carousel Stage Container Reels -->
     <div class="relative">
       <div id="reelsSkeletonGrid" class="flex items-center gap-4 sm:gap-6 overflow-hidden py-1">
         <div class="w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] shrink-0 bg-white rounded-[26px] p-2.5 border border-appleBorder animate-pulse shadow-sm">
@@ -500,10 +616,14 @@
       <h3 class="text-base font-semibold text-appleDark">Belum Ada Video Reels 9:16</h3>
       <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan karya video vertikal untuk Instagram Reels atau TikTok melalui panel admin.</p>
     </div>
+
   </section>
 
+  <!-- ================= SECTION 5: PORTOFOLIO DRONE (AERIAL) ================= -->
   <section id="section-drone" class="max-w-7xl mx-auto px-4 sm:px-8 py-20 md:py-28">
-    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
+
+    <!-- Header Section Drone -->
+    <div id="droneSectionHeader" class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
       <div>
         <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
           <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-sky-600 uppercase tracking-wider">
@@ -511,6 +631,7 @@
             <span>Aerial & Masterplan Perspective</span>
           </div>
 
+          <!-- Tombol Share Section Drone -->
           <button 
             type="button" 
             onclick="handleShareSection('drone')" 
@@ -523,6 +644,7 @@
             <span class="underline underline-offset-2">Share</span>
           </button>
 
+          <!-- Tombol Screenshot Section Drone -->
           <button 
             type="button" 
             onclick="takeSectionScreenshot('section-drone', 'Portofolio-Drone')" 
@@ -536,7 +658,16 @@
         <p class="text-xs sm:text-sm text-appleGray mt-1">Dokumentasi udara fasad bangunan megah, keindahan lanskap, dan tata ruang dari sudut pandang luas.</p>
       </div>
 
-      <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
+      <div class="flex items-center gap-2.5 self-start sm:self-auto shrink-0 flex-nowrap">
+        <!-- Tombol Kontras & Mencolok: Lihat Semua Drone -->
+        <a 
+          id="btnDedicatedDrone" 
+          href="#/drone" 
+          onclick="handleNavRoute(event, '/drone')" 
+          class="cta-pill-btn inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 active:scale-95 rounded-full shadow-sm hover:shadow-md transition-all cursor-pointer">
+          <span>Lihat Semua Drone</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs whitespace-nowrap">
           <span id="droneProjectCount" class="font-semibold text-appleDark mr-1">...</span>
           <span>Proyek Aerial</span>
@@ -567,6 +698,7 @@
       </div>
     </div>
 
+    <!-- Carousel Stage Container Drone -->
     <div class="relative">
       <div id="droneSkeletonGrid" class="flex items-center gap-4 sm:gap-6 overflow-hidden py-1">
         <div class="w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] shrink-0 bg-white rounded-[26px] p-3 border border-appleBorder animate-pulse shadow-sm">
@@ -603,8 +735,10 @@
       <h3 class="text-base font-semibold text-appleDark">Belum Ada Portofolio Drone</h3>
       <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan karya foto atau video drone melalui panel admin.</p>
     </div>
+
   </section>
 
+  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO ================= -->
   <div 
     id="lightboxModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex flex-col justify-between select-none bg-neutral-950 text-white"
@@ -687,8 +821,10 @@
         Gunakan tombol panah ◀ ▶ pada keyboard atau geser layar untuk navigasi
       </p>
     </div>
+
   </div>
 
+  <!-- ================= SECTION 7: MODAL VIDEO PLAYER ================= -->
   <div 
     id="videoModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-xl">
@@ -740,6 +876,7 @@
     </div>
   </div>
 
+  <!-- ================= MODAL PREVIEW SCREENSHOT ================= -->
   <div id="screenshotPreviewModal" class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-200 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md">
     <div onclick="closeScreenshotPreview()" class="absolute inset-0"></div>
 
@@ -776,6 +913,7 @@
     </div>
   </div>
 
+  <!-- ================= FOOTER ================= -->
   <footer class="border-t border-appleBorder bg-white py-12 sm:py-14">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-appleBorder">
@@ -795,13 +933,13 @@
         </div>
 
         <div class="space-y-1.5 text-xs md:text-right">
-          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Akses Cepat</h4>
-          <div><a href="#section-foto" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Foto</a></div>
-          <div><a href="#section-video" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Video Tour</a></div>
-          <div><a href="#section-reels" class="text-appleGray hover:text-appleDark transition-colors">Social Reels & TikTok</a></div>
-          <div><a href="#section-drone" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Drone Aerial</a></div>
+          <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Halaman Khusus</h4>
+          <div><a href="#/foto" onclick="handleNavRoute(event, '/foto')" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Foto Interior</a></div>
+          <div><a href="#/video" onclick="handleNavRoute(event, '/video')" class="text-appleGray hover:text-appleDark transition-colors">Video Walkthrough 16:9</a></div>
+          <div><a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="text-appleGray hover:text-appleDark transition-colors">Social Reels & TikTok 9:16</a></div>
+          <div><a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="text-appleGray hover:text-appleDark transition-colors">Drone & Aerial Masterplan</a></div>
           <div><button onclick="handleAdminNavClick()" class="text-appleGray hover:text-appleDark transition-colors cursor-pointer">Panel Masuk Admin</button></div>
-          <div><a href="#" class="text-appleGray hover:text-appleDark transition-colors">Kembali ke Atas ↑</a></div>
+          <div><a href="#/" onclick="handleNavRoute(event, '/')" class="text-appleGray hover:text-appleDark transition-colors">Kembali ke Beranda ↑</a></div>
         </div>
 
       </div>
@@ -813,6 +951,7 @@
     </div>
   </footer>
 
+  <!-- ================= MODAL LOGIN ADMIN ================= -->
   <div id="loginModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 flex items-center justify-center p-4">
     <div onclick="toggleLoginModal(false)" class="absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity"></div>
 
@@ -832,6 +971,7 @@
         </button>
       </div>
 
+      <!-- Quick Select Whitelist -->
       <div class="mt-4 p-3 rounded-2xl bg-neutral-50 border border-appleBorder">
         <span class="text-[10px] font-semibold text-appleGray uppercase tracking-wider block mb-2">Pilih Akun Email Terdaftar:</span>
         <div class="flex flex-col gap-1.5">
@@ -850,6 +990,7 @@
         </div>
       </div>
 
+      <!-- Form Login -->
       <form onsubmit="handleAdminLogin(event)" class="space-y-3.5 mt-4">
         <div>
           <label class="block text-xs font-medium text-appleDark mb-1">Email Akun</label>
@@ -893,11 +1034,13 @@
     </div>
   </div>
 
+  <!-- ================= BACKEND / ADMIN DRAWER ================= -->
   <div id="adminModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 ease-out flex justify-end">
     <div onclick="toggleAdminPanel(false)" class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
 
     <div class="relative w-full max-w-xl bg-white h-full shadow-2xl overflow-y-auto flex flex-col z-10">
       
+      <!-- Drawer Header -->
       <div class="sticky top-0 bg-white/95 backdrop-blur-md border-b border-appleBorder p-4 sm:p-5 flex items-center justify-between gap-3 z-20">
         <div class="flex items-center gap-2.5 min-w-0">
           <div class="w-8 h-8 rounded-xl bg-foriorBrand text-white flex items-center justify-center shadow-xs shrink-0">
@@ -922,8 +1065,10 @@
         </div>
       </div>
 
+      <!-- Drawer Body -->
       <div class="p-4 sm:p-6 space-y-6 flex-1">
 
+        <!-- Form Tambah / Edit Proyek -->
         <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-4 sm:p-5 space-y-3.5">
           <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider flex items-center gap-2">
             <i data-lucide="plus-circle" class="w-4 h-4 text-foriorBrand"></i>
@@ -933,6 +1078,7 @@
           <form id="projectForm" onsubmit="handleSaveProject(event)" class="space-y-3.5">
             <input type="hidden" id="editProjectId" value="">
 
+            <!-- TIPE PORTOFOLIO -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Tipe Portofolio</label>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -963,6 +1109,7 @@
               </div>
             </div>
 
+            <!-- Judul Proyek -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Judul Portofolio</label>
               <input 
@@ -974,6 +1121,7 @@
               />
             </div>
 
+            <!-- MULTI-KATEGORI SELECTOR -->
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-medium text-appleDark">Kategori (Bisa pilih lebih dari satu)</label>
@@ -982,6 +1130,7 @@
               <div id="formCategoryPillsContainer" class="flex flex-wrap gap-1.5 p-2 bg-white rounded-xl border border-appleBorder min-h-[44px]"></div>
             </div>
 
+            <!-- Lokasi -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1">Tag Lokasi Kota</label>
               <input 
@@ -993,6 +1142,7 @@
               />
             </div>
 
+            <!-- Tautan Link -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span id="linkFieldLabel">Tautan Album Google Photos</span>
@@ -1008,6 +1158,7 @@
               />
             </div>
 
+            <!-- Cover Thumbnail -->
             <div>
               <div class="flex items-center justify-between mb-1.5">
                 <label class="block text-xs font-medium text-appleDark">Foto Cover (Thumbnail Proyek)</label>
@@ -1016,6 +1167,7 @@
                 </span>
               </div>
 
+              <!-- Tombol Opsi Ambil Thumbnail dari Video -->
               <div id="videoThumbExtractBox" class="mb-2 flex items-center gap-2">
                 <button 
                   type="button" 
@@ -1058,6 +1210,7 @@
               </div>
             </div>
 
+            <!-- Galeri Tambahan (Khusus Foto / Drone) -->
             <div id="formGalleryWrapper">
               <div class="flex items-center justify-between mb-1">
                 <label class="block text-xs font-medium text-appleDark">Galeri Foto Tambahan (Lightbox)</label>
@@ -1076,6 +1229,7 @@
               <div id="formGalleryPreviewContainer" class="mt-2.5 grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-48 overflow-y-auto p-1.5 rounded-xl bg-white border border-appleBorder empty:hidden"></div>
             </div>
 
+            <!-- Progress Upload Bar -->
             <div id="uploadProgressBar" class="hidden p-2.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-700 text-xs flex items-center gap-2">
               <svg class="animate-spin w-4 h-4 text-purple-600 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -1104,6 +1258,7 @@
           </form>
         </div>
 
+        <!-- Filter Tipe Tab di Drawer Admin -->
         <div>
           <div class="flex items-center justify-between mb-3">
             <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider">Daftar Portofolio Aktif</h4>
@@ -1134,6 +1289,7 @@
     </div>
   </div>
 
+  <!-- Modal Konfirmasi Hapus Proyek -->
   <div id="confirmModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
     <div onclick="closeConfirmModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
@@ -1153,6 +1309,7 @@
     </div>
   </div>
 
+  <!-- Modal Konfirmasi Reset Data -->
   <div id="confirmResetModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
     <div onclick="closeResetModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
     <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
@@ -1172,11 +1329,13 @@
     </div>
   </div>
 
+  <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 max-w-[92vw]">
     <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
     <span id="toastMsg" class="leading-snug">Perubahan berhasil disimpan</span>
   </div>
 
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
     const CATEGORIES = [
       "Semua",
@@ -1232,6 +1391,7 @@
       appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
     };
 
+    // Data Bawaan Orisinal (Auto-seeding jika database kosong)
     const INITIAL_PROJECTS = [
       {
         id: "foto-1",
@@ -1367,30 +1527,36 @@
       {
         id: "drone-1",
         type: "drone",
-        title: "Epic FPV Drone One-Shot — Tokay Sanctuary",
-        category: "Vila",
-        categories: ["Vila"],
-        location: "Gili Air, Bali",
+        title: "Menara BRILiaN Jakarta",
+        category: "Office, Komersial",
+        categories: ["Office", "Komersial"],
+        location: "Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop",
-        link: "https://www.youtube.com/watch?v=JFw4KcuzlTs"
+        gallery: [
+          "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop"
+        ],
+        link: "https://photos.google.com/"
       },
       {
         id: "drone-2",
         type: "drone",
-        title: "Aerial Masterplan & Facade Pine Breeze",
-        category: "Rumah",
-        categories: ["Rumah"],
-        location: "Marbella & Serang",
+        title: "Night at Kemayoran - Aerial Drone Video by FORIOR",
+        category: "Apartemen",
+        categories: ["Apartemen"],
+        location: "Jakarta Pusat",
         image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=wMo6QWWQKlI"
       },
       {
         id: "drone-3",
         type: "drone",
-        title: "Bird-Eye Masterplan Resort & Spa",
-        category: "Hotel",
-        categories: ["Hotel"],
-        location: "Sanur, Bali",
+        title: "Desa Pembuat Kapal di Jawa Tengah",
+        category: "Lainnya",
+        categories: ["Lainnya"],
+        location: "Batang, Jawa Tengah",
         image: "https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=JFw4KcuzlTs"
       }
@@ -1424,6 +1590,237 @@
     let droneAutoplayTimer = null;
     let isDroneAutoplayPaused = false;
 
+    // Current SPA Active Route ('/', '/foto', '/video', '/sosmed', '/drone')
+    let currentRoute = "/";
+
+    // Client-Side Routing Configurations
+    const ROUTE_CONFIG = {
+      "/": {
+        title: "FORIOR — Interior Photo Services",
+        badgeText: "SHOWCASE PORTOFOLIO",
+        badgeIcon: "layout-grid",
+        badgeClass: "bg-neutral-100 text-appleDark",
+        headline: "Memotret Bentuk, Ruang & Cahaya",
+        desc: "Eksplorasi portofolio fotografi interior dan arsitektur oleh FORIOR."
+      },
+      "/foto": {
+        title: "Portofolio Fotografi Interior & Arsitektur — FORIOR",
+        badgeText: "PORTOFOLIO FOTOGRAFI",
+        badgeIcon: "camera",
+        badgeClass: "bg-foriorBrand/10 text-foriorBrand border border-foriorBrand/20",
+        headline: "Interior & Arsitektur",
+        desc: "Dokumentasi fotografi profesional beresolusi tinggi dengan komposisi simetris, natural lighting, dan detail material ruang."
+      },
+      "/video": {
+        title: "Portofolio Video Walkthrough Sinematik 16:9 — FORIOR",
+        badgeText: "VIDEO SINEMATIK 16:9",
+        badgeIcon: "video",
+        badgeClass: "bg-rose-50 text-rose-600 border border-rose-200",
+        headline: "Cinema & Video Walkthrough",
+        desc: "Eksplorasi ruang dengan pergerakan kamera halus sinematik, tata pencahayaan dramatis, dan sound design immersive."
+      },
+      "/sosmed": {
+        title: "Portofolio Social Reels & TikTok 9:16 — FORIOR",
+        badgeText: "SOCIAL REELS & TIKTOK 9:16",
+        badgeIcon: "smartphone",
+        badgeClass: "bg-purple-50 text-purple-600 border border-purple-200",
+        headline: "Vertical Cinema & Social Media",
+        desc: "Kurasi visual vertikal 9:16 berkecepatan tinggi yang dioptimalkan untuk engagement Instagram Reels, TikTok, dan Shorts."
+      },
+      "/reels": {
+        title: "Portofolio Social Reels & TikTok 9:16 — FORIOR",
+        badgeText: "SOCIAL REELS & TIKTOK 9:16",
+        badgeIcon: "smartphone",
+        badgeClass: "bg-purple-50 text-purple-600 border border-purple-200",
+        headline: "Vertical Cinema & Social Media",
+        desc: "Kurasi visual vertikal 9:16 berkecepatan tinggi yang dioptimalkan untuk engagement Instagram Reels, TikTok, dan Shorts."
+      },
+      "/drone": {
+        title: "Portofolio Drone Aerial & Masterplan — FORIOR",
+        badgeText: "AERIAL & DRONE MASTERPLAN",
+        badgeIcon: "plane",
+        badgeClass: "bg-sky-50 text-sky-600 border border-sky-200",
+        headline: "Portofolio Drone & Aerial",
+        desc: "Dokumentasi udara fasad bangunan megah, keindahan lanskap, dan tata letak masterplan dari sudut pandang luas."
+      }
+    };
+
+    function parsePath(input) {
+      let raw = "";
+      
+      // 1. Prioritaskan parameter rute yang sedang diklik/dituju
+      if (typeof input === "string" && input.trim()) {
+        raw = input.trim();
+      } else if (window.location.hash) {
+        raw = window.location.hash;
+      } else if (window.location.protocol !== "file:") {
+        raw = window.location.pathname;
+      }
+
+      // Bersihkan karakter awalan #, slash, dan trailing slash
+      raw = raw.toLowerCase().replace(/^[#/]+/, "").replace(/\/$/, "");
+
+      if (raw === "foto" || raw.endsWith("/foto") || raw.endsWith("foto")) return "/foto";
+      if (raw === "video" || raw.endsWith("/video") || raw.endsWith("video")) return "/video";
+      if (raw === "sosmed" || raw === "reels" || raw.endsWith("/sosmed") || raw.endsWith("/reels")) return "/sosmed";
+      if (raw === "drone" || raw.endsWith("/drone") || raw.endsWith("drone")) return "/drone";
+
+      return "/";
+    }
+
+    function handleNavRoute(event, targetPath) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      navigateTo(targetPath);
+    }
+
+    function navigateTo(targetPath) {
+      const cleanPath = parsePath(targetPath);
+      try {
+        if (window.location.protocol !== "file:") {
+          if (window.location.pathname !== cleanPath) {
+            window.history.pushState({}, "", cleanPath);
+          }
+        } else {
+          window.location.hash = cleanPath === "/" ? "" : "#" + cleanPath.replace(/^\//, "");
+        }
+      } catch (err) {
+        console.warn("Navigation state fallback:", err);
+      }
+      applyRoute(cleanPath);
+    }
+
+    function applyRoute(path) {
+      currentRoute = parsePath(path);
+      const config = ROUTE_CONFIG[currentRoute] || ROUTE_CONFIG["/"];
+
+      document.title = config.title;
+      const metaTitle = document.getElementById("pageMetaTitle");
+      if (metaTitle) metaTitle.textContent = config.title;
+
+      const heroEl = document.getElementById("heroSection");
+      const dedicatedHeader = document.getElementById("dedicatedHeader");
+
+      const secFoto = document.getElementById("section-foto");
+      const secVideo = document.getElementById("section-video");
+      const secReels = document.getElementById("section-reels");
+      const secDrone = document.getElementById("section-drone");
+
+      const btnDedicatedFoto = document.getElementById("btnDedicatedFoto");
+      const btnDedicatedVideo = document.getElementById("btnDedicatedVideo");
+      const btnDedicatedSosmed = document.getElementById("btnDedicatedSosmed");
+      const btnDedicatedDrone = document.getElementById("btnDedicatedDrone");
+
+      document.querySelectorAll(".nav-route-btn").forEach(btn => {
+        btn.classList.remove("bg-white", "text-appleDark", "shadow-2xs", "font-semibold");
+        btn.classList.add("text-appleGray");
+      });
+
+      if (currentRoute === "/foto") {
+        document.getElementById("navLinkFoto")?.classList.add("bg-white", "text-appleDark", "shadow-2xs", "font-semibold");
+      } else if (currentRoute === "/video") {
+        document.getElementById("navLinkVideo")?.classList.add("bg-white", "text-appleDark", "shadow-2xs", "font-semibold");
+      } else if (currentRoute === "/sosmed" || currentRoute === "/reels") {
+        document.getElementById("navLinkSosmed")?.classList.add("bg-white", "text-appleDark", "shadow-2xs", "font-semibold");
+      } else if (currentRoute === "/drone") {
+        document.getElementById("navLinkDrone")?.classList.add("bg-white", "text-appleDark", "shadow-2xs", "font-semibold");
+      }
+
+      if (currentRoute === "/") {
+        heroEl.classList.remove("hidden");
+        dedicatedHeader.classList.add("hidden");
+
+        secFoto.classList.remove("hidden");
+        secVideo.classList.remove("hidden");
+        secReels.classList.remove("hidden");
+        secDrone.classList.remove("hidden");
+
+        secFoto.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-14 md:pt-20";
+        secVideo.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28";
+        secReels.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28";
+        secDrone.className = "max-w-7xl mx-auto px-4 sm:px-8 py-20 md:py-28";
+
+        if (btnDedicatedFoto) btnDedicatedFoto.classList.remove("hidden");
+        if (btnDedicatedVideo) btnDedicatedVideo.classList.remove("hidden");
+        if (btnDedicatedSosmed) btnDedicatedSosmed.classList.remove("hidden");
+        if (btnDedicatedDrone) btnDedicatedDrone.classList.remove("hidden");
+
+        photoDisplayLimit = 9;
+        videoDisplayLimit = 6;
+      } else {
+        heroEl.classList.add("hidden");
+        dedicatedHeader.classList.remove("hidden");
+
+        document.getElementById("dedicatedTitle").textContent = config.headline;
+        document.getElementById("dedicatedDesc").textContent = config.desc;
+        
+        const badgeBox = document.getElementById("dedicatedBadgeBox");
+        badgeBox.className = `inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${config.badgeClass}`;
+        document.getElementById("dedicatedBadgeText").textContent = config.badgeText;
+        
+        const badgeIcon = document.getElementById("dedicatedBadgeIcon");
+        badgeIcon.setAttribute("data-lucide", config.badgeIcon);
+
+        secFoto.classList.toggle("hidden", currentRoute !== "/foto");
+        secVideo.classList.toggle("hidden", currentRoute !== "/video");
+        secReels.classList.toggle("hidden", !(currentRoute === "/sosmed" || currentRoute === "/reels"));
+        secDrone.classList.toggle("hidden", currentRoute !== "/drone");
+
+        if (currentRoute === "/foto") secFoto.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-20";
+        if (currentRoute === "/video") secVideo.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-20";
+        if (currentRoute === "/sosmed" || currentRoute === "/reels") secReels.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-20";
+        if (currentRoute === "/drone") secDrone.className = "max-w-7xl mx-auto px-4 sm:px-8 pt-8 pb-20";
+
+        if (btnDedicatedFoto) btnDedicatedFoto.classList.add("hidden");
+        if (btnDedicatedVideo) btnDedicatedVideo.classList.add("hidden");
+        if (btnDedicatedSosmed) btnDedicatedSosmed.classList.add("hidden");
+        if (btnDedicatedDrone) btnDedicatedDrone.classList.add("hidden");
+
+        photoDisplayLimit = 999;
+        videoDisplayLimit = 999;
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      renderAllSections();
+      lucide.createIcons();
+    }
+
+    function shareCurrentPage() {
+      const isLocal = window.location.protocol === "file:";
+      const cleanPath = currentRoute === "/" ? "" : currentRoute;
+      const shareUrl = isLocal ? window.location.href : `https://showcase.forior.id${cleanPath}`;
+      const shareTitle = document.title;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile && navigator.share) {
+        navigator.share({
+          title: shareTitle,
+          text: `Eksplorasi ${shareTitle} oleh FORIOR:`,
+          url: shareUrl
+        }).catch((err) => {
+          if (err.name !== 'AbortError') {
+            copyTextToClipboard(shareUrl);
+            showToast("Tautan halaman berhasil disalin!");
+          }
+        });
+      } else {
+        copyTextToClipboard(shareUrl);
+        showToast("Tautan halaman berhasil disalin ke clipboard!");
+      }
+    }
+
+    // Handle Browser Back / Forward Button & Hash change
+    window.addEventListener("popstate", () => {
+      const path = window.location.protocol === "file:" ? window.location.hash : window.location.pathname;
+      applyRoute(path);
+    });
+
+    window.addEventListener("hashchange", () => {
+      applyRoute(window.location.hash);
+    });
+
     window.addEventListener("error", (e) => {
       console.warn("Runtime error:", e.message);
       try { hideAllLoadingSkeletons(); } catch (_) {}
@@ -1436,9 +1833,11 @@
         checkAuthStatus();
         
         loadInitialCache();
-        renderAllSections();
-        hideAllLoadingSkeletons();
         
+        const initialPath = window.location.hash ? window.location.hash : window.location.pathname;
+        applyRoute(initialPath);
+        
+        hideAllLoadingSkeletons();
         initFirebaseConnection();
         setupLightboxKeyboardAndSwipe();
         lucide.createIcons();
@@ -1640,7 +2039,7 @@
 
     function setCategoryFilter(category) {
       activeCategory = category;
-      photoDisplayLimit = 9;
+      if (currentRoute === "/") photoDisplayLimit = 9;
       renderCategoryFilters();
       renderPhotoSection();
       lucide.createIcons();
@@ -1907,6 +2306,22 @@
 
       emptyState.classList.add("hidden");
 
+      // Mode Grid penuh jika di halaman khusus /sosmed, mode Slider jika di Beranda
+      const isDedicated = (currentRoute === "/sosmed" || currentRoute === "/reels");
+      
+      if (isDedicated) {
+        track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
+        if (navControls) navControls.classList.add("hidden");
+        stopReelsAutoplay();
+      } else {
+        track.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        if (navControls && reelsProjects.length > 1) navControls.classList.remove("hidden");
+      }
+
+      const cardWidthClass = isDedicated 
+        ? "w-full" 
+        : "shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start";
+
       track.innerHTML = reelsProjects.map(item => {
         const cats = getProjectCategories(item);
         const badgesHtml = cats.map(c => `
@@ -1920,7 +2335,7 @@
           role="button"
           tabindex="0"
           onclick="openVideoModal('${item.id}')"
-          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start project-card">
+          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none ${cardWidthClass} project-card">
           
           <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
             <img 
@@ -1960,12 +2375,8 @@
       `;
       }).join("");
 
-      if (reelsProjects.length > 1) {
-        if (navControls) navControls.classList.remove("hidden");
+      if (!isDedicated && reelsProjects.length > 1) {
         startReelsAutoplay();
-      } else {
-        if (navControls) navControls.classList.add("hidden");
-        stopReelsAutoplay();
       }
     }
 
@@ -2046,6 +2457,22 @@
 
       emptyState.classList.add("hidden");
 
+      // Mode Grid penuh jika di halaman khusus /drone, mode Slider jika di Beranda
+      const isDedicated = (currentRoute === "/drone");
+
+      if (isDedicated) {
+        track.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 py-2 px-1";
+        if (navControls) navControls.classList.add("hidden");
+        stopDroneAutoplay();
+      } else {
+        track.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        if (navControls && droneProjects.length > 1) navControls.classList.remove("hidden");
+      }
+
+      const cardWidthClass = isDedicated 
+        ? "w-full" 
+        : "shrink-0 w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] snap-start";
+
       track.innerHTML = droneProjects.map(item => {
         const isVideo = Boolean(item.link && (item.link.includes('youtube') || item.link.includes('youtu.be') || item.link.endsWith('.mp4')));
         const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
@@ -2061,7 +2488,7 @@
           role="button"
           tabindex="0"
           onclick="handleDroneClick('${item.id}')"
-          class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none shrink-0 w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] snap-start">
+          class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none ${cardWidthClass}">
           
           <div class="project-img-container relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-neutral-900">
             <img 
@@ -2118,12 +2545,8 @@
       `;
       }).join("");
 
-      if (droneProjects.length > 1) {
-        if (navControls) navControls.classList.remove("hidden");
+      if (!isDedicated && droneProjects.length > 1) {
         startDroneAutoplay();
-      } else {
-        if (navControls) navControls.classList.add("hidden");
-        stopDroneAutoplay();
       }
     }
 
@@ -2520,7 +2943,7 @@
               el.style.whiteSpace = 'normal';
               el.style.lineHeight = '1.35';
             });
-            clonedDoc.querySelectorAll('.project-count-badge, .category-pill').forEach(el => {
+            clonedDoc.querySelectorAll('.project-count-badge, .category-pill, .cta-pill-btn').forEach(el => {
               el.style.boxSizing = 'border-box';
               el.style.height = '32px';
               el.style.lineHeight = '32px';
@@ -2579,7 +3002,7 @@
               el.style.whiteSpace = 'normal';
               el.style.lineHeight = '1.35';
             });
-            clonedDoc.querySelectorAll('.project-count-badge, .category-pill').forEach(el => {
+            clonedDoc.querySelectorAll('.project-count-badge, .category-pill, .cta-pill-btn').forEach(el => {
               el.style.boxSizing = 'border-box';
               el.style.height = '32px';
               el.style.lineHeight = '32px';
@@ -2633,9 +3056,9 @@
     }
 
     function handleShareSection(type) {
-      const targetHash = type === 'video' ? '#section-video' : (type === 'reels' ? '#section-reels' : (type === 'drone' ? '#section-drone' : '#section-foto'));
-      const shareUrl = `${window.location.origin}${window.location.pathname}${targetHash}`;
-      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'reels' ? 'Portofolio Social Reels & TikTok FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
+      const targetPath = type === 'video' ? '/video' : (type === 'sosmed' || type === 'reels' ? '/sosmed' : (type === 'drone' ? '/drone' : '/foto'));
+      const shareUrl = `${window.location.origin}${targetPath}`;
+      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'sosmed' || type === 'reels' ? 'Portofolio Social Reels & TikTok FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
 
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -2647,12 +3070,12 @@
         }).catch((err) => {
           if (err.name !== 'AbortError') {
             copyTextToClipboard(shareUrl);
-            showToast("Tautan section berhasil disalin!");
+            showToast("Tautan halaman khusus berhasil disalin!");
           }
         });
       } else {
         copyTextToClipboard(shareUrl);
-        showToast("Tautan section berhasil disalin ke clipboard!");
+        showToast("Tautan halaman khusus berhasil disalin ke clipboard!");
       }
     }
 
@@ -2687,10 +3110,6 @@
         linkHint.textContent = selectedType === 'reels'
           ? "URL Shorts / TikTok / Reels / MP4"
           : "Bisa URL YouTube atau video link";
-      } else if (selectedType === 'drone') {
-        galleryWrapper.classList.remove("hidden");
-        linkLabel.textContent = "Tautan Album Foto (Google Photos) atau Video";
-        linkHint.textContent = "Album Google Photos atau URL YouTube";
       } else {
         galleryWrapper.classList.remove("hidden");
         linkLabel.textContent = "Tautan Album Google Photos";
