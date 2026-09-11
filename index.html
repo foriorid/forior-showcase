@@ -332,7 +332,7 @@
       </div>
     </div>
 
-    <!-- Filter Kategori Foto -->
+    <!-- Filter Kategori Foto (Otomatis urut terbanyak & sembunyikan yang kosong) -->
     <div class="relative mb-8 md:mb-10">
       <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
     </div>
@@ -1227,9 +1227,9 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
+    // Master kategori (Komersial telah dihapus secara resmi)
     const CATEGORIES = [
       "Semua",
-      "Komersial",
       "Rumah",
       "Apartemen",
       "Hotel",
@@ -1244,19 +1244,22 @@
       "Lainnya"
     ];
 
-    let selectedFormCategories = ["Komersial"];
+    let selectedFormCategories = ["Hotel"];
 
     function getProjectCategories(p) {
       if (!p) return ["Lainnya"];
-      if (Array.isArray(p.categories) && p.categories.length > 0) return p.categories;
-      if (Array.isArray(p.category) && p.category.length > 0) return p.category;
-      if (typeof p.category === "string" && p.category.trim()) {
-        return p.category.split(",").map(c => c.trim()).filter(Boolean);
+      let rawList = [];
+      if (Array.isArray(p.categories) && p.categories.length > 0) rawList = p.categories;
+      else if (Array.isArray(p.category) && p.category.length > 0) rawList = p.category;
+      else if (typeof p.category === "string" && p.category.trim()) {
+        rawList = p.category.split(",").map(c => c.trim()).filter(Boolean);
+      } else if (typeof p.categories === "string" && p.categories.trim()) {
+        rawList = p.categories.split(",").map(c => c.trim()).filter(Boolean);
       }
-      if (typeof p.categories === "string" && p.categories.trim()) {
-        return p.categories.split(",").map(c => c.trim()).filter(Boolean);
-      }
-      return ["Lainnya"];
+
+      // Filter nama kategori & abaikan kata "Komersial"
+      const cleanList = rawList.filter(c => c.toLowerCase() !== "komersial");
+      return cleanList.length > 0 ? cleanList : ["Lainnya"];
     }
 
     function projectMatchesCategory(p, catFilter) {
@@ -1324,8 +1327,8 @@
         id: "vid-1",
         type: "video",
         title: "Architectural Interior Film — PERP Burger",
-        category: "Resto, Komersial",
-        categories: ["Resto", "Komersial"],
+        category: "Resto",
+        categories: ["Resto"],
         location: "Cipete, Jakarta Selatan",
         image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=4jnzf1yj48M"
@@ -1383,7 +1386,6 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       try {
-        renderCategoryFilters();
         renderFormCategoryPills();
         checkAuthStatus();
         loadInitialCache();
@@ -1656,11 +1658,10 @@
       }
     }
 
-    // ================= CLIENT-SIDE IMAGE COMPRESSOR (SAFETY NET) =================
+    // ================= CLIENT-SIDE IMAGE COMPRESSOR =================
     async function compressImageIfNeeded(file) {
       if (!file) return file;
       
-      // Tangani format HEIC dari iPhone jika ada
       let processFile = file;
       if (file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) && window.heic2any) {
         try {
@@ -1672,7 +1673,6 @@
         }
       }
 
-      // Jika file bukan gambar atau ukurannya sudah <= 600 KB (misal sudah diekspor dari Lightroom), lewati kompresi
       if (!processFile.type.startsWith('image/') || processFile.size <= 600 * 1024) {
         return processFile;
       }
@@ -1686,7 +1686,7 @@
           const canvas = document.createElement('canvas');
           let width = img.width;
           let height = img.height;
-          const maxLongEdge = 1920; // Resolusi tajam untuk layar Retina/High-DPI
+          const maxLongEdge = 1920;
 
           if (width > height && width > maxLongEdge) {
             height = Math.round((height * maxLongEdge) / width);
@@ -1726,7 +1726,6 @@
     async function uploadToFirebaseStorage(fileOrBlob, folderPath = "projects") {
       if (!storageInstance) throw new Error("Storage belum terhubung.");
       
-      // Terapkan kompresi aman sebelum diunggah
       const safeFile = await compressImageIfNeeded(fileOrBlob);
 
       const fileExt = safeFile.name ? safeFile.name.split('.').pop() : 'jpg';
@@ -1793,11 +1792,38 @@
       }
     }
 
+    // FILTER FOTO DINAMIS: URUT TERBANYAK & HANYA KATEGORI BERISI
     function renderCategoryFilters() {
       const container = document.getElementById("categoryFilterContainer");
       if (!container) return;
 
-      container.innerHTML = CATEGORIES.map(cat => {
+      const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
+
+      // Hitung jumlah proyek foto per kategori
+      const categoryCounts = {};
+      photoProjects.forEach(p => {
+        const cats = getProjectCategories(p);
+        cats.forEach(c => {
+          const catName = c.trim();
+          if (catName.toLowerCase() === "komersial") return;
+          categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+        });
+      });
+
+      // Filter hanya kategori yang memiliki proyek (>0) dan urutkan dari yang terbanyak
+      const activeFilledCategories = Object.keys(categoryCounts)
+        .filter(cat => categoryCounts[cat] > 0)
+        .sort((a, b) => categoryCounts[b] - categoryCounts[a]);
+
+      // Gabungkan dengan "Semua" di awal
+      const displayCategories = ["Semua", ...activeFilledCategories];
+
+      // Jika kategori yang sedang aktif ternyata tidak ada di daftar isi, kembalikan ke "Semua"
+      if (!displayCategories.map(c => c.toLowerCase()).includes(activeCategory.toLowerCase())) {
+        activeCategory = "Semua";
+      }
+
+      container.innerHTML = displayCategories.map(cat => {
         const isActive = cat.toLowerCase() === activeCategory.toLowerCase();
         const baseClass = "category-pill inline-flex items-center justify-center rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none";
         const activeClass = isActive 
@@ -1826,7 +1852,7 @@
     function renderFormCategoryPills() {
       const container = document.getElementById("formCategoryPillsContainer");
       if (!container) return;
-      const availableCats = CATEGORIES.filter(c => c !== "Semua");
+      const availableCats = CATEGORIES.filter(c => c !== "Semua" && c !== "Komersial");
 
       container.innerHTML = availableCats.map(cat => {
         const isSelected = selectedFormCategories.includes(cat);
@@ -1874,6 +1900,9 @@
       const loadMoreText = document.getElementById("photoLoadMoreText");
       
       if (!isDataLoaded) return;
+
+      // Render filter kategori dinamis berdasarkan data terbaru
+      renderCategoryFilters();
 
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
       const filtered = photoProjects.filter(p => projectMatchesCategory(p, activeCategory));
@@ -2972,7 +3001,7 @@
       if (defaultTypeRadio) defaultTypeRadio.checked = true;
       toggleFormTypeFields();
 
-      selectedFormCategories = ["Komersial"];
+      selectedFormCategories = ["Hotel"];
       renderFormCategoryPills();
 
       pendingCoverFile = null;
