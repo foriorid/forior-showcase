@@ -337,7 +337,7 @@
       <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
     </div>
 
-    <!-- Grid Foto Proyek Nyata -->
+    <!-- Grid Foto Proyek -->
     <div id="photoPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8"></div>
 
     <!-- Load More Tombol Foto -->
@@ -671,7 +671,7 @@
           class="max-h-[60vh] sm:max-h-[72vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
         />
 
-        <!-- Slide Mandiri: End-Card (Hanya muncul jika ada link dan digeser setelah foto terakhir) -->
+        <!-- Slide Mandiri: End-Card -->
         <div 
           id="lightboxEndCardSlide" 
           class="hidden flex flex-col items-center justify-center text-center p-8 sm:p-12 rounded-3xl bg-neutral-900 border border-white/15 max-w-md w-[90vw] shadow-2xl">
@@ -1039,7 +1039,7 @@
               />
             </div>
 
-            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO -->
+            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO/DRONE -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span id="linkFieldLabel">Tautan Album Google Photos (Opsional)</span>
@@ -1110,7 +1110,7 @@
                 <label class="block text-xs font-medium text-appleDark">Galeri Foto Tambahan (Lightbox)</label>
                 <span id="formGalleryCount" class="text-[10px] text-appleGray">0 foto ditambahkan</span>
               </div>
-              <p class="text-[11px] text-appleGray mb-2">Foto otomatis disimpan ke Firebase Storage secara gratis & cepat.</p>
+              <p class="text-[11px] text-appleGray mb-2">Foto otomatis dikompresi ringan & disimpan ke Firebase Storage secara aman.</p>
               
               <div class="flex flex-wrap items-center gap-2">
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1.5 rounded-lg hover:bg-neutral-100 transition-colors inline-flex items-center gap-1.5 shadow-xs">
@@ -1128,7 +1128,7 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
               </svg>
-              <span id="uploadProgressText">Mengunggah file ke Firebase Storage...</span>
+              <span id="uploadProgressText">Memproses & mengunggah file...</span>
             </div>
 
             <div class="flex items-center gap-2 pt-2">
@@ -1482,7 +1482,6 @@
       const reelsTrack = document.getElementById("reelsPortfolioGrid");
       const droneTrack = document.getElementById("dronePortfolioGrid");
 
-      // Reset style slider
       if (reelsTrack) {
         reelsTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
       }
@@ -1657,14 +1656,85 @@
       }
     }
 
+    // ================= CLIENT-SIDE IMAGE COMPRESSOR (SAFETY NET) =================
+    async function compressImageIfNeeded(file) {
+      if (!file) return file;
+      
+      // Tangani format HEIC dari iPhone jika ada
+      let processFile = file;
+      if (file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) && window.heic2any) {
+        try {
+          const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.85 });
+          const singleBlob = Array.isArray(blob) ? blob[0] : blob;
+          processFile = new File([singleBlob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg" });
+        } catch (e) {
+          console.warn("Konversi HEIC gagal, gunakan file asli:", e);
+        }
+      }
+
+      // Jika file bukan gambar atau ukurannya sudah <= 600 KB (misal sudah diekspor dari Lightroom), lewati kompresi
+      if (!processFile.type.startsWith('image/') || processFile.size <= 600 * 1024) {
+        return processFile;
+      }
+
+      return new Promise((resolve) => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(processFile);
+        
+        img.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxLongEdge = 1920; // Resolusi tajam untuk layar Retina/High-DPI
+
+          if (width > height && width > maxLongEdge) {
+            height = Math.round((height * maxLongEdge) / width);
+            width = maxLongEdge;
+          } else if (height > maxLongEdge) {
+            width = Math.round((width * maxLongEdge) / height);
+            height = maxLongEdge;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            if (blob && blob.size < processFile.size) {
+              const compressedFile = new File([blob], processFile.name.replace(/\.[^/.]+$/, ".jpg"), {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(processFile);
+            }
+          }, 'image/jpeg', 0.85);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          resolve(processFile);
+        };
+
+        img.src = objectUrl;
+      });
+    }
+
     async function uploadToFirebaseStorage(fileOrBlob, folderPath = "projects") {
       if (!storageInstance) throw new Error("Storage belum terhubung.");
-      const fileExt = fileOrBlob.name ? fileOrBlob.name.split('.').pop() : 'jpg';
+      
+      // Terapkan kompresi aman sebelum diunggah
+      const safeFile = await compressImageIfNeeded(fileOrBlob);
+
+      const fileExt = safeFile.name ? safeFile.name.split('.').pop() : 'jpg';
       const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
       const fileRef = storageInstance.ref().child(`${folderPath}/${fileName}`);
       
-      const snapshot = await fileRef.put(fileOrBlob, {
-        contentType: fileOrBlob.type || 'image/jpeg'
+      const snapshot = await fileRef.put(safeFile, {
+        contentType: safeFile.type || 'image/jpeg'
       });
       return await snapshot.ref.getDownloadURL();
     }
@@ -2232,7 +2302,6 @@
         <span>${project.location || 'Indonesia'}</span>
       `;
 
-      // Cek apakah ada link album eksternal (Google Photos dsb)
       const hasAlbumLink = project.link && project.link.trim() !== "" && !project.link.includes("youtube") && !project.link.includes("youtu.be");
       const extBtn = document.getElementById("lightboxExternalBtn");
       const mobileBtnWrapper = document.getElementById("lightboxMobileBtnWrapper");
@@ -2278,7 +2347,6 @@
       const hasAlbumLink = activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
       
       const photoCount = currentLightboxPhotos.length;
-      // Jika ada link album, tambahkan 1 slot slide untuk End-Card mandiri
       const totalSlides = hasAlbumLink ? photoCount + 1 : photoCount;
       const isEndCardActive = hasAlbumLink && currentLightboxIndex === photoCount;
 
@@ -2302,7 +2370,6 @@
       document.getElementById("lightboxMobileIndex").textContent = displayIndex;
       document.getElementById("lightboxMobileTotal").textContent = totalSlides;
 
-      // Render Baris Thumbnail
       const thumbContainer = document.getElementById("lightboxThumbnails");
       let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
         const isActive = idx === currentLightboxIndex;
@@ -2319,7 +2386,6 @@
         `;
       }).join("");
 
-      // Tambahkan kotak thumbnail khusus End-Card jika link tersedia
       if (hasAlbumLink) {
         const isCardActive = currentLightboxIndex === photoCount;
         const cardBorder = isCardActive 
@@ -2786,7 +2852,7 @@
 
       try {
         if (pendingCoverFile) {
-          progText.textContent = "Mengunggah foto cover ke Firebase Storage...";
+          progText.textContent = "Mengompresi & mengunggah cover...";
           image = await uploadToFirebaseStorage(pendingCoverFile, "covers");
         } else if (!image) {
           const ytId = extractYouTubeId(link);
@@ -2806,7 +2872,7 @@
           let count = 1;
           for (const item of pendingGalleryItems) {
             if (item.type === 'file' && item.file) {
-              progText.textContent = `Mengunggah foto galeri (${count}/${pendingGalleryItems.length}) ke Firebase Storage...`;
+              progText.textContent = `Mengompresi & mengunggah galeri (${count}/${pendingGalleryItems.length})...`;
               const uploadedUrl = await uploadToFirebaseStorage(item.file, "galleries");
               finalGallery.push(uploadedUrl);
             } else if (item.url) {
