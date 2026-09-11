@@ -785,61 +785,67 @@
     </div>
 
     <!-- Stage Foto & Overlay End-Card -->
-    <div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
-      <button 
-        id="lightboxPrevBtn"
-        type="button"
-        onclick="navigateLightbox(-1)" 
-        aria-label="Foto Sebelumnya"
-        class="absolute left-3 sm:left-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
-        <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-      </button>
+    />
+</div>
+2. Bagian Modal Lightbox (Ganti <div id="lightboxStage">)
+Ganti elemen lightboxStage agar menampilkan slide khusus End-Card yang berdiri sendiri tanpa menimpa foto terakhir:
 
-      <div class="relative max-w-full max-h-full flex items-center justify-center">
-        <img 
-          id="lightboxMainImage" 
-          src="" 
-          alt="Portofolio FORIOR" 
-          class="max-h-[60vh] sm:max-h-[72vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
-        />
+HTML
+<div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
+  <button 
+    id="lightboxPrevBtn"
+    type="button"
+    onclick="navigateLightbox(-1)" 
+    aria-label="Foto Sebelumnya"
+    class="absolute left-3 sm:left-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
+    <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+  </button>
 
-        <!-- End-Card Overlay (Muncul saat tiba di foto terakhir) -->
-        <div 
-          id="lightboxEndCardOverlay" 
-          class="hidden absolute inset-0 rounded-2xl bg-black/80 backdrop-blur-md p-6 flex flex-col items-center justify-center text-center border border-white/20 animate-fade-in">
-          <div class="w-12 h-12 rounded-full bg-white/15 border border-white/25 flex items-center justify-center mb-3">
-            <i data-lucide="images" class="w-6 h-6 text-white"></i>
-          </div>
-          <h4 class="text-base sm:text-lg font-bold text-white mb-1">Dokumentasi Lengkap Tersedia</h4>
-          <p class="text-xs text-neutral-300 max-w-xs mb-4">
-            Lihat seluruh koleksi foto arsitektur dan detail ruang beresolusi penuh langsung di Google Photos.
-          </p>
-          <a 
-            id="lightboxEndCardBtn" 
-            href="#" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
-            <span>Buka Album Google Photos</span>
-            <i data-lucide="external-link" class="w-4 h-4"></i>
-          </a>
-        </div>
+  <div class="relative max-w-full max-h-full flex items-center justify-center">
+    <!-- Tampilan Foto Normal -->
+    <img 
+      id="lightboxMainImage" 
+      src="" 
+      alt="Portofolio FORIOR" 
+      class="max-h-[60vh] sm:max-h-[72vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
+    />
 
-        <div class="sm:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono text-white shadow-md">
-          <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
-        </div>
+    <!-- Slide Khusus End-Card Mandiri (Hanya muncul jika digeser melewati foto terakhir) -->
+    <div 
+      id="lightboxEndCardSlide" 
+      class="hidden flex flex-col items-center justify-center text-center p-8 sm:p-12 rounded-3xl bg-neutral-900 border border-white/15 max-w-md w-[90vw] shadow-2xl">
+      <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-4">
+        <i data-lucide="images" class="w-7 h-7 text-white"></i>
       </div>
-
-      <button 
-        id="lightboxNextBtn"
-        type="button"
-        onclick="navigateLightbox(1)" 
-        aria-label="Foto Berikutnya"
-        class="absolute right-3 sm:right-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
-        <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-      </button>
+      <h4 class="text-base sm:text-lg font-bold text-white mb-2">Dokumentasi Lengkap Tersedia</h4>
+      <p class="text-xs text-neutral-300 leading-relaxed mb-6">
+        Eksplorasi seluruh sudut ruangan dan detail material resolusi penuh pada album Google Photos.
+      </p>
+      <a 
+        id="lightboxEndCardBtn" 
+        href="#" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-6 py-3 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
+        <span>Buka Album Google Photos</span>
+        <i data-lucide="external-link" class="w-4 h-4"></i>
+      </a>
     </div>
 
+    <div class="sm:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono text-white shadow-md">
+      <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
+    </div>
+  </div>
+
+  <button 
+    id="lightboxNextBtn"
+    type="button"
+    onclick="navigateLightbox(1)" 
+    aria-label="Foto Berikutnya"
+    class="absolute right-3 sm:right-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
+    <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+  </button>
+</div>
     <!-- Floating Pill Khusus Mobile (Dekat jangkauan jempol) -->
     <div class="sm:hidden px-4 pb-2 text-center">
       <a 
@@ -1184,17 +1190,16 @@
             <!-- Tautan Link -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
-                <span id="linkFieldLabel">Tautan Album Google Photos</span>
-                <span class="text-[10px] text-appleGray" id="linkFieldHint">Tautan arsip lengkap</span>
+                <span id="linkFieldLabel">Tautan Album Google Photos (Opsional)</span>
+                <span class="text-[10px] text-appleGray" id="linkFieldHint">Bisa dikosongkan jika foto terbatas</span>
               </label>
-              <input 
-                type="url" 
-                id="inputLink" 
-                required 
-                placeholder="https://photos.app.goo.gl/... atau https://youtube.com/..."
-                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
-                onchange="handleVideoLinkChange(this.value)"
-              />
+          <input 
+            type="url" 
+            id="inputLink" 
+            placeholder="https://photos.app.goo.gl/... atau https://youtube.com/..."
+            class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+            onchange="handleVideoLinkChange(this.value)"
+            />
             </div>
 
             <!-- Cover Thumbnail -->
