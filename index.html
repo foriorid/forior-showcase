@@ -625,131 +625,193 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO & FEED ================= -->
+  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO & FEED (SPLIT VIEW ALA INSTAGRAM) ================= -->
   <div 
     id="lightboxModal" 
-    class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex flex-col justify-between select-none bg-neutral-950 text-white"
-    style="background-color: rgba(10, 10, 14, 0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+    class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex items-center justify-center p-0 sm:p-4 select-none bg-black/90 backdrop-blur-2xl">
     
-    <!-- Topbar Modal -->
-    <div class="px-4 sm:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md shrink-0">
-      <div class="min-w-0">
-        <div class="flex items-center gap-2 flex-wrap">
-          <h3 id="lightboxProjectTitle" class="text-sm sm:text-base md:text-lg font-bold tracking-tight text-white truncate drop-shadow-sm">
-            Judul Proyek
-          </h3>
-          <div id="lightboxProjectCategories" class="flex flex-wrap gap-1"></div>
-        </div>
-        <p id="lightboxProjectLocation" class="text-xs text-neutral-300 mt-1 flex items-center gap-1.5 font-normal">
-          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
-          <span>Lokasi</span>
-        </p>
-      </div>
+    <!-- Backdrop klik untuk tutup -->
+    <div onclick="closeProjectLightbox()" class="absolute inset-0"></div>
 
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-        <div class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-full bg-white/15 border border-white/20 text-xs font-mono font-medium text-white shadow-sm">
-          <span id="lightboxIndexDisplay">1</span>&nbsp;/&nbsp;<span id="lightboxTotalDisplay">1</span>
-        </div>
-
-        <!-- Tombol Eksternal (Opsional) -->
-        <a 
-          id="lightboxExternalBtn" 
-          href="#" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
-          <span>Buka Album / Tautan</span>
-          <i data-lucide="external-link" class="w-3.5 h-3.5 ml-0.5"></i>
-        </a>
-
-        <button 
-          type="button"
-          onclick="closeProjectLightbox()" 
-          title="Tutup Galeri (Esc)"
-          class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 flex items-center justify-center text-white transition-all active:scale-95 shadow-sm cursor-pointer">
-          <i data-lucide="x" class="w-4 h-4"></i>
-        </button>
-      </div>
-    </div>
-
-    <!-- Stage Foto & Slide End-Card Mandiri -->
-    <div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 overflow-hidden">
-      <button 
-        id="lightboxPrevBtn"
-        type="button"
-        onclick="navigateLightbox(-1)" 
-        aria-label="Foto Sebelumnya"
-        class="absolute left-3 sm:left-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
-        <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-      </button>
-
-      <div class="relative max-w-full max-h-full flex items-center justify-center">
-        <!-- Foto Utama -->
-        <img 
-          id="lightboxMainImage" 
-          src="" 
-          alt="Portofolio FORIOR" 
-          class="max-h-[60vh] sm:max-h-[72vh] max-w-[92vw] object-contain rounded-2xl shadow-2xl transition-opacity duration-150 border border-white/10"
-        />
-
-        <!-- Slide Mandiri: End-Card -->
-        <div 
-          id="lightboxEndCardSlide" 
-          class="hidden flex flex-col items-center justify-center text-center p-8 sm:p-12 rounded-3xl bg-neutral-900 border border-white/15 max-w-md w-[90vw] shadow-2xl">
-          <div class="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-4">
-            <i data-lucide="images" class="w-7 h-7 text-white"></i>
+    <!-- Container Dialog Modal (Bisa Mode Klasik atau Mode Split Instagram) -->
+    <div 
+      id="lightboxDialogWrapper" 
+      class="relative z-10 w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-6xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Topbar (Hanya muncul jika mode Classic Lightbox / bukan Instagram mode) -->
+      <div id="lightboxClassicTopbar" class="px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md shrink-0">
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h3 id="lightboxProjectTitle" class="text-sm sm:text-base font-bold tracking-tight text-white truncate">
+              Judul Proyek
+            </h3>
+            <div id="lightboxProjectCategories" class="flex flex-wrap gap-1"></div>
           </div>
-          <h4 class="text-base sm:text-lg font-bold text-white mb-2">Dokumentasi Lengkap Tersedia</h4>
-          <p class="text-xs text-neutral-300 leading-relaxed mb-6">
-            Eksplorasi seluruh detail dan resolusi penuh langsung melalui tautan album resmi.
+          <p id="lightboxProjectLocation" class="text-xs text-neutral-300 mt-0.5 flex items-center gap-1.5 font-normal">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
+            <span>Lokasi</span>
           </p>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div class="hidden sm:inline-flex items-center px-3 py-1 rounded-full bg-white/15 border border-white/20 text-xs font-mono font-medium text-white shadow-sm">
+            <span id="lightboxIndexDisplay">1</span>&nbsp;/&nbsp;<span id="lightboxTotalDisplay">1</span>
+          </div>
+
           <a 
-            id="lightboxEndCardBtn" 
+            id="lightboxExternalBtn" 
             href="#" 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-6 py-3 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
-            <span>Buka Album Lengkap</span>
-            <i data-lucide="external-link" class="w-4 h-4"></i>
+            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
+            <span>Buka Album</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5 ml-0.5"></i>
           </a>
-        </div>
 
-        <div class="sm:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[11px] font-mono text-white shadow-md">
-          <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
+          <button 
+            type="button"
+            onclick="closeProjectLightbox()" 
+            title="Tutup Galeri (Esc)"
+            class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 flex items-center justify-center text-white transition-all active:scale-95 shadow-sm cursor-pointer">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
         </div>
       </div>
 
-      <button 
-        id="lightboxNextBtn"
-        type="button"
-        onclick="navigateLightbox(1)" 
-        aria-label="Foto Berikutnya"
-        class="absolute right-3 sm:right-6 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
-        <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-      </button>
-    </div>
+      <!-- MAIN STAGE / CONTENT BODY -->
+      <div id="lightboxMainContentRow" class="flex-1 flex flex-col md:flex-row min-h-0 overflow-y-auto sm:overflow-hidden">
+        
+        <!-- Sisi Kiri: Slider Foto Media (Stage) -->
+        <div id="lightboxStage" class="relative flex-1 flex items-center justify-center p-3 sm:p-6 bg-black min-h-[50vh] sm:min-h-[60vh] overflow-hidden">
+          <button 
+            id="lightboxPrevBtn"
+            type="button"
+            onclick="navigateLightbox(-1)" 
+            aria-label="Foto Sebelumnya"
+            class="absolute left-3 sm:left-5 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
 
-    <!-- Tombol Melayang Mobile (Opsional) -->
-    <div id="lightboxMobileBtnWrapper" class="sm:hidden px-4 pb-2 text-center hidden">
-      <a 
-        id="lightboxMobilePillBtn" 
-        href="#" 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-full bg-white text-appleDark text-xs font-semibold shadow-md active:scale-95 transition-all">
-        <span>Buka Album Lengkap</span>
-        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-      </a>
-    </div>
+          <div class="relative max-w-full max-h-full flex items-center justify-center">
+            <!-- Foto Utama -->
+            <img 
+              id="lightboxMainImage" 
+              src="" 
+              alt="Portofolio FORIOR" 
+              class="max-h-[55vh] sm:max-h-[68vh] max-w-[92vw] md:max-w-full object-contain rounded-xl shadow-2xl transition-opacity duration-150"
+            />
 
-    <!-- Bottom Thumbnail Bar -->
-    <div class="p-3 sm:p-4 bg-black/50 border-t border-white/10 flex flex-col items-center gap-2 shrink-0">
-      <div id="lightboxThumbnails" class="flex items-center gap-2 overflow-x-auto no-scrollbar max-w-full py-1 px-2"></div>
-      <p class="text-[11px] text-neutral-300 font-light hidden sm:block">
-        Gunakan tombol panah ◀ ▶ pada keyboard atau geser layar untuk navigasi
-      </p>
-    </div>
+            <!-- Slide Mandiri: End-Card Album -->
+            <div 
+              id="lightboxEndCardSlide" 
+              class="hidden flex flex-col items-center justify-center text-center p-8 sm:p-10 rounded-3xl bg-neutral-900 border border-white/15 max-w-md w-[88vw] shadow-2xl">
+              <div class="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-3">
+                <i data-lucide="images" class="w-6 h-6 text-white"></i>
+              </div>
+              <h4 class="text-base font-bold text-white mb-1.5">Dokumentasi Lengkap Tersedia</h4>
+              <p class="text-xs text-neutral-300 leading-relaxed mb-5">
+                Eksplorasi seluruh detail material dan resolusi penuh langsung di album foto.
+              </p>
+              <a 
+                id="lightboxEndCardBtn" 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center gap-2 bg-white text-appleDark text-xs font-semibold px-5 py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
+                <span>Buka Album Lengkap</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
 
+            <!-- Mobile Counter Pill -->
+            <div class="md:hidden absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/75 border border-white/20 backdrop-blur-md text-[10px] font-mono text-white shadow-md">
+              <span id="lightboxMobileIndex">1</span> / <span id="lightboxMobileTotal">1</span>
+            </div>
+          </div>
+
+          <button 
+            id="lightboxNextBtn"
+            type="button"
+            onclick="navigateLightbox(1)" 
+            aria-label="Foto Berikutnya"
+            class="absolute right-3 sm:right-5 z-20 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/60 hover:bg-black/85 border border-white/25 text-white flex items-center justify-center backdrop-blur-md transition-all active:scale-90 shadow-xl">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Sisi Kanan: Sidebar Caption & Profil (HANYA AKTIF UNTUK FORMAT INSTAGRAM FEED) -->
+        <div 
+          id="lightboxInstagramSidebar" 
+          class="hidden w-full md:w-[380px] lg:w-[420px] bg-neutral-900 border-t md:border-t-0 md:border-l border-white/10 flex flex-col shrink-0">
+          
+          <!-- Header Akun & Close Desktop -->
+          <div class="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-neutral-900/90">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-[2px]">
+                <div class="w-full h-full rounded-full bg-neutral-950 flex items-center justify-center overflow-hidden">
+                  <span class="text-[10px] font-black text-white">FOR</span>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-xs font-bold text-white tracking-wide">forior.id</span>
+                  <i data-lucide="badge-check" class="w-3.5 h-3.5 text-sky-400 fill-sky-400"></i>
+                </div>
+                <span id="igSidebarLocation" class="text-[11px] text-neutral-400 truncate block max-w-[200px]">Indonesia</span>
+              </div>
+            </div>
+
+            <button 
+              type="button" 
+              onclick="closeProjectLightbox()" 
+              class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Body Teks Caption Instagram -->
+          <div class="p-4 flex-1 overflow-y-auto space-y-3.5 text-xs text-neutral-200 leading-relaxed font-normal">
+            <div class="space-y-2">
+              <h4 id="igSidebarTitle" class="text-sm font-bold text-white">Judul Postingan</h4>
+              <p id="igSidebarCaptionText" class="whitespace-pre-line text-neutral-300 leading-relaxed"></p>
+            </div>
+          </div>
+
+          <!-- Footer Interaksi & Link -->
+          <div class="p-4 border-t border-white/10 bg-neutral-950/80 space-y-3 shrink-0">
+            <div class="flex items-center justify-between text-neutral-300">
+              <div class="flex items-center gap-4">
+                <i data-lucide="heart" class="w-5 h-5 hover:text-rose-500 cursor-pointer transition-colors"></i>
+                <i data-lucide="message-circle" class="w-5 h-5 hover:text-white cursor-pointer transition-colors"></i>
+                <i data-lucide="send" class="w-5 h-5 hover:text-white cursor-pointer transition-colors"></i>
+              </div>
+              <i data-lucide="bookmark" class="w-5 h-5 hover:text-white cursor-pointer transition-colors"></i>
+            </div>
+
+            <div class="pt-1 flex items-center justify-between gap-2">
+              <span id="igSidebarSlideCount" class="text-[11px] font-mono text-neutral-400">Slide 1 / 1</span>
+              <a 
+                id="igSidebarExtBtn" 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="hidden inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:underline">
+                <span>Lihat di Instagram</span>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bottom Thumbnail Bar (Klasik) -->
+      <div id="lightboxClassicThumbBar" class="p-3 bg-black/60 border-t border-white/10 flex flex-col items-center gap-1.5 shrink-0">
+        <div id="lightboxThumbnails" class="flex items-center gap-2 overflow-x-auto no-scrollbar max-w-full py-0.5 px-2"></div>
+      </div>
+
+    </div>
   </div>
 
   <!-- ================= SECTION 7: MODAL VIDEO PLAYER ================= -->
@@ -1058,6 +1120,19 @@
                 placeholder="Contoh: Kirei Castle Villa Lembang"
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
               />
+            </div>
+
+            <!-- INPUT CAPTION INSTAGRAM (KHUSUS SOSMED FEED) -->
+            <div id="captionFieldWrapper" class="hidden">
+              <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
+                <span>Caption Postingan Instagram (Opsional)</span>
+                <span class="text-[10px] text-appleGray">Tampil di sidebar lightbox</span>
+              </label>
+              <textarea 
+                id="inputCaption" 
+                rows="4"
+                placeholder="Tulis caption lengkap, deskripsi suasana, hingga hashtag Instagram di sini..."
+                class="w-full text-xs bg-white border border-appleBorder rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-all leading-relaxed"></textarea>
             </div>
 
             <div>
@@ -1386,16 +1461,17 @@
         id: "reels-2",
         type: "reels",
         subtype: "feed",
-        title: "Modern Minimalist Villa Corner",
+        title: "Intragama Villa Puncak",
+        caption: "Step away from the rush and into a slower kind of luxury.\n\nAt Intragama Villa, nature feels closer, the atmosphere feels calmer, and every corner is made for you to unwind in complete comfort.\n\nYour private escape is waiting.\nScan to book your stay.\n\n#IntragamaVilla #PuncakEscape #LuxuryVilla",
         category: "Vila",
         categories: ["Vila"],
-        location: "Canggu, Bali",
+        location: "Puncak, Bogor",
         image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1000&auto=format&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1000&auto=format&fit=crop"
         ],
-        link: ""
+        link: "https://instagram.com/"
       },
       {
         id: "drone-1",
@@ -2266,7 +2342,7 @@
         }
 
       } else {
-        // DI HALAMAN KHUSUS /sosmed (DUA TAB INSTAGRAM)
+        // DI HALAMAN KHUSUS /sosmed
         if (navControls) navControls.classList.add("hidden");
 
         if (activeInstagramTab === 'reels') {
@@ -2304,7 +2380,7 @@
 
                 <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
                   <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5">
-                    <i data-lucide="film" class="w-3.5 h-3.5"></i> Reels
+                    <i data-lucide="film" class="w-3 h-3"></i> Reels
                   </span>
                   <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">
                     ${item.title}
@@ -2319,7 +2395,7 @@
           `).join("");
 
         } else {
-          // TAB FEED: Rasio Vertikal 3:4 Bersih Tanpa Metadata (Metadata tampil di Lightbox)
+          // TAB FEED: Rasio Vertikal 3:4 Bersih Tanpa Metadata di Foto (Metadata hanya tampil di Lightbox)
           const filteredFeed = allSosmedProjects.filter(p => p.subtype === 'feed' || p.subtype === 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
@@ -2333,7 +2409,7 @@
               onclick="handleSocialItemClick('${item.id}')"
               class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
               
-              <!-- Rasio Vertikal 3:4 Bersih Ala Instagram Feed -->
+              <!-- Rasio Vertikal 3:4 Bersih Ala Feed Instagram -->
               <div class="relative w-full aspect-[3/4] rounded-[20px] overflow-hidden bg-neutral-900">
                 <img 
                   src="${item.image}" 
@@ -2491,7 +2567,7 @@
       }
     }
 
-    // ================= LIGHTBOX FOTO & FEED =================
+    // ================= LIGHTBOX FOTO & SPLIT VIEW INSTAGRAM MODAL =================
     function openProjectLightbox(id) {
       const project = projects.find(p => p.id === id);
       if (!project) return;
@@ -2503,36 +2579,77 @@
       }
       currentLightboxIndex = 0;
 
-      document.getElementById("lightboxProjectTitle").textContent = project.title;
-      
-      const cats = getProjectCategories(project);
-      document.getElementById("lightboxProjectCategories").innerHTML = cats.map(c => `
-        <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/20 text-white font-medium border border-white/20 shadow-xs">
-          ${c}
-        </span>
-      `).join("");
+      const isInstagramFeed = (project.type === 'reels' && (project.subtype === 'feed' || project.subtype === 'carousel'));
 
-      document.getElementById("lightboxProjectLocation").innerHTML = `
-        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
-        <span>${project.location || 'Indonesia'}</span>
-      `;
+      const classicTopbar = document.getElementById("lightboxClassicTopbar");
+      const classicThumbBar = document.getElementById("lightboxClassicThumbBar");
+      const igSidebar = document.getElementById("lightboxInstagramSidebar");
+      const dialogWrapper = document.getElementById("lightboxDialogWrapper");
 
-      const hasAlbumLink = project.link && project.link.trim() !== "" && !project.link.includes("youtube") && !project.link.includes("youtu.be");
-      const extBtn = document.getElementById("lightboxExternalBtn");
-      const mobileBtnWrapper = document.getElementById("lightboxMobileBtnWrapper");
-      const mobilePill = document.getElementById("lightboxMobilePillBtn");
+      if (isInstagramFeed) {
+        // AKTIFKAN MODE SPLIT VIEW INSTAGRAM
+        classicTopbar.classList.add("hidden");
+        classicThumbBar.classList.add("hidden");
+        igSidebar.classList.remove("hidden");
+        
+        dialogWrapper.className = "relative z-10 w-full h-full sm:h-auto sm:max-h-[88vh] sm:max-w-5xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden";
 
-      if (hasAlbumLink) {
-        extBtn.href = project.link;
-        extBtn.classList.remove("hidden");
-        document.getElementById("lightboxEndCardBtn").href = project.link;
-        if (mobileBtnWrapper && mobilePill) {
-          mobilePill.href = project.link;
-          mobileBtnWrapper.classList.remove("hidden");
+        document.getElementById("igSidebarTitle").textContent = project.title;
+        document.getElementById("igSidebarLocation").textContent = project.location || "Indonesia";
+        
+        // Render Teks Caption Instagram
+        const captionContent = project.caption && project.caption.trim() !== "" 
+          ? project.caption 
+          : `${project.title}\n\nDokumentasi visual profesional oleh @forior.id\n\n#FORIOR #InteriorPhotography #ArchitectureShowcase`;
+        document.getElementById("igSidebarCaptionText").textContent = captionContent;
+
+        const igExtBtn = document.getElementById("igSidebarExtBtn");
+        if (project.link && project.link.trim() !== "" && !project.link.includes("photos.app.goo.gl") && !project.link.includes("photos.google.com")) {
+          igExtBtn.href = project.link;
+          igExtBtn.classList.remove("hidden");
+        } else {
+          igExtBtn.classList.add("hidden");
         }
+
       } else {
-        extBtn.classList.add("hidden");
-        if (mobileBtnWrapper) mobileBtnWrapper.classList.add("hidden");
+        // AKTIFKAN MODE KLASIK LIGHTBOX (FOTO BIASA & DRONE)
+        igSidebar.classList.add("hidden");
+        classicTopbar.classList.remove("hidden");
+        classicThumbBar.classList.remove("hidden");
+        
+        dialogWrapper.className = "relative z-10 w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-6xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden";
+
+        document.getElementById("lightboxProjectTitle").textContent = project.title;
+        
+        const cats = getProjectCategories(project);
+        document.getElementById("lightboxProjectCategories").innerHTML = cats.map(c => `
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/20 text-white font-medium border border-white/20 shadow-xs">
+            ${c}
+          </span>
+        `).join("");
+
+        document.getElementById("lightboxProjectLocation").innerHTML = `
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
+          <span>${project.location || 'Indonesia'}</span>
+        `;
+
+        const hasAlbumLink = project.link && project.link.trim() !== "" && !project.link.includes("youtube") && !project.link.includes("youtu.be");
+        const extBtn = document.getElementById("lightboxExternalBtn");
+        const mobileBtnWrapper = document.getElementById("lightboxMobileBtnWrapper");
+        const mobilePill = document.getElementById("lightboxMobilePillBtn");
+
+        if (hasAlbumLink) {
+          extBtn.href = project.link;
+          extBtn.classList.remove("hidden");
+          document.getElementById("lightboxEndCardBtn").href = project.link;
+          if (mobileBtnWrapper && mobilePill) {
+            mobilePill.href = project.link;
+            mobileBtnWrapper.classList.remove("hidden");
+          }
+        } else {
+          extBtn.classList.add("hidden");
+          if (mobileBtnWrapper) mobileBtnWrapper.classList.add("hidden");
+        }
       }
 
       updateLightboxDisplay();
@@ -2559,7 +2676,9 @@
     function updateLightboxDisplay() {
       const mainImg = document.getElementById("lightboxMainImage");
       const endCardSlide = document.getElementById("lightboxEndCardSlide");
-      const hasAlbumLink = activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
+      const isInstagramFeed = activeLightboxProject && (activeLightboxProject.type === 'reels' && (activeLightboxProject.subtype === 'feed' || activeLightboxProject.subtype === 'carousel'));
+
+      const hasAlbumLink = !isInstagramFeed && activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
       
       const photoCount = currentLightboxPhotos.length;
       const totalSlides = hasAlbumLink ? photoCount + 1 : photoCount;
@@ -2585,41 +2704,50 @@
       document.getElementById("lightboxMobileIndex").textContent = displayIndex;
       document.getElementById("lightboxMobileTotal").textContent = totalSlides;
 
-      const thumbContainer = document.getElementById("lightboxThumbnails");
-      let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
-        const isActive = idx === currentLightboxIndex;
-        const borderClass = isActive 
-          ? "border-2 border-white scale-105 shadow-md brightness-110" 
-          : "border border-white/20 opacity-50 hover:opacity-90";
-        return `
-          <button 
-            type="button" 
-            onclick="setLightboxPhotoIndex(${idx})" 
-            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-200 ${borderClass} cursor-pointer">
-            <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
-          </button>
-        `;
-      }).join("");
-
-      if (hasAlbumLink) {
-        const isCardActive = currentLightboxIndex === photoCount;
-        const cardBorder = isCardActive 
-          ? "border-2 border-white scale-105 bg-white/30 text-white" 
-          : "border border-dashed border-white/40 bg-white/10 opacity-60 hover:opacity-100 text-neutral-300";
-        
-        thumbsHtml += `
-          <button 
-            type="button" 
-            onclick="setLightboxPhotoIndex(${photoCount})" 
-            title="Buka Slide Album Lengkap"
-            class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl shrink-0 flex flex-col items-center justify-center text-[9px] font-semibold transition-all p-1 leading-tight cursor-pointer ${cardBorder}">
-            <i data-lucide="external-link" class="w-3.5 h-3.5 mb-0.5"></i>
-            <span>Album</span>
-          </button>
-        `;
+      // Update counter di sidebar Instagram
+      const igSlideCounter = document.getElementById("igSidebarSlideCount");
+      if (igSlideCounter) {
+        igSlideCounter.textContent = `Slide ${displayIndex} / ${totalSlides}`;
       }
 
-      thumbContainer.innerHTML = thumbsHtml;
+      // Render thumbnail bar klasik jika bukan Instagram mode
+      if (!isInstagramFeed) {
+        const thumbContainer = document.getElementById("lightboxThumbnails");
+        let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
+          const isActive = idx === currentLightboxIndex;
+          const borderClass = isActive 
+            ? "border-2 border-white scale-105 shadow-md brightness-110" 
+            : "border border-white/20 opacity-50 hover:opacity-90";
+          return `
+            <button 
+              type="button" 
+              onclick="setLightboxPhotoIndex(${idx})" 
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-200 ${borderClass} cursor-pointer">
+              <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
+            </button>
+          `;
+        }).join("");
+
+        if (hasAlbumLink) {
+          const isCardActive = currentLightboxIndex === photoCount;
+          const cardBorder = isCardActive 
+            ? "border-2 border-white scale-105 bg-white/30 text-white" 
+            : "border border-dashed border-white/40 bg-white/10 opacity-60 hover:opacity-100 text-neutral-300";
+          
+          thumbsHtml += `
+            <button 
+              type="button" 
+              onclick="setLightboxPhotoIndex(${photoCount})" 
+              title="Buka Slide Album Lengkap"
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl shrink-0 flex flex-col items-center justify-center text-[9px] font-semibold transition-all p-1 leading-tight cursor-pointer ${cardBorder}">
+              <i data-lucide="external-link" class="w-3.5 h-3.5 mb-0.5"></i>
+              <span>Album</span>
+            </button>
+          `;
+        }
+
+        thumbContainer.innerHTML = thumbsHtml;
+      }
 
       const prevBtn = document.getElementById("lightboxPrevBtn");
       const nextBtn = document.getElementById("lightboxNextBtn");
@@ -2635,7 +2763,9 @@
     }
 
     function navigateLightbox(direction) {
-      const hasAlbumLink = activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
+      const isInstagramFeed = activeLightboxProject && (activeLightboxProject.type === 'reels' && (activeLightboxProject.subtype === 'feed' || activeLightboxProject.subtype === 'carousel'));
+      const hasAlbumLink = !isInstagramFeed && activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
+      
       const totalSlides = hasAlbumLink ? currentLightboxPhotos.length + 1 : currentLightboxPhotos.length;
       if (totalSlides <= 1) return;
 
@@ -2964,12 +3094,14 @@
       const linkLabel = document.getElementById("linkFieldLabel");
       const linkHint = document.getElementById("linkFieldHint");
       const linkInput = document.getElementById("inputLink");
+      const captionWrapper = document.getElementById("captionFieldWrapper");
 
       if (selectedType === 'reels') {
         sosmedSubtypeBox.classList.remove("hidden");
         handleSosmedSubtypeChange();
       } else {
         sosmedSubtypeBox.classList.add("hidden");
+        if (captionWrapper) captionWrapper.classList.add("hidden");
 
         if (selectedType === 'video') {
           galleryWrapper.classList.add("hidden");
@@ -2992,14 +3124,17 @@
       const linkLabel = document.getElementById("linkFieldLabel");
       const linkHint = document.getElementById("linkFieldHint");
       const linkInput = document.getElementById("inputLink");
+      const captionWrapper = document.getElementById("captionFieldWrapper");
 
       if (subtype === 'feed') {
         galleryWrapper.classList.remove("hidden");
+        if (captionWrapper) captionWrapper.classList.remove("hidden");
         linkInput.required = false;
         linkLabel.textContent = "Tautan Postingan Instagram (Opsional)";
         linkHint.textContent = "Bisa diisi link postingan Instagram";
       } else {
         galleryWrapper.classList.add("hidden");
+        if (captionWrapper) captionWrapper.classList.add("hidden");
         linkInput.required = true;
         linkLabel.textContent = "Tautan Reels / Shorts / TikTok";
         linkHint.textContent = "Wajib diisi link video";
@@ -3091,6 +3226,7 @@
       const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed') : null;
 
       const title = document.getElementById("inputTitle").value.trim();
+      const caption = document.getElementById("inputCaption") ? document.getElementById("inputCaption").value.trim() : "";
       const location = document.getElementById("inputLocation").value.trim();
       const link = document.getElementById("inputLink").value.trim();
       let image = document.getElementById("inputImageUrl").value.trim();
@@ -3131,6 +3267,7 @@
           type,
           subtype: sosmedSubtype,
           title,
+          caption,
           category: selectedFormCategories.join(", "),
           categories: [...selectedFormCategories],
           location,
@@ -3192,6 +3329,9 @@
       }
 
       document.getElementById("inputTitle").value = item.title;
+      if (document.getElementById("inputCaption")) {
+        document.getElementById("inputCaption").value = item.caption || "";
+      }
       document.getElementById("inputLocation").value = item.location || "";
       document.getElementById("inputLink").value = item.link || "";
       document.getElementById("inputImageUrl").value = item.image;
@@ -3229,6 +3369,10 @@
 
       selectedFormCategories = ["Hotel"];
       renderFormCategoryPills();
+
+      if (document.getElementById("inputCaption")) {
+        document.getElementById("inputCaption").value = "";
+      }
 
       pendingCoverFile = null;
       pendingGalleryItems = [];
