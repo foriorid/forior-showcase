@@ -155,7 +155,7 @@
           <i data-lucide="play" class="w-3 h-3 text-rose-500 fill-rose-500"></i> Video Tour
         </a>
         <a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
-          <i data-lucide="smartphone" class="w-3 h-3 text-purple-600"></i> Reels & TikTok
+          <i data-lucide="smartphone" class="w-3 h-3 text-purple-600"></i> Reels & Feed
         </a>
         <a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="text-xs font-medium text-appleGray hover:text-appleDark hover:bg-white px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5">
           <i data-lucide="plane" class="w-3 h-3 text-sky-500"></i> Drone Aerial
@@ -269,7 +269,7 @@
           </a>
           <a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
             <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-300"></i>
-            <span>Reels 9:16</span>
+            <span>Reels & Feed</span>
           </a>
           <a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
             <i data-lucide="plane" class="w-3.5 h-3.5 text-sky-400"></i>
@@ -332,7 +332,7 @@
       </div>
     </div>
 
-    <!-- Filter Kategori Foto (Otomatis urut terbanyak & sembunyikan yang kosong) -->
+    <!-- Filter Kategori Foto (Dinamis: Urut terbanyak & sembunyikan yang kosong) -->
     <div class="relative mb-8 md:mb-10">
       <div id="categoryFilterContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1"></div>
     </div>
@@ -432,7 +432,7 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 4: PORTOFOLIO REELS & SOCIAL MEDIA ================= -->
+  <!-- ================= SECTION 4: PORTOFOLIO SOCIAL MEDIA (REELS & FEED 3:4) ================= -->
   <section id="section-reels" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 md:mb-8 gap-3">
       <div>
@@ -461,8 +461,8 @@
             <i data-lucide="camera" class="w-3.5 h-3.5"></i>
           </button>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Vertical Cinema & Social Media</h2>
-        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik dan feed carousel yang dioptimalkan untuk Instagram, TikTok, dan Shorts.</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Social Media & Vertical Cinema</h2>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik dan feed carousel 3:4 yang dioptimalkan untuk Instagram, TikTok, dan Shorts.</p>
       </div>
 
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
@@ -471,7 +471,7 @@
           href="#/sosmed" 
           onclick="handleNavRoute(event, '/sosmed')" 
           class="project-count-badge inline-flex items-center justify-center gap-1.5 text-xs font-semibold bg-purple-600 text-white hover:bg-purple-700 rounded-full shadow-sm active:scale-95 transition-all">
-          <span>Lihat Semua Reels</span>
+          <span>Lihat Semua Konten</span>
           <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
 
@@ -501,15 +501,15 @@
       </div>
     </div>
 
-    <!-- TAB NAVIGASI ALA INSTAGRAM (Hanya muncul di halaman khusus /sosmed) -->
-    <div id="instagramTabsContainer" class="hidden mb-6 border-b border-appleBorder flex items-center justify-center gap-8">
+    <!-- TAB NAVIGASI INSTAGRAM: 2 TAB (FEED 3:4 & REELS 9:16) -->
+    <div id="instagramTabsContainer" class="hidden mb-8 border-b border-appleBorder flex items-center justify-center gap-10">
       <button 
         type="button" 
-        onclick="setInstagramTab('all')" 
-        id="igTab-all" 
+        onclick="setInstagramTab('feed')" 
+        id="igTab-feed" 
         class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
         <i data-lucide="grid" class="w-4 h-4"></i>
-        <span>Semua Postingan</span>
+        <span>Feed (3:4)</span>
       </button>
 
       <button 
@@ -518,20 +518,11 @@
         id="igTab-reels" 
         class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
         <i data-lucide="film" class="w-4 h-4"></i>
-        <span>Reels 9:16</span>
-      </button>
-
-      <button 
-        type="button" 
-        onclick="setInstagramTab('carousel')" 
-        id="igTab-carousel" 
-        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
-        <i data-lucide="copy" class="w-4 h-4"></i>
-        <span>Carousel Feed</span>
+        <span>Reels (9:16)</span>
       </button>
     </div>
 
-    <!-- Carousel & Grid Container Reels/Social Media -->
+    <!-- Grid / Carousel Container Sosmed -->
     <div class="relative">
       <div 
         id="reelsPortfolioGrid" 
@@ -634,7 +625,7 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO ================= -->
+  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO (DIGUNAKAN JUGA UNTUK FEED) ================= -->
   <div 
     id="lightboxModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex flex-col justify-between select-none bg-neutral-950 text-white"
@@ -660,14 +651,14 @@
           <span id="lightboxIndexDisplay">1</span>&nbsp;/&nbsp;<span id="lightboxTotalDisplay">1</span>
         </div>
 
-        <!-- Tombol Eksternal Google Photos (Opsional) -->
+        <!-- Tombol Eksternal (Opsional) -->
         <a 
           id="lightboxExternalBtn" 
           href="#" 
           target="_blank" 
           rel="noopener noreferrer" 
           class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
-          <span>Buka Album Google Photos</span>
+          <span>Buka Album / Tautan</span>
           <i data-lucide="external-link" class="w-3.5 h-3.5 ml-0.5"></i>
         </a>
 
@@ -710,7 +701,7 @@
           </div>
           <h4 class="text-base sm:text-lg font-bold text-white mb-2">Dokumentasi Lengkap Tersedia</h4>
           <p class="text-xs text-neutral-300 leading-relaxed mb-6">
-            Eksplorasi seluruh sudut ruangan dan detail material resolusi penuh pada album Google Photos.
+            Eksplorasi seluruh detail dan resolusi penuh langsung melalui tautan album resmi.
           </p>
           <a 
             id="lightboxEndCardBtn" 
@@ -718,7 +709,7 @@
             target="_blank" 
             rel="noopener noreferrer" 
             class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-6 py-3 rounded-full hover:bg-neutral-100 active:scale-95 shadow-lg transition-all">
-            <span>Buka Album Google Photos</span>
+            <span>Buka Album Lengkap</span>
             <i data-lucide="external-link" class="w-4 h-4"></i>
           </a>
         </div>
@@ -746,7 +737,7 @@
         target="_blank" 
         rel="noopener noreferrer" 
         class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-full bg-white text-appleDark text-xs font-semibold shadow-md active:scale-95 transition-all">
-        <span>Buka Album Lengkap di Google Photos</span>
+        <span>Buka Album Lengkap</span>
         <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
       </a>
     </div>
@@ -873,7 +864,7 @@
           <h4 class="font-semibold text-appleDark uppercase tracking-wider text-[11px] mb-2">Halaman Khusus</h4>
           <div><a href="#/foto" onclick="handleNavRoute(event, '/foto')" class="text-appleGray hover:text-appleDark transition-colors">Portofolio Foto Interior</a></div>
           <div><a href="#/video" onclick="handleNavRoute(event, '/video')" class="text-appleGray hover:text-appleDark transition-colors">Video Walkthrough 16:9</a></div>
-          <div><a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="text-appleGray hover:text-appleDark transition-colors">Social Reels & TikTok 9:16</a></div>
+          <div><a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="text-appleGray hover:text-appleDark transition-colors">Social Media & Feed 3:4</a></div>
           <div><a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="text-appleGray hover:text-appleDark transition-colors">Drone & Aerial Masterplan</a></div>
           <div><button onclick="handleAdminNavClick()" class="text-appleGray hover:text-appleDark transition-colors cursor-pointer">Panel Masuk Admin</button></div>
           <div><a href="#" onclick="handleNavRoute(event, '/')" class="text-appleGray hover:text-appleDark transition-colors">Kembali ke Beranda ↑</a></div>
@@ -1039,20 +1030,20 @@
               </div>
             </div>
 
-            <!-- SUB-PILIHAN KHUSUS TIPE SOSMED -->
+            <!-- SUB-PILIHAN TIPE SOSMED -->
             <div id="sosmedSubtypeWrapper" class="hidden p-3 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1.5">
               <label class="block text-[11px] font-semibold text-purple-900">Format Konten Sosial Media:</label>
               <div class="grid grid-cols-2 gap-2">
                 <label class="cursor-pointer">
-                  <input type="radio" name="sosmedSubtype" value="reels" checked onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <input type="radio" name="sosmedSubtype" value="feed" checked onchange="handleSosmedSubtypeChange()" class="hidden peer">
                   <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
-                    <i data-lucide="film" class="w-3.5 h-3.5"></i> <span>Reels Video 9:16</span>
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Feed (3:4)</span>
                   </div>
                 </label>
                 <label class="cursor-pointer">
-                  <input type="radio" name="sosmedSubtype" value="carousel" onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <input type="radio" name="sosmedSubtype" value="reels" onchange="handleSosmedSubtypeChange()" class="hidden peer">
                   <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
-                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Carousel Feed 1:1</span>
+                    <i data-lucide="film" class="w-3.5 h-3.5"></i> <span>Reels (9:16)</span>
                   </div>
                 </label>
               </div>
@@ -1088,7 +1079,7 @@
               />
             </div>
 
-            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO/DRONE/CAROUSEL -->
+            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO/DRONE/FEED -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span id="linkFieldLabel">Tautan Album Google Photos (Opsional)</span>
@@ -1156,7 +1147,7 @@
             <!-- Galeri Tambahan -->
             <div id="formGalleryWrapper">
               <div class="flex items-center justify-between mb-1">
-                <label class="block text-xs font-medium text-appleDark">Galeri Foto / Slide Carousel</label>
+                <label class="block text-xs font-medium text-appleDark">Galeri Foto / Slide Post (Feed / Lightbox)</label>
                 <span id="formGalleryCount" class="text-[10px] text-appleGray">0 foto ditambahkan</span>
               </div>
               <p class="text-[11px] text-appleGray mb-2">Foto otomatis disimpan ke Firebase Storage secara gratis & cepat.</p>
@@ -1395,7 +1386,7 @@
       {
         id: "reels-2",
         type: "reels",
-        subtype: "carousel",
+        subtype: "feed",
         title: "Modern Minimalist Villa Corner",
         category: "Vila",
         categories: ["Vila"],
@@ -1436,7 +1427,7 @@
 
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 6;
-    let activeInstagramTab = "all"; // 'all' (Grid 1:1), 'reels' (9:16), 'carousel' (Slide)
+    let activeInstagramTab = "feed"; // Default tab di /sosmed adalah 'feed'
 
     let activeLightboxProject = null;
     let currentLightboxPhotos = [];
@@ -1610,7 +1601,7 @@
           document.title = "Portofolio Social Media & Reels — FORIOR";
           badge.textContent = "Instagram Profile Showcase";
           title.textContent = "Social Media & Vertical Cinema";
-          desc.textContent = "Kumpulan konten micro-tours video reels vertikal 9:16 dan feed carousel berkualitas tinggi untuk platform media sosial.";
+          desc.textContent = "Kumpulan konten micro-tours video reels vertikal 9:16 dan feed carousel 3:4 yang dioptimalkan untuk media sosial.";
           
           secReels.classList.remove("hidden");
           if (btnLihatSemuaReels) btnLihatSemuaReels.classList.add("hidden");
@@ -2156,7 +2147,7 @@
     function setInstagramTab(tab) {
       activeInstagramTab = tab;
       
-      const tabs = ['all', 'reels', 'carousel'];
+      const tabs = ['feed', 'reels'];
       tabs.forEach(t => {
         const el = document.getElementById(`igTab-${t}`);
         if (el) {
@@ -2175,6 +2166,8 @@
       const item = projects.find(p => p.id === id);
       if (!item) return;
 
+      // Logika klik: jika Feed / Carousel -> Buka Lightbox Foto
+      // jika Reels Video -> Buka Pemutar Video
       const isVideo = (item.subtype === 'reels' || (!item.subtype && item.link && (item.link.includes("youtube") || item.link.includes("youtu.be"))));
       if (isVideo) {
         openVideoModal(id);
@@ -2204,9 +2197,8 @@
 
       emptyState.classList.add("hidden");
 
-      // Logika di Beranda vs Halaman Khusus /sosmed
       if (!isSubpage) {
-        // DI BERANDA: Tampilkan carousel geser 9:16 elegan
+        // DI BERANDA UTAMA: Carousel Horisontal (9:16)
         track.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
         
         track.innerHTML = allSosmedProjects.map(item => {
@@ -2217,7 +2209,7 @@
             </span>
           `).join("");
 
-          const isCarousel = item.subtype === 'carousel';
+          const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
 
           return `
           <div 
@@ -2241,21 +2233,21 @@
                 ${badgesHtml}
               </div>
 
-              <!-- Badge Ikon Instagram Ala Mobile -->
+              <!-- Ikon Sudut Format -->
               <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
-                <i data-lucide="${isCarousel ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+                <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
               </div>
 
               <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isCarousel ? '' : 'pl-0.5'}">
-                  <i data-lucide="${isCarousel ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
+                <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isFeed ? '' : 'pl-0.5'}">
+                  <i data-lucide="${isFeed ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
                 </div>
               </div>
 
               <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
                 <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5 drop-shadow-xs">
-                  <i data-lucide="${isCarousel ? 'copy' : 'smartphone'}" class="w-3 h-3"></i> 
-                  <span>${isCarousel ? 'Feed Carousel' : 'Reels 9:16'}</span>
+                  <i data-lucide="${isFeed ? 'copy' : 'smartphone'}" class="w-3 h-3"></i> 
+                  <span>${isFeed ? 'Feed Post' : 'Reels 9:16'}</span>
                 </span>
                 <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 drop-shadow-sm">
                   ${item.title}
@@ -2277,22 +2269,15 @@
         }
 
       } else {
-        // DI HALAMAN KHUSUS /sosmed: TAMPILAN ALA PROFIL INSTAGRAM
+        // DI HALAMAN KHUSUS /sosmed (DUA TAB INSTAGRAM)
         if (navControls) navControls.classList.add("hidden");
 
-        let filteredSosmed = allSosmedProjects;
         if (activeInstagramTab === 'reels') {
-          filteredSosmed = allSosmedProjects.filter(p => p.subtype !== 'carousel');
-        } else if (activeInstagramTab === 'carousel') {
-          filteredSosmed = allSosmedProjects.filter(p => p.subtype === 'carousel');
-        }
-
-        if (activeInstagramTab === 'reels') {
-          // Tab Reels: Rasio vertikal 9:16
+          // TAB REELS: Rasio Vertikal 9:16
+          const filteredReels = allSosmedProjects.filter(p => p.subtype !== 'feed' && p.subtype !== 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
-          
-          track.innerHTML = filteredSosmed.map(item => {
-            return `
+
+          track.innerHTML = filteredReels.map(item => `
             <div 
               role="button"
               tabindex="0"
@@ -2327,18 +2312,21 @@
                   <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">
                     ${item.title}
                   </h3>
+                  <p class="text-[11px] text-neutral-300 flex items-center gap-1 mt-0.5 font-normal">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-400"></i>
+                    <span class="truncate">${item.location || 'Indonesia'}</span>
+                  </p>
                 </div>
               </div>
             </div>
-            `;
-          }).join("");
+          `).join("");
 
         } else {
-          // Tab Semua Postingan / Carousel: Grid Kotak 1:1 Ala Instagram Profile
-          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 py-2 px-1";
+          // TAB FEED: Rasio Vertikal 3:4 (KLIK MEMUNCULKAN LIGHTBOX)
+          const filteredFeed = allSosmedProjects.filter(p => p.subtype === 'feed' || p.subtype === 'carousel');
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
-          track.innerHTML = filteredSosmed.map(item => {
-            const isCarousel = item.subtype === 'carousel';
+          track.innerHTML = filteredFeed.map(item => {
             const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
 
             return `
@@ -2346,9 +2334,10 @@
               role="button"
               tabindex="0"
               onclick="handleSocialItemClick('${item.id}')"
-              class="group relative cursor-pointer bg-appleCard rounded-2xl sm:rounded-3xl p-2 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none w-full project-card">
+              class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
               
-              <div class="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-900">
+              <!-- Rasio Vertikal 3:4 -->
+              <div class="relative w-full aspect-[3/4] rounded-[20px] overflow-hidden bg-neutral-900">
                 <img 
                   src="${item.image}" 
                   alt="${item.title}" 
@@ -2356,31 +2345,37 @@
                   class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
                 />
-                
-                <!-- Instagram Top-Right Corner Icon -->
-                <div class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
-                  <i data-lucide="${isCarousel ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+
+                <div class="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+
+                <!-- Ikon Sudut Kanan -->
+                <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                 </div>
 
-                <!-- Hover Overlay Elegan -->
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center p-3 text-center text-white">
-                  <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-2">
-                    <i data-lucide="${isCarousel ? 'images' : 'play'}" class="w-5 h-5"></i>
+                <!-- Indikator Slide Sudut Kiri -->
+                <div class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20">
+                  <span>${totalSlides} Slide</span>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
+                    <i data-lucide="images" class="w-4 h-4"></i>
                   </div>
-                  <p class="text-xs font-semibold line-clamp-2 leading-tight">${item.title}</p>
-                  <span class="text-[10px] text-neutral-300 mt-1">
-                    ${isCarousel ? `${totalSlides} Slide Foto` : 'Tonton Video Reels'}
-                  </span>
                 </div>
-              </div>
 
-              <div class="pt-2 px-1 pb-1 flex items-center justify-between">
-                <span class="text-xs font-semibold text-appleDark truncate group-hover:text-purple-600 transition-colors">
-                  ${item.title}
-                </span>
-                <span class="text-[10px] text-appleGray shrink-0 ml-1">
-                  ${item.location || 'ID'}
-                </span>
+                <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5">
+                    <i data-lucide="copy" class="w-3 h-3"></i> Feed Post
+                  </span>
+                  <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">
+                    ${item.title}
+                  </h3>
+                  <p class="text-[11px] text-neutral-300 flex items-center gap-1 mt-0.5 font-normal">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-400"></i>
+                    <span class="truncate">${item.location || 'Indonesia'}</span>
+                  </p>
+                </div>
               </div>
             </div>
             `;
@@ -2521,7 +2516,7 @@
       }
     }
 
-    // ================= LIGHTBOX FOTO (DENGAN END-CARD MANDIRI) =================
+    // ================= LIGHTBOX FOTO & FEED =================
     function openProjectLightbox(id) {
       const project = projects.find(p => p.id === id);
       if (!project) return;
@@ -3017,17 +3012,17 @@
     }
 
     function handleSosmedSubtypeChange() {
-      const subtype = document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'reels';
+      const subtype = document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed';
       const galleryWrapper = document.getElementById("formGalleryWrapper");
       const linkLabel = document.getElementById("linkFieldLabel");
       const linkHint = document.getElementById("linkFieldHint");
       const linkInput = document.getElementById("inputLink");
 
-      if (subtype === 'carousel') {
+      if (subtype === 'feed') {
         galleryWrapper.classList.remove("hidden");
         linkInput.required = false;
         linkLabel.textContent = "Tautan Postingan Instagram (Opsional)";
-        linkHint.textContent = "Bisa disi link postingan Instagram";
+        linkHint.textContent = "Bisa diisi link postingan Instagram";
       } else {
         galleryWrapper.classList.add("hidden");
         linkInput.required = true;
@@ -3070,7 +3065,7 @@
         else if (item.type === 'drone') typeBadgeColor = 'bg-sky-100 text-sky-700';
 
         let typeLabel = (item.type || 'foto').toUpperCase();
-        if (item.type === 'reels' && item.subtype === 'carousel') typeLabel = 'CAROUSEL';
+        if (item.type === 'reels' && (item.subtype === 'feed' || item.subtype === 'carousel')) typeLabel = 'FEED';
         const cats = getProjectCategories(item).join(", ");
 
         return `
@@ -3118,7 +3113,7 @@
 
       const editId = document.getElementById("editProjectId").value;
       const type = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
-      const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'reels') : null;
+      const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed') : null;
 
       const title = document.getElementById("inputTitle").value.trim();
       const location = document.getElementById("inputLocation").value.trim();
@@ -3143,8 +3138,8 @@
         }
 
         const finalGallery = [];
-        // Izinkan galeri foto jika tipenya FOTO, DRONE, atau SOSMED CAROUSEL
-        if (type === 'foto' || type === 'drone' || (type === 'reels' && sosmedSubtype === 'carousel')) {
+        // Izinkan galeri foto jika tipenya FOTO, DRONE, atau SOSMED FEED
+        if (type === 'foto' || type === 'drone' || (type === 'reels' && sosmedSubtype === 'feed')) {
           let count = 1;
           for (const item of pendingGalleryItems) {
             if (item.type === 'file' && item.file) {
@@ -3214,7 +3209,8 @@
       toggleFormTypeFields();
 
       if (item.type === 'reels' && item.subtype) {
-        const subRadio = document.querySelector(`input[name="sosmedSubtype"][value="${item.subtype}"]`);
+        const subVal = item.subtype === 'carousel' ? 'feed' : item.subtype;
+        const subRadio = document.querySelector(`input[name="sosmedSubtype"][value="${subVal}"]`);
         if (subRadio) {
           subRadio.checked = true;
           handleSosmedSubtypeChange();
