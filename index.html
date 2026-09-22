@@ -432,14 +432,14 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 4: PORTOFOLIO REELS & TIKTOK (VERTICAL 9:16) ================= -->
+  <!-- ================= SECTION 4: PORTOFOLIO REELS & SOCIAL MEDIA ================= -->
   <section id="section-reels" class="max-w-7xl mx-auto px-4 sm:px-8 pt-20 md:pt-28">
-    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
+    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 md:mb-8 gap-3">
       <div>
         <div class="inline-flex items-center gap-2 mb-2 flex-wrap">
           <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-purple-600 uppercase tracking-wider">
             <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
-            <span>Social Reels & TikTok</span>
+            <span>Social Media Showcase</span>
           </div>
 
           <button 
@@ -462,7 +462,7 @@
           </button>
         </div>
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Vertical Cinema & Social Media</h2>
-        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik yang dioptimalkan untuk Instagram Reels, TikTok, dan YouTube Shorts.</p>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi format vertikal 9:16 sinematik dan feed carousel yang dioptimalkan untuk Instagram, TikTok, dan Shorts.</p>
       </div>
 
       <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-nowrap">
@@ -477,7 +477,7 @@
 
         <div class="project-count-badge inline-flex items-center justify-center text-xs font-medium text-appleGray bg-white border border-appleBorder rounded-full shadow-2xs whitespace-nowrap">
           <span id="reelsProjectCount" class="font-semibold text-appleDark mr-1">...</span>
-          <span>Reels Tersedia</span>
+          <span>Konten Tersedia</span>
         </div>
 
         <div id="reelsNavControls" class="flex flex-row items-center gap-1 shrink-0">
@@ -501,7 +501,37 @@
       </div>
     </div>
 
-    <!-- Carousel Container Reels -->
+    <!-- TAB NAVIGASI ALA INSTAGRAM (Hanya muncul di halaman khusus /sosmed) -->
+    <div id="instagramTabsContainer" class="hidden mb-6 border-b border-appleBorder flex items-center justify-center gap-8">
+      <button 
+        type="button" 
+        onclick="setInstagramTab('all')" 
+        id="igTab-all" 
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+        <i data-lucide="grid" class="w-4 h-4"></i>
+        <span>Semua Postingan</span>
+      </button>
+
+      <button 
+        type="button" 
+        onclick="setInstagramTab('reels')" 
+        id="igTab-reels" 
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
+        <i data-lucide="film" class="w-4 h-4"></i>
+        <span>Reels 9:16</span>
+      </button>
+
+      <button 
+        type="button" 
+        onclick="setInstagramTab('carousel')" 
+        id="igTab-carousel" 
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
+        <i data-lucide="copy" class="w-4 h-4"></i>
+        <span>Carousel Feed</span>
+      </button>
+    </div>
+
+    <!-- Carousel & Grid Container Reels/Social Media -->
     <div class="relative">
       <div 
         id="reelsPortfolioGrid" 
@@ -513,8 +543,8 @@
       <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3">
         <i data-lucide="smartphone" class="w-6 h-6"></i>
       </div>
-      <h3 class="text-base font-semibold text-appleDark">Belum Ada Video Reels 9:16</h3>
-      <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan karya video vertikal untuk Instagram Reels atau TikTok melalui panel admin.</p>
+      <h3 class="text-base font-semibold text-appleDark">Belum Ada Konten Media Sosial</h3>
+      <p class="text-xs text-appleGray mt-1 max-w-sm mx-auto">Tambahkan video reels vertikal atau postingan carousel feed melalui panel admin.</p>
     </div>
   </section>
 
@@ -883,15 +913,15 @@
         <div class="flex flex-col gap-1.5">
           <button type="button" onclick="selectQuickEmail('foriorid@gmail.com')" class="text-left px-2.5 py-1.5 rounded-lg bg-white border border-appleBorder text-xs text-appleDark font-medium hover:border-foriorBrand transition-all flex items-center justify-between cursor-pointer">
             <span>foriorid@gmail.com</span>
-            <i data-lucide="chevron-right" class="w-3 h-3 text-neutral-400"></i>
+            <i data-lucide="chevron-right" class="w-3 text-neutral-400"></i>
           </button>
           <button type="button" onclick="selectQuickEmail('foriorproject@gmail.com')" class="text-left px-2.5 py-1.5 rounded-lg bg-white border border-appleBorder text-xs text-appleDark font-medium hover:border-foriorBrand transition-all flex items-center justify-between cursor-pointer">
             <span>foriorproject@gmail.com</span>
-            <i data-lucide="chevron-right" class="w-3 h-3 text-neutral-400"></i>
+            <i data-lucide="chevron-right" class="w-3 text-neutral-400"></i>
           </button>
           <button type="button" onclick="selectQuickEmail('foriormedia@gmail.com')" class="text-left px-2.5 py-1.5 rounded-lg bg-white border border-appleBorder text-xs text-appleDark font-medium hover:border-foriorBrand transition-all flex items-center justify-between cursor-pointer">
             <span>foriormedia@gmail.com</span>
-            <i data-lucide="chevron-right" class="w-3 h-3 text-neutral-400"></i>
+            <i data-lucide="chevron-right" class="w-3 text-neutral-400"></i>
           </button>
         </div>
       </div>
@@ -997,13 +1027,32 @@
                 <label class="cursor-pointer">
                   <input type="radio" name="projectType" value="reels" onchange="toggleFormTypeFields()" class="hidden peer">
                   <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-purple-600 peer-checked:bg-purple-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
-                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> <span>Reels 9:16</span>
+                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> <span>Sosmed</span>
                   </div>
                 </label>
                 <label class="cursor-pointer">
                   <input type="radio" name="projectType" value="drone" onchange="toggleFormTypeFields()" class="hidden peer">
                   <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-sky-600 peer-checked:bg-sky-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
                     <i data-lucide="plane" class="w-3.5 h-3.5"></i> <span>Drone</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- SUB-PILIHAN KHUSUS TIPE SOSMED -->
+            <div id="sosmedSubtypeWrapper" class="hidden p-3 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1.5">
+              <label class="block text-[11px] font-semibold text-purple-900">Format Konten Sosial Media:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="sosmedSubtype" value="reels" checked onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="film" class="w-3.5 h-3.5"></i> <span>Reels Video 9:16</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="sosmedSubtype" value="carousel" onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Carousel Feed 1:1</span>
                   </div>
                 </label>
               </div>
@@ -1039,7 +1088,7 @@
               />
             </div>
 
-            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO/DRONE -->
+            <!-- TAUTAN LINK OPSIONAL UNTUK FOTO/DRONE/CAROUSEL -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
                 <span id="linkFieldLabel">Tautan Album Google Photos (Opsional)</span>
@@ -1107,10 +1156,10 @@
             <!-- Galeri Tambahan -->
             <div id="formGalleryWrapper">
               <div class="flex items-center justify-between mb-1">
-                <label class="block text-xs font-medium text-appleDark">Galeri Foto Tambahan (Lightbox)</label>
+                <label class="block text-xs font-medium text-appleDark">Galeri Foto / Slide Carousel</label>
                 <span id="formGalleryCount" class="text-[10px] text-appleGray">0 foto ditambahkan</span>
               </div>
-              <p class="text-[11px] text-appleGray mb-2">Foto otomatis dikompresi ringan & disimpan ke Firebase Storage secara aman.</p>
+              <p class="text-[11px] text-appleGray mb-2">Foto otomatis disimpan ke Firebase Storage secara gratis & cepat.</p>
               
               <div class="flex flex-wrap items-center gap-2">
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1.5 rounded-lg hover:bg-neutral-100 transition-colors inline-flex items-center gap-1.5 shadow-xs">
@@ -1158,7 +1207,7 @@
               <button type="button" onclick="setAdminListFilter('all', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md bg-white shadow-xs text-appleDark">Semua</button>
               <button type="button" onclick="setAdminListFilter('foto', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Foto</button>
               <button type="button" onclick="setAdminListFilter('video', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Video</button>
-              <button type="button" onclick="setAdminListFilter('reels', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Reels</button>
+              <button type="button" onclick="setAdminListFilter('reels', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Sosmed</button>
               <button type="button" onclick="setAdminListFilter('drone', this)" class="admin-tab-btn text-[10px] font-medium px-2 py-0.5 rounded-md text-appleGray hover:text-appleDark">Drone</button>
             </div>
           </div>
@@ -1257,7 +1306,6 @@
         rawList = p.categories.split(",").map(c => c.trim()).filter(Boolean);
       }
 
-      // Filter nama kategori & abaikan kata "Komersial"
       const cleanList = rawList.filter(c => c.toLowerCase() !== "komersial");
       return cleanList.length > 0 ? cleanList : ["Lainnya"];
     }
@@ -1336,12 +1384,28 @@
       {
         id: "reels-1",
         type: "reels",
+        subtype: "reels",
         title: "Morning Sauna with Mountain View",
         category: "Vila",
         categories: ["Vila"],
         location: "Cisarua, Puncak",
         image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
         link: "https://www.youtube.com/shorts/5qap5aO4i9A"
+      },
+      {
+        id: "reels-2",
+        type: "reels",
+        subtype: "carousel",
+        title: "Modern Minimalist Villa Corner",
+        category: "Vila",
+        categories: ["Vila"],
+        location: "Canggu, Bali",
+        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1000&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1000&auto=format&fit=crop"
+        ],
+        link: ""
       },
       {
         id: "drone-1",
@@ -1372,6 +1436,7 @@
 
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 6;
+    let activeInstagramTab = "all"; // 'all' (Grid 1:1), 'reels' (9:16), 'carousel' (Slide)
 
     let activeLightboxProject = null;
     let currentLightboxPhotos = [];
@@ -1481,12 +1546,10 @@
       const btnLihatSemuaReels = document.getElementById("btnLihatSemuaReels");
       const btnLihatSemuaDrone = document.getElementById("btnLihatSemuaDrone");
 
+      const igTabs = document.getElementById("instagramTabsContainer");
       const reelsTrack = document.getElementById("reelsPortfolioGrid");
       const droneTrack = document.getElementById("dronePortfolioGrid");
 
-      if (reelsTrack) {
-        reelsTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
-      }
       if (droneTrack) {
         droneTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
       }
@@ -1500,6 +1563,11 @@
         secVideo.classList.remove("hidden");
         secReels.classList.remove("hidden");
         secDrone.classList.remove("hidden");
+
+        if (igTabs) igTabs.classList.add("hidden");
+        if (reelsTrack) {
+          reelsTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        }
 
         if (btnLihatSemuaFoto) btnLihatSemuaFoto.classList.remove("hidden");
         if (btnLihatSemuaVideo) btnLihatSemuaVideo.classList.remove("hidden");
@@ -1539,16 +1607,14 @@
           renderVideoSection();
 
         } else if (r === "/sosmed") {
-          document.title = "Portofolio Social Reels & TikTok 9:16 — FORIOR";
-          badge.textContent = "Katalog Khusus Social Reels 9:16";
-          title.textContent = "Vertical Cinema & Social Media";
-          desc.textContent = "Kompilasi micro-tours dinamis dan visual vertikal berkualitas tinggi yang dioptimalkan untuk engagement Instagram Reels, TikTok, dan Shorts.";
+          document.title = "Portofolio Social Media & Reels — FORIOR";
+          badge.textContent = "Instagram Profile Showcase";
+          title.textContent = "Social Media & Vertical Cinema";
+          desc.textContent = "Kumpulan konten micro-tours video reels vertikal 9:16 dan feed carousel berkualitas tinggi untuk platform media sosial.";
           
           secReels.classList.remove("hidden");
           if (btnLihatSemuaReels) btnLihatSemuaReels.classList.add("hidden");
-          if (reelsTrack) {
-            reelsTrack.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
-          }
+          if (igTabs) igTabs.classList.remove("hidden");
           renderReelsSection();
 
         } else if (r === "/drone") {
@@ -1799,7 +1865,6 @@
 
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
 
-      // Hitung jumlah proyek foto per kategori
       const categoryCounts = {};
       photoProjects.forEach(p => {
         const cats = getProjectCategories(p);
@@ -1810,15 +1875,12 @@
         });
       });
 
-      // Filter hanya kategori yang memiliki proyek (>0) dan urutkan dari yang terbanyak
       const activeFilledCategories = Object.keys(categoryCounts)
         .filter(cat => categoryCounts[cat] > 0)
         .sort((a, b) => categoryCounts[b] - categoryCounts[a]);
 
-      // Gabungkan dengan "Semua" di awal
       const displayCategories = ["Semua", ...activeFilledCategories];
 
-      // Jika kategori yang sedang aktif ternyata tidak ada di daftar isi, kembalikan ke "Semua"
       if (!displayCategories.map(c => c.toLowerCase()).includes(activeCategory.toLowerCase())) {
         activeCategory = "Semua";
       }
@@ -1901,7 +1963,6 @@
       
       if (!isDataLoaded) return;
 
-      // Render filter kategori dinamis berdasarkan data terbaru
       renderCategoryFilters();
 
       const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
@@ -2091,6 +2152,37 @@
       lucide.createIcons();
     }
 
+    // ================= SECTION 4: SOCIAL MEDIA & REELS =================
+    function setInstagramTab(tab) {
+      activeInstagramTab = tab;
+      
+      const tabs = ['all', 'reels', 'carousel'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`igTab-${t}`);
+        if (el) {
+          if (t === tab) {
+            el.className = "ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer";
+          } else {
+            el.className = "ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer";
+          }
+        }
+      });
+
+      renderReelsSection();
+    }
+
+    function handleSocialItemClick(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      const isVideo = (item.subtype === 'reels' || (!item.subtype && item.link && (item.link.includes("youtube") || item.link.includes("youtu.be"))));
+      if (isVideo) {
+        openVideoModal(id);
+      } else {
+        openProjectLightbox(id);
+      }
+    }
+
     function renderReelsSection() {
       const track = document.getElementById("reelsPortfolioGrid");
       const emptyState = document.getElementById("emptyReelsState");
@@ -2098,10 +2190,12 @@
 
       if (!isDataLoaded) return;
 
-      const reelsProjects = projects.filter(p => p.type === 'reels');
-      document.getElementById("reelsProjectCount").textContent = reelsProjects.length;
+      const isSubpage = currentRoute === "/sosmed";
+      let allSosmedProjects = projects.filter(p => p.type === 'reels');
 
-      if (reelsProjects.length === 0) {
+      document.getElementById("reelsProjectCount").textContent = allSosmedProjects.length;
+
+      if (allSosmedProjects.length === 0) {
         track.innerHTML = "";
         emptyState.classList.remove("hidden");
         if (navControls) navControls.classList.add("hidden");
@@ -2109,70 +2203,192 @@
       }
 
       emptyState.classList.add("hidden");
-      const isSubpage = currentRoute === "/sosmed";
 
-      track.innerHTML = reelsProjects.map(item => {
-        const cats = getProjectCategories(item);
-        const badgesHtml = cats.map(c => `
-          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
-            ${c}
-          </span>
-        `).join("");
+      // Logika di Beranda vs Halaman Khusus /sosmed
+      if (!isSubpage) {
+        // DI BERANDA: Tampilkan carousel geser 9:16 elegan
+        track.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        
+        track.innerHTML = allSosmedProjects.map(item => {
+          const cats = getProjectCategories(item);
+          const badgesHtml = cats.map(c => `
+            <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
+              ${c}
+            </span>
+          `).join("");
 
-        const itemWidthClass = isSubpage 
-          ? "w-full" 
-          : "shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start";
+          const isCarousel = item.subtype === 'carousel';
 
-        return `
-        <div 
-          role="button"
-          tabindex="0"
-          onclick="openVideoModal('${item.id}')"
-          class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none ${itemWidthClass} project-card">
-          
-          <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
-            <img 
-              src="${item.image}" 
-              alt="${item.title}" 
-              decoding="async"
-              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-              onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
-            />
+          return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleSocialItemClick('${item.id}')"
+            class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start project-card">
             
-            <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+            <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${item.image}" 
+                alt="${item.title}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+              />
+              
+              <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
 
-            <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
-              ${badgesHtml}
-            </div>
+              <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
+                ${badgesHtml}
+              </div>
 
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
-                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              <!-- Badge Ikon Instagram Ala Mobile -->
+              <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
+                <i data-lucide="${isCarousel ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+              </div>
+
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isCarousel ? '' : 'pl-0.5'}">
+                  <i data-lucide="${isCarousel ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
+                </div>
+              </div>
+
+              <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5 drop-shadow-xs">
+                  <i data-lucide="${isCarousel ? 'copy' : 'smartphone'}" class="w-3 h-3"></i> 
+                  <span>${isCarousel ? 'Feed Carousel' : 'Reels 9:16'}</span>
+                </span>
+                <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 drop-shadow-sm">
+                  ${item.title}
+                </h3>
+                <p class="text-[11px] text-neutral-200 flex items-center gap-1 mt-1 font-normal drop-shadow-xs">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300 shrink-0"></i>
+                  <span class="truncate">${item.location || 'Indonesia'}</span>
+                </p>
               </div>
             </div>
-
-            <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
-              <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5 drop-shadow-xs">
-                <i data-lucide="smartphone" class="w-3 h-3"></i> <span>Reels 9:16</span>
-              </span>
-              <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 drop-shadow-sm">
-                ${item.title}
-              </h3>
-              <p class="text-[11px] text-neutral-200 flex items-center gap-1 mt-1 font-normal drop-shadow-xs">
-                <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300 shrink-0"></i>
-                <span class="truncate">${item.location || 'Indonesia'}</span>
-              </p>
-            </div>
           </div>
-        </div>
-      `;
-      }).join("");
+        `;
+        }).join("");
 
-      if (!isSubpage && reelsProjects.length > 1) {
-        if (navControls) navControls.classList.remove("hidden");
+        if (allSosmedProjects.length > 1) {
+          if (navControls) navControls.classList.remove("hidden");
+        } else {
+          if (navControls) navControls.classList.add("hidden");
+        }
+
       } else {
+        // DI HALAMAN KHUSUS /sosmed: TAMPILAN ALA PROFIL INSTAGRAM
         if (navControls) navControls.classList.add("hidden");
+
+        let filteredSosmed = allSosmedProjects;
+        if (activeInstagramTab === 'reels') {
+          filteredSosmed = allSosmedProjects.filter(p => p.subtype !== 'carousel');
+        } else if (activeInstagramTab === 'carousel') {
+          filteredSosmed = allSosmedProjects.filter(p => p.subtype === 'carousel');
+        }
+
+        if (activeInstagramTab === 'reels') {
+          // Tab Reels: Rasio vertikal 9:16
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
+          
+          track.innerHTML = filteredSosmed.map(item => {
+            return `
+            <div 
+              role="button"
+              tabindex="0"
+              onclick="handleSocialItemClick('${item.id}')"
+              class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
+              
+              <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.title}" 
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                />
+                
+                <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+
+                <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
+                  <i data-lucide="film" class="w-3.5 h-3.5"></i>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5">
+                    <i data-lucide="film" class="w-3 h-3"></i> Reels
+                  </span>
+                  <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">
+                    ${item.title}
+                  </h3>
+                </div>
+              </div>
+            </div>
+            `;
+          }).join("");
+
+        } else {
+          // Tab Semua Postingan / Carousel: Grid Kotak 1:1 Ala Instagram Profile
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 py-2 px-1";
+
+          track.innerHTML = filteredSosmed.map(item => {
+            const isCarousel = item.subtype === 'carousel';
+            const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+            return `
+            <div 
+              role="button"
+              tabindex="0"
+              onclick="handleSocialItemClick('${item.id}')"
+              class="group relative cursor-pointer bg-appleCard rounded-2xl sm:rounded-3xl p-2 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none w-full project-card">
+              
+              <div class="relative w-full aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-900">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.title}" 
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                />
+                
+                <!-- Instagram Top-Right Corner Icon -->
+                <div class="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
+                  <i data-lucide="${isCarousel ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+                </div>
+
+                <!-- Hover Overlay Elegan -->
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center p-3 text-center text-white">
+                  <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-2">
+                    <i data-lucide="${isCarousel ? 'images' : 'play'}" class="w-5 h-5"></i>
+                  </div>
+                  <p class="text-xs font-semibold line-clamp-2 leading-tight">${item.title}</p>
+                  <span class="text-[10px] text-neutral-300 mt-1">
+                    ${isCarousel ? `${totalSlides} Slide Foto` : 'Tonton Video Reels'}
+                  </span>
+                </div>
+              </div>
+
+              <div class="pt-2 px-1 pb-1 flex items-center justify-between">
+                <span class="text-xs font-semibold text-appleDark truncate group-hover:text-purple-600 transition-colors">
+                  ${item.title}
+                </span>
+                <span class="text-[10px] text-appleGray shrink-0 ml-1">
+                  ${item.location || 'ID'}
+                </span>
+              </div>
+            </div>
+            `;
+          }).join("");
+        }
       }
+
+      lucide.createIcons();
     }
 
     function slideReels(direction) {
@@ -2745,7 +2961,7 @@
         ? `${window.location.origin}${window.location.pathname}#${routePath}`
         : `${window.location.origin}${routePath}`;
 
-      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'reels' ? 'Portofolio Social Reels & TikTok FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
+      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'reels' ? 'Portofolio Social Media FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
 
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -2773,23 +2989,50 @@
 
     function toggleFormTypeFields() {
       const selectedType = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
+      const sosmedSubtypeBox = document.getElementById("sosmedSubtypeWrapper");
       const galleryWrapper = document.getElementById("formGalleryWrapper");
       const linkLabel = document.getElementById("linkFieldLabel");
       const linkHint = document.getElementById("linkFieldHint");
       const linkInput = document.getElementById("inputLink");
 
-      if (selectedType === 'video' || selectedType === 'reels') {
-        galleryWrapper.classList.add("hidden");
-        linkInput.required = true;
-        linkLabel.textContent = selectedType === 'reels' 
-          ? "Tautan Reels / TikTok / YouTube Shorts" 
-          : "Tautan Video (YouTube / MP4)";
-        linkHint.textContent = "Wajib diisi URL video";
+      if (selectedType === 'reels') {
+        sosmedSubtypeBox.classList.remove("hidden");
+        handleSosmedSubtypeChange();
       } else {
+        sosmedSubtypeBox.classList.add("hidden");
+
+        if (selectedType === 'video') {
+          galleryWrapper.classList.add("hidden");
+          linkInput.required = true;
+          linkLabel.textContent = "Tautan Video (YouTube / MP4)";
+          linkHint.textContent = "Wajib diisi URL video";
+        } else {
+          // Foto atau Drone
+          galleryWrapper.classList.remove("hidden");
+          linkInput.required = false;
+          linkLabel.textContent = "Tautan Album Google Photos (Opsional)";
+          linkHint.textContent = "Bisa dikosongkan jika foto terbatas";
+        }
+      }
+    }
+
+    function handleSosmedSubtypeChange() {
+      const subtype = document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'reels';
+      const galleryWrapper = document.getElementById("formGalleryWrapper");
+      const linkLabel = document.getElementById("linkFieldLabel");
+      const linkHint = document.getElementById("linkFieldHint");
+      const linkInput = document.getElementById("inputLink");
+
+      if (subtype === 'carousel') {
         galleryWrapper.classList.remove("hidden");
         linkInput.required = false;
-        linkLabel.textContent = "Tautan Album Google Photos (Opsional)";
-        linkHint.textContent = "Bisa dikosongkan jika foto terbatas";
+        linkLabel.textContent = "Tautan Postingan Instagram (Opsional)";
+        linkHint.textContent = "Bisa disi link postingan Instagram";
+      } else {
+        galleryWrapper.classList.add("hidden");
+        linkInput.required = true;
+        linkLabel.textContent = "Tautan Reels / Shorts / TikTok";
+        linkHint.textContent = "Wajib diisi link video";
       }
     }
 
@@ -2826,7 +3069,8 @@
         else if (item.type === 'reels') typeBadgeColor = 'bg-purple-100 text-purple-700';
         else if (item.type === 'drone') typeBadgeColor = 'bg-sky-100 text-sky-700';
 
-        const typeLabel = (item.type || 'foto').toUpperCase();
+        let typeLabel = (item.type || 'foto').toUpperCase();
+        if (item.type === 'reels' && item.subtype === 'carousel') typeLabel = 'CAROUSEL';
         const cats = getProjectCategories(item).join(", ");
 
         return `
@@ -2874,6 +3118,8 @@
 
       const editId = document.getElementById("editProjectId").value;
       const type = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
+      const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'reels') : null;
+
       const title = document.getElementById("inputTitle").value.trim();
       const location = document.getElementById("inputLocation").value.trim();
       const link = document.getElementById("inputLink").value.trim();
@@ -2897,7 +3143,8 @@
         }
 
         const finalGallery = [];
-        if (type !== 'video' && type !== 'reels') {
+        // Izinkan galeri foto jika tipenya FOTO, DRONE, atau SOSMED CAROUSEL
+        if (type === 'foto' || type === 'drone' || (type === 'reels' && sosmedSubtype === 'carousel')) {
           let count = 1;
           for (const item of pendingGalleryItems) {
             if (item.type === 'file' && item.file) {
@@ -2913,6 +3160,7 @@
 
         const projectData = {
           type,
+          subtype: sosmedSubtype,
           title,
           category: selectedFormCategories.join(", "),
           categories: [...selectedFormCategories],
@@ -2964,6 +3212,14 @@
       const typeRadio = document.querySelector(`input[name="projectType"][value="${item.type || 'foto'}"]`);
       if (typeRadio) typeRadio.checked = true;
       toggleFormTypeFields();
+
+      if (item.type === 'reels' && item.subtype) {
+        const subRadio = document.querySelector(`input[name="sosmedSubtype"][value="${item.subtype}"]`);
+        if (subRadio) {
+          subRadio.checked = true;
+          handleSosmedSubtypeChange();
+        }
+      }
 
       document.getElementById("inputTitle").value = item.title;
       document.getElementById("inputLocation").value = item.location || "";
