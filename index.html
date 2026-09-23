@@ -281,7 +281,7 @@
     </div>
   </section>
 
-  <!-- ================= SECTION: CLIENT SPOTLIGHT ================= -->
+  <!-- ================= SECTION: CLIENT SPOTLIGHT (CAROUSEL SLIDER) ================= -->
   <section id="section-clients" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-4">
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
       <div>
@@ -292,10 +292,33 @@
         <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Client Spotlight</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ekosistem media kit lengkap yang FORIOR produksi khusus untuk brand hospitality & arsitektur ternama.</p>
       </div>
+
+      <!-- Tombol Navigasi Slider Client Spotlight -->
+      <div id="brandNavControls" class="flex items-center gap-1.5 self-start sm:self-auto shrink-0">
+        <button 
+          type="button" 
+          onclick="slideBrands(-1)" 
+          aria-label="Geser Brand ke Kiri"
+          class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <button 
+          type="button" 
+          onclick="slideBrands(1)" 
+          aria-label="Geser Brand ke Kanan"
+          class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
     </div>
 
-    <!-- Grid Kartu Berdampingan (2 Kolom) -->
-    <div id="clientSpotlightGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"></div>
+    <!-- Container Slider Horisontal untuk Client Spotlight -->
+    <div class="relative">
+      <div 
+        id="clientSpotlightGrid" 
+        class="flex items-stretch gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1">
+      </div>
+    </div>
   </section>
 
   <!-- ================= SECTION KHUSUS: DETAIL HALAMAN BRAND CASE STUDY (MASONRY) ================= -->
@@ -570,8 +593,17 @@
       </div>
     </div>
 
-    <!-- TAB NAVIGASI INSTAGRAM: 2 TAB (FEED 3:4 & REELS 9:16) -->
-    <div id="instagramTabsContainer" class="hidden mb-8 border-b border-appleBorder flex items-center justify-center gap-10">
+    <!-- TAB NAVIGASI INSTAGRAM: 3 TAB (SEMUA, FEED 3:4, REELS 9:16) -->
+    <div id="instagramTabsContainer" class="hidden mb-8 border-b border-appleBorder flex items-center justify-center gap-6 sm:gap-10">
+      <button 
+        type="button" 
+        onclick="setInstagramTab('all')" 
+        id="igTab-all" 
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+        <span>Semua</span>
+      </button>
+
       <button 
         type="button" 
         onclick="setInstagramTab('feed')" 
@@ -764,7 +796,7 @@
               id="lightboxMainImage" 
               src="" 
               alt="Portofolio FORIOR" 
-              class="max-h-[55vh] sm:max-h-[68vh] max-w-[92vw] md:max-w-full object-contain rounded-xl shadow-2xl transition-opacity duration-150"
+              class="max-h-[55vh] sm:max-h-[68vh] max-w-[92vw] md:max-w-full object-contain rounded-xl shadow-2xl"
             />
 
             <!-- Slide Mandiri: End-Card Album -->
@@ -860,7 +892,7 @@
                 rel="noopener noreferrer" 
                 class="hidden inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:underline">
                 <span>Lihat di Instagram</span>
-                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                <i data-lucide="external-link" class="w-3 h-3"></i>
               </a>
             </div>
           </div>
@@ -1285,7 +1317,7 @@
               <div class="flex items-center gap-2">
                 <span class="text-[10px] text-appleGray">Upload berkas ke Cloud Storage:</span>
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1 rounded-lg hover:bg-neutral-100 transition-colors inline-flex items-center gap-1 shadow-2xs">
-                  <i data-lucide="upload-cloud" class="w-3 h-3 text-foriorBrand"></i>
+                  <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-foriorBrand"></i>
                   <span>Pilih Berkas</span>
                   <input type="file" id="inputFileUpload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
                 </label>
@@ -1445,7 +1477,6 @@
 
     let selectedFormCategories = ["Hotel"];
 
-    // DAFTAR BRAND SPOTLIGHT AWAL (Dukungan Preset Default)
     const FEATURED_BRANDS = [
       {
         slug: "swiss-belhotel",
@@ -1608,7 +1639,7 @@
 
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 6;
-    let activeInstagramTab = "feed";
+    let activeInstagramTab = "all"; // Tab default Sosial Media: "all"
     let activeBrandTab = "all";
     let currentBrandSlug = null;
 
@@ -2056,7 +2087,7 @@
       }
     }
 
-    // ================= LOGIKA BRAND CASE STUDY: DINAMIS & DROPDOWN =================
+    // ================= LOGIKA BRAND CASE STUDY: CAROUSEL SLIDER =================
     function createSlug(text) {
       return String(text || "")
         .toLowerCase()
@@ -2152,6 +2183,7 @@
 
     function renderFeaturedBrandsSection() {
       const container = document.getElementById("clientSpotlightGrid");
+      const navControls = document.getElementById("brandNavControls");
       if (!container) return;
 
       const allBrands = getAllBrands();
@@ -2159,7 +2191,12 @@
 
       if (filledBrands.length === 0) {
         container.innerHTML = `<p class="text-xs text-appleGray col-span-full py-4 text-center">Belum ada brand yang terdaftar.</p>`;
+        if (navControls) navControls.classList.add("hidden");
         return;
+      }
+
+      if (navControls) {
+        navControls.classList.toggle("hidden", filledBrands.length <= 1);
       }
 
       container.innerHTML = filledBrands.map(brand => {
@@ -2176,7 +2213,7 @@
             role="button"
             tabindex="0"
             onclick="handleNavRoute(event, '/client/${brand.slug}')"
-            class="project-card group block cursor-pointer bg-appleCard rounded-[30px] p-3.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+            class="project-card group cursor-pointer bg-appleCard rounded-[30px] p-3.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none shrink-0 w-[84vw] sm:w-[58vw] md:w-[48vw] lg:w-[calc((100%-1.5rem)/2)] snap-start">
             
             <div class="relative w-full aspect-[16/9] rounded-[22px] overflow-hidden bg-neutral-900">
               <img 
@@ -2227,6 +2264,14 @@
       lucide.createIcons();
     }
 
+    function slideBrands(direction) {
+      const track = document.getElementById("clientSpotlightGrid");
+      if (!track) return;
+      const cards = track.querySelectorAll(".snap-start");
+      const step = cards.length >= 2 ? (cards[1].offsetLeft - cards[0].offsetLeft) : 340;
+      track.scrollBy({ left: direction * step, behavior: "smooth" });
+    }
+
     function setBrandTab(tab) {
       activeBrandTab = tab;
       const tabs = ['all', 'foto', 'video', 'reels', 'drone'];
@@ -2243,7 +2288,6 @@
       if (currentBrandSlug) renderBrandCaseStudyPage(currentBrandSlug);
     }
 
-    // RENDER DETAIL BRAND MENGGUNAKAN LAYOUT MASONRY MULTIRASIO
     function renderBrandCaseStudyPage(slug) {
       const allBrands = getAllBrands();
       const brand = allBrands.find(b => b.slug === slug);
@@ -2282,7 +2326,6 @@
         const isDrone = item.type === 'drone';
         const isFeed = isReels && (item.subtype === 'feed' || item.subtype === 'carousel');
 
-        // Tentukan rasio presisi sesuai single portofolio aslinya
         let aspectClass = "aspect-[4/3]";
         let typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">Foto</span>`;
         let cornerIcon = "maximize-2";
@@ -2323,19 +2366,16 @@
                 onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
               />
 
-              <!-- Badge Format -->
               <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1">
                 ${typeBadge}
               </div>
 
-              <!-- Indikator Slide Feed -->
               ${isFeed ? `
                 <div class="absolute top-3.5 left-3.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
                   <span>${totalSlides} Slide</span>
                 </div>
               ` : ''}
 
-              <!-- Tombol Play untuk Video / Reels -->
               ${(isVideo || (isReels && !isFeed)) ? `
                 <div class="absolute inset-0 flex items-center justify-center">
                   <div class="w-11 h-11 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 ${isVideo ? 'group-hover:bg-rose-600' : 'group-hover:bg-purple-600'} group-hover:text-white">
@@ -2682,7 +2722,7 @@
     function setInstagramTab(tab) {
       activeInstagramTab = tab;
       
-      const tabs = ['feed', 'reels'];
+      const tabs = ['all', 'feed', 'reels'];
       tabs.forEach(t => {
         const el = document.getElementById(`igTab-${t}`);
         if (el) {
@@ -2766,7 +2806,6 @@
                 ${badgesHtml}
               </div>
 
-              <!-- Ikon Sudut Format -->
               <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
                 <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
               </div>
@@ -2802,10 +2841,70 @@
         }
 
       } else {
-        // DI SUB-HALAMAN /sosmed
+        // DI SUB-HALAMAN /sosmed (3 TAB INSTAGRAM)
         if (navControls) navControls.classList.add("hidden");
 
-        if (activeInstagramTab === 'reels') {
+        if (activeInstagramTab === 'all') {
+          // TAB "SEMUA": Masonry Grid Multi-Rasio (Feed 3:4 & Reels 9:16 bergabung rapi)
+          track.className = "columns-2 sm:columns-3 lg:columns-4 gap-4 sm:gap-6 space-y-4 sm:space-y-6 py-2 px-1";
+
+          track.innerHTML = allSosmedProjects.map(item => {
+            const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
+            const aspectClass = isFeed ? 'aspect-[3/4]' : 'aspect-[9/16]';
+            const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+            return `
+              <div 
+                role="button"
+                tabindex="0"
+                onclick="handleSocialItemClick('${item.id}')"
+                class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full break-inside-avoid block mb-4 sm:mb-6 project-card">
+                
+                <div class="relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
+                  <img 
+                    src="${item.image}" 
+                    alt="${item.title}" 
+                    decoding="async"
+                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                  />
+
+                  <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
+                    <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+                  </div>
+
+                  ${isFeed ? `
+                    <div class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
+                      <span>${totalSlides} Slide</span>
+                    </div>
+                  ` : ''}
+
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isFeed ? '' : 'pl-0.5'}">
+                      <i data-lucide="${isFeed ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2 px-1 text-appleDark">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-600 uppercase tracking-wider mb-0.5">
+                    <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3 h-3"></i> ${isFeed ? 'Feed (3:4)' : 'Reels (9:16)'}
+                  </span>
+                  <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-1">
+                    ${item.title}
+                  </h3>
+                  <p class="text-[11px] text-appleGray flex items-center gap-1 mt-0.5 font-normal">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-400"></i>
+                    <span class="truncate">${item.location || 'Indonesia'}</span>
+                  </p>
+                </div>
+
+              </div>
+            `;
+          }).join("");
+
+        } else if (activeInstagramTab === 'reels') {
+          // TAB REELS
           const filteredReels = allSosmedProjects.filter(p => p.subtype !== 'feed' && p.subtype !== 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
@@ -2854,6 +2953,7 @@
           `).join("");
 
         } else {
+          // TAB FEED
           const filteredFeed = allSosmedProjects.filter(p => p.subtype === 'feed' || p.subtype === 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
@@ -3021,7 +3121,18 @@
       }
     }
 
-    // ================= LIGHTBOX FOTO & SPLIT VIEW INSTAGRAM MODAL =================
+    // ================= LIGHTBOX DENGAN RESPON CEPAT (ZERO DELAY & PRELOADING) =================
+    function preloadAdjacentImages() {
+      if (!currentLightboxPhotos || currentLightboxPhotos.length <= 1) return;
+      const nextIdx = (currentLightboxIndex + 1) % currentLightboxPhotos.length;
+      const prevIdx = (currentLightboxIndex - 1 + currentLightboxPhotos.length) % currentLightboxPhotos.length;
+
+      const nextImg = new Image();
+      nextImg.src = currentLightboxPhotos[nextIdx];
+      const prevImg = new Image();
+      prevImg.src = currentLightboxPhotos[prevIdx];
+    }
+
     function openProjectLightbox(id) {
       const project = projects.find(p => p.id === id);
       if (!project) return;
@@ -3142,11 +3253,10 @@
         endCardSlide.classList.add("hidden");
         mainImg.classList.remove("hidden");
         const currentUrl = currentLightboxPhotos[currentLightboxIndex];
-        mainImg.style.opacity = "0.4";
+        
+        // PENGGANTIAN LANGSUNG SECARA INSTAN TANPA DELAY FADE
         mainImg.src = currentUrl;
-        mainImg.onload = () => {
-          mainImg.style.opacity = "1";
-        };
+        preloadAdjacentImages();
       }
 
       const displayIndex = currentLightboxIndex + 1;
@@ -3171,7 +3281,7 @@
             <button 
               type="button" 
               onclick="setLightboxPhotoIndex(${idx})" 
-              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-200 ${borderClass} cursor-pointer">
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-150 ${borderClass} cursor-pointer">
               <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
             </button>
           `;
@@ -3676,7 +3786,6 @@
 
       const title = document.getElementById("inputTitle").value.trim();
 
-      // Tangkap Brand dari Dropdown atau Input Brand Baru
       const brandSelectVal = document.getElementById("selectBrand").value;
       let brand = "";
       if (brandSelectVal === "__NEW_BRAND__") {
@@ -3791,7 +3900,6 @@
 
       document.getElementById("inputTitle").value = item.title;
 
-      // Set Dropdown Brand
       populateBrandDropdown(item.brand || "");
 
       if (document.getElementById("inputCaption")) {
