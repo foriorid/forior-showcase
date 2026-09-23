@@ -281,7 +281,7 @@
     </div>
   </section>
 
-  <!-- ================= SECTION: FEATURED CLIENT SPOTLIGHT / CASE STUDY ================= -->
+  <!-- ================= SECTION: CLIENT SPOTLIGHT ================= -->
   <section id="section-clients" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-4">
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
       <div>
@@ -289,26 +289,42 @@
           <i data-lucide="award" class="w-3.5 h-3.5"></i>
           <span>Client Spotlight & Case Study</span>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Brand Spotlight</h2>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Client Spotlight</h2>
         <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ekosistem media kit lengkap yang FORIOR produksi khusus untuk brand hospitality & arsitektur ternama.</p>
       </div>
     </div>
 
-    <!-- Grid Kartu Brand Showcase -->
+    <!-- Grid Kartu Berdampingan (2 Kolom) -->
     <div id="clientSpotlightGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"></div>
   </section>
 
   <!-- ================= SECTION KHUSUS: DETAIL HALAMAN BRAND CASE STUDY ================= -->
-  <section id="section-brand-detail" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-28 md:pb-36">
-    <!-- Brand Banner Info -->
+  <section id="section-brand-detail" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-28 md:pb-36">
+    <!-- Tombol Navigasi Kembali & Bagikan -->
+    <div class="flex items-center justify-between gap-3 pb-6 mb-6 border-b border-appleBorder">
+      <a href="#" onclick="handleNavRoute(event, '/')" class="inline-flex items-center gap-2 text-xs font-semibold text-appleGray hover:text-appleDark bg-white border border-appleBorder px-4 py-2 rounded-full shadow-2xs transition-all active:scale-95">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+        <span>Kembali ke Semua Showcase</span>
+      </a>
+
+      <button 
+        type="button" 
+        onclick="shareCurrentPage()" 
+        class="inline-flex items-center gap-1.5 text-xs font-medium text-appleDark bg-white border border-appleBorder px-4 py-2 rounded-full shadow-2xs hover:bg-neutral-50 active:scale-95 transition-all cursor-pointer">
+        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+        <span>Bagikan Halaman</span>
+      </button>
+    </div>
+
+    <!-- Brand Hero Banner (Leluasa dan tidak terpotong navbar) -->
     <div class="relative w-full rounded-3xl overflow-hidden bg-neutral-900 text-white p-6 sm:p-12 mb-10 shadow-xl border border-black/[0.06]">
-      <img id="brandHeroBg" src="" alt="Hero Brand" class="absolute inset-0 w-full h-full object-cover opacity-30 blur-xs">
+      <img id="brandHeroBg" src="" alt="Hero Brand" class="absolute inset-0 w-full h-full object-cover opacity-35 blur-xs">
       <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-transparent"></div>
 
       <div class="relative z-10 max-w-3xl space-y-3">
         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider text-amber-300 border border-white/20">
-          <i data-lucide="check-circle" class="w-3 h-3"></i>
-          <span>Official Brand Documentation</span>
+          <i data-lucide="award" class="w-3 h-3"></i>
+          <span>Official Client Spotlight</span>
         </div>
         <h1 id="brandDetailTitle" class="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">Nama Brand Klien</h1>
         <p id="brandDetailLocation" class="text-xs sm:text-sm text-neutral-300 flex items-center gap-1.5 font-normal">
@@ -316,7 +332,7 @@
           <span>Lokasi Hotel</span>
         </p>
         <p id="brandDetailDesc" class="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed max-w-2xl pt-1">
-          Kompilasi dokumentasi multimedia menyeluruh dari foto arsitektural interior, film walkthrough 16:9, konten social media, hingga rekaman drone udara.
+          Kompilasi dokumentasi multimedia menyeluruh dari foto arsitektur interior, film sinematik 16:9, konten social media, hingga aerial drone.
         </p>
       </div>
     </div>
@@ -1169,18 +1185,26 @@
               />
             </div>
 
-            <!-- INPUT BRAND CASE STUDY (OPSIONAL) -->
+            <!-- DROPDOWN PILIHAN BRAND / TAMBAH BRAND BARU -->
             <div>
               <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
-                <span>Nama Brand / Klien Khusus (Opsional)</span>
-                <span class="text-[10px] text-amber-600 font-semibold">Brand Spotlight</span>
+                <span>Pilih Brand / Klien Khusus (Opsional)</span>
+                <span class="text-[10px] text-amber-600 font-semibold">Client Spotlight</span>
               </label>
-              <input 
-                type="text" 
-                id="inputBrand" 
-                placeholder="Contoh: Swiss-Belresort Belitung atau Mövenpick Resort"
-                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
-              />
+              <select 
+                id="selectBrand" 
+                onchange="handleBrandSelectChange(this.value)"
+                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all cursor-pointer">
+              </select>
+
+              <div id="newBrandInputBox" class="hidden mt-2">
+                <input 
+                  type="text" 
+                  id="inputNewBrand" 
+                  placeholder="Ketik nama brand baru (contoh: Mövenpick Resort)"
+                  class="w-full text-xs sm:text-sm bg-amber-50/50 border border-amber-300 rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
+                />
+              </div>
             </div>
 
             <!-- INPUT CAPTION INSTAGRAM (KHUSUS SOSMED FEED) -->
@@ -1421,26 +1445,6 @@
 
     let selectedFormCategories = ["Hotel"];
 
-    // DAFTAR BRAND SPOTLIGHT UTAMA (Case Study)
-    const FEATURED_BRANDS = [
-      {
-        slug: "swiss-belhotel",
-        name: "Swiss-Belresort Belitung",
-        location: "Tanjung Binga, Kepulauan Bangka Belitung",
-        desc: "Dokumentasi komprehensif mulai dari interior suites, fasilitas hotel, video tour sinematik, hingga rekaman udara pesisir pantai.",
-        keywords: ["swiss-belresort", "swiss-belhotel", "swiss belhotel"],
-        cover: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop"
-      },
-      {
-        slug: "movenpick",
-        name: "Mövenpick Resort & Spa",
-        location: "Jimbaran, Bali",
-        desc: "Media kit lengkap dokumentasi arsitektur tropis, restoran mewah, fasilitas kolam laguna, dan video vertikal social media.",
-        keywords: ["movenpick", "mövenpick"],
-        cover: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop"
-      }
-    ];
-
     function getProjectCategories(p) {
       if (!p) return ["Lainnya"];
       let rawList = [];
@@ -1587,7 +1591,7 @@
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 6;
     let activeInstagramTab = "feed";
-    let activeBrandTab = "all"; // 'all', 'foto', 'video', 'reels', 'drone'
+    let activeBrandTab = "all";
     let currentBrandSlug = null;
 
     let activeLightboxProject = null;
@@ -1604,6 +1608,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       try {
         renderFormCategoryPills();
+        populateBrandDropdown();
         checkAuthStatus();
         loadInitialCache();
         
@@ -1709,7 +1714,6 @@
       }
 
       if (r.startsWith("/client/")) {
-        // ================= ROUTE KHUSUS BRAND CASE STUDY =================
         const slug = r.replace("/client/", "").trim();
         currentBrandSlug = slug;
         
@@ -1885,6 +1889,7 @@
             seedInitialDataToCloud();
           }
 
+          populateBrandDropdown();
           applyRoute(currentRoute);
           renderAdminList();
         }, (err) => {
@@ -2006,6 +2011,7 @@
       } else {
         projects = [...INITIAL_PROJECTS];
       }
+      populateBrandDropdown();
       applyRoute(currentRoute);
       renderAdminList();
     }
@@ -2032,15 +2038,97 @@
       }
     }
 
-    // ================= LOGIKA BRAND CASE STUDY / CLIENT SPOTLIGHT =================
+    // ================= LOGIKA BRAND CASE STUDY: DINAMIS & DROPDOWN =================
+    function createSlug(text) {
+      return String(text || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function getAllBrands() {
+      const brandMap = new Map();
+
+      const defaultBrands = [
+        {
+          slug: "swiss-belhotel",
+          name: "Swiss-Belresort Belitung",
+          location: "Tanjung Binga, Kepulauan Bangka Belitung",
+          desc: "Dokumentasi komprehensif mulai dari interior suites, fasilitas hotel, video tour sinematik, hingga rekaman udara pesisir pantai.",
+          keywords: ["swiss-belresort", "swiss-belhotel", "swiss belhotel"]
+        },
+        {
+          slug: "movenpick",
+          name: "Mövenpick Resort & Spa",
+          location: "Jimbaran, Bali",
+          desc: "Media kit lengkap dokumentasi arsitektur tropis, restoran mewah, fasilitas kolam laguna, dan video vertikal social media.",
+          keywords: ["movenpick", "mövenpick"]
+        }
+      ];
+
+      defaultBrands.forEach(b => brandMap.set(b.slug, b));
+
+      projects.forEach(p => {
+        if (p.brand && p.brand.trim() !== "") {
+          const rawName = p.brand.trim();
+          const slug = createSlug(rawName);
+
+          if (!brandMap.has(slug)) {
+            brandMap.set(slug, {
+              slug: slug,
+              name: rawName,
+              location: p.location || "Indonesia",
+              desc: `Dokumentasi visual komprehensif untuk ${rawName} oleh FORIOR.`,
+              keywords: [rawName.toLowerCase()]
+            });
+          }
+        }
+      });
+
+      return Array.from(brandMap.values());
+    }
+
+    function populateBrandDropdown(selectedBrandName = "") {
+      const select = document.getElementById("selectBrand");
+      if (!select) return;
+
+      const allBrands = getAllBrands();
+      let html = `
+        <option value="">— Tidak terikat brand khusus —</option>
+      `;
+
+      allBrands.forEach(b => {
+        const isSel = (selectedBrandName && (selectedBrandName.toLowerCase() === b.name.toLowerCase() || createSlug(selectedBrandName) === b.slug));
+        html += `<option value="${b.name}" ${isSel ? 'selected' : ''}>${b.name}</option>`;
+      });
+
+      html += `<option value="__NEW_BRAND__" class="font-bold text-amber-700">+ Tambah Brand Baru...</option>`;
+      select.innerHTML = html;
+
+      handleBrandSelectChange(select.value);
+    }
+
+    function handleBrandSelectChange(val) {
+      const newBox = document.getElementById("newBrandInputBox");
+      const newInput = document.getElementById("inputNewBrand");
+      if (!newBox) return;
+
+      if (val === "__NEW_BRAND__") {
+        newBox.classList.remove("hidden");
+        if (newInput) setTimeout(() => newInput.focus(), 100);
+      } else {
+        newBox.classList.add("hidden");
+        if (newInput) newInput.value = "";
+      }
+    }
+
     function getProjectsForBrand(brandConfig) {
       if (!brandConfig) return [];
       return projects.filter(p => {
-        // Cek field brand langsung
-        if (p.brand && p.brand.toLowerCase().includes(brandConfig.slug.replace("-", " "))) return true;
-        // Cek kata kunci pada judul & lokasi
+        if (p.brand && createSlug(p.brand) === brandConfig.slug) return true;
         const fullText = `${p.title || ''} ${p.location || ''} ${p.brand || ''}`.toLowerCase();
-        return brandConfig.keywords.some(k => fullText.includes(k.toLowerCase()));
+        return (brandConfig.keywords || []).some(k => fullText.includes(k.toLowerCase()));
       });
     }
 
@@ -2048,15 +2136,22 @@
       const container = document.getElementById("clientSpotlightGrid");
       if (!container) return;
 
-      container.innerHTML = FEATURED_BRANDS.map(brand => {
+      const allBrands = getAllBrands();
+      const filledBrands = allBrands.filter(brand => getProjectsForBrand(brand).length > 0);
+
+      if (filledBrands.length === 0) {
+        container.innerHTML = `<p class="text-xs text-appleGray col-span-full py-4 text-center">Belum ada brand yang terdaftar.</p>`;
+        return;
+      }
+
+      container.innerHTML = filledBrands.map(brand => {
         const brandProjects = getProjectsForBrand(brand);
         const countFoto = brandProjects.filter(p => !p.type || p.type === 'foto').length;
         const countVideo = brandProjects.filter(p => p.type === 'video').length;
         const countSosmed = brandProjects.filter(p => p.type === 'reels').length;
         const countDrone = brandProjects.filter(p => p.type === 'drone').length;
 
-        // Ambil gambar cover terbaik dari proyek brand jika ada
-        const coverImg = brandProjects.length > 0 ? brandProjects[0].image : brand.cover;
+        const coverImg = brandProjects.length > 0 ? brandProjects[0].image : 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop';
 
         return `
           <div 
@@ -2071,7 +2166,7 @@
                 alt="${brand.name}" 
                 decoding="async"
                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                onerror="this.src='${brand.cover}'"
+                onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
               />
               
               <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
@@ -2079,7 +2174,7 @@
               <div class="absolute top-3.5 left-3.5">
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-appleDark shadow-xs border border-white/40">
                   <i data-lucide="award" class="w-3 h-3 text-amber-500"></i>
-                  <span>Brand Spotlight</span>
+                  <span>Client Spotlight</span>
                 </span>
               </div>
 
@@ -2131,10 +2226,11 @@
     }
 
     function renderBrandCaseStudyPage(slug) {
-      const brand = FEATURED_BRANDS.find(b => b.slug === slug);
+      const allBrands = getAllBrands();
+      const brand = allBrands.find(b => b.slug === slug);
       if (!brand) return;
 
-      document.title = `${brand.name} — Brand Case Study | FORIOR`;
+      document.title = `${brand.name} — Client Spotlight | FORIOR`;
       document.getElementById("brandDetailTitle").textContent = brand.name;
       document.getElementById("brandDetailLocation").innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-400 shrink-0"></i><span>${brand.location}</span>`;
       document.getElementById("brandDetailDesc").textContent = brand.desc;
@@ -2144,7 +2240,6 @@
         document.getElementById("brandHeroBg").src = allBrandProjects[0].image;
       }
 
-      // Filter berdasarkan Tab Internal
       let filtered = allBrandProjects;
       if (activeBrandTab !== 'all') {
         filtered = allBrandProjects.filter(p => (p.type || 'foto') === activeBrandTab);
@@ -2622,6 +2717,7 @@
                 ${badgesHtml}
               </div>
 
+              <!-- Ikon Sudut Format -->
               <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
                 <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
               </div>
@@ -3413,7 +3509,6 @@
           linkLabel.textContent = "Tautan Video (YouTube / MP4)";
           linkHint.textContent = "Wajib diisi URL video";
         } else {
-          // Foto atau Drone
           galleryWrapper.classList.remove("hidden");
           linkInput.required = false;
           linkLabel.textContent = "Tautan Album Google Photos (Opsional)";
@@ -3531,7 +3626,16 @@
       const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed') : null;
 
       const title = document.getElementById("inputTitle").value.trim();
-      const brand = document.getElementById("inputBrand") ? document.getElementById("inputBrand").value.trim() : "";
+
+      // Tangkap Brand dari Dropdown atau Input Brand Baru
+      const brandSelectVal = document.getElementById("selectBrand").value;
+      let brand = "";
+      if (brandSelectVal === "__NEW_BRAND__") {
+        brand = document.getElementById("inputNewBrand").value.trim();
+      } else {
+        brand = brandSelectVal.trim();
+      }
+
       const caption = document.getElementById("inputCaption") ? document.getElementById("inputCaption").value.trim() : "";
       const location = document.getElementById("inputLocation").value.trim();
       const link = document.getElementById("inputLink").value.trim();
@@ -3610,6 +3714,7 @@
         projects.unshift({ id: (projectData.type || 'foto') + "-" + Date.now(), ...projectData });
       }
       cacheProjectsSafely(projects);
+      populateBrandDropdown();
       applyRoute(currentRoute);
       renderAdminList();
       resetForm();
@@ -3636,9 +3741,10 @@
       }
 
       document.getElementById("inputTitle").value = item.title;
-      if (document.getElementById("inputBrand")) {
-        document.getElementById("inputBrand").value = item.brand || "";
-      }
+
+      // Set Dropdown Brand
+      populateBrandDropdown(item.brand || "");
+
       if (document.getElementById("inputCaption")) {
         document.getElementById("inputCaption").value = item.caption || "";
       }
@@ -3679,10 +3785,8 @@
 
       selectedFormCategories = ["Hotel"];
       renderFormCategoryPills();
+      populateBrandDropdown();
 
-      if (document.getElementById("inputBrand")) {
-        document.getElementById("inputBrand").value = "";
-      }
       if (document.getElementById("inputCaption")) {
         document.getElementById("inputCaption").value = "";
       }
@@ -3812,6 +3916,7 @@
     function deleteLocally(id) {
       projects = projects.filter(p => p.id !== id);
       cacheProjectsSafely(projects);
+      populateBrandDropdown();
       applyRoute(currentRoute);
       renderAdminList();
       showToast("Portofolio berhasil dihapus");
