@@ -298,7 +298,7 @@
     <div id="clientSpotlightGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"></div>
   </section>
 
-  <!-- ================= SECTION KHUSUS: DETAIL HALAMAN BRAND CASE STUDY ================= -->
+  <!-- ================= SECTION KHUSUS: DETAIL HALAMAN BRAND CASE STUDY (MASONRY) ================= -->
   <section id="section-brand-detail" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-24 md:pt-28 pb-28 md:pb-36">
     <!-- Tombol Navigasi Kembali & Bagikan -->
     <div class="flex items-center justify-between gap-3 pb-6 mb-6 border-b border-appleBorder">
@@ -346,8 +346,8 @@
       <button type="button" onclick="setBrandTab('drone')" id="brandTab-drone" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap">Drone Aerial</button>
     </div>
 
-    <!-- Grid Gabungan Semua Format Brand -->
-    <div id="brandProjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
+    <!-- Grid Masonry Multirasio (Proporsional mengikuti format asli) -->
+    <div id="brandProjectsGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"></div>
   </section>
 
   <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
@@ -860,7 +860,7 @@
                 rel="noopener noreferrer" 
                 class="hidden inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:underline">
                 <span>Lihat di Instagram</span>
-                <i data-lucide="external-link" class="w-3 h-3"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
               </a>
             </div>
           </div>
@@ -1444,6 +1444,24 @@
     ];
 
     let selectedFormCategories = ["Hotel"];
+
+    // DAFTAR BRAND SPOTLIGHT AWAL (Dukungan Preset Default)
+    const FEATURED_BRANDS = [
+      {
+        slug: "swiss-belhotel",
+        name: "Swiss-Belresort Belitung",
+        location: "Tanjung Binga, Kepulauan Bangka Belitung",
+        desc: "Dokumentasi komprehensif mulai dari interior suites, fasilitas hotel, video tour sinematik, hingga rekaman udara pesisir pantai.",
+        keywords: ["swiss-belresort", "swiss-belhotel", "swiss belhotel"]
+      },
+      {
+        slug: "movenpick",
+        name: "Mövenpick Resort & Spa",
+        location: "Jimbaran, Bali",
+        desc: "Media kit lengkap dokumentasi arsitektur tropis, restoran mewah, fasilitas kolam laguna, dan video vertikal social media.",
+        keywords: ["movenpick", "mövenpick"]
+      }
+    ];
 
     function getProjectCategories(p) {
       if (!p) return ["Lainnya"];
@@ -2225,6 +2243,7 @@
       if (currentBrandSlug) renderBrandCaseStudyPage(currentBrandSlug);
     }
 
+    // RENDER DETAIL BRAND MENGGUNAKAN LAYOUT MASONRY MULTIRASIO
     function renderBrandCaseStudyPage(slug) {
       const allBrands = getAllBrands();
       const brand = allBrands.find(b => b.slug === slug);
@@ -2249,7 +2268,7 @@
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
+          <div class="col-span-full w-full text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
             <p class="text-xs text-appleGray">Belum ada aset proyek untuk kategori ini.</p>
           </div>
         `;
@@ -2261,20 +2280,41 @@
         const isVideo = item.type === 'video';
         const isReels = item.type === 'reels';
         const isDrone = item.type === 'drone';
+        const isFeed = isReels && (item.subtype === 'feed' || item.subtype === 'carousel');
 
+        // Tentukan rasio presisi sesuai single portofolio aslinya
+        let aspectClass = "aspect-[4/3]";
         let typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">Foto</span>`;
-        if (isVideo) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-rose-600 text-white shadow-xs">Video 16:9</span>`;
-        if (isReels) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Social Media</span>`;
-        if (isDrone) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-sky-600 text-white shadow-xs">Aerial Drone</span>`;
+        let cornerIcon = "maximize-2";
+
+        if (isVideo) {
+          aspectClass = "aspect-video"; // 16:9
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-rose-600 text-white shadow-xs">Video 16:9</span>`;
+          cornerIcon = "play";
+        } else if (isReels && !isFeed) {
+          aspectClass = "aspect-[9/16]"; // 9:16 Vertikal
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Reels 9:16</span>`;
+          cornerIcon = "film";
+        } else if (isFeed) {
+          aspectClass = "aspect-[3/4]"; // 3:4 Vertikal Feed
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Feed Post</span>`;
+          cornerIcon = "copy";
+        } else if (isDrone) {
+          aspectClass = "aspect-[16/10]"; // 16:10 Udara
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-sky-600 text-white shadow-xs">Aerial Drone</span>`;
+          cornerIcon = "plane";
+        }
+
+        const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
 
         return `
           <div 
             role="button"
             tabindex="0"
             onclick="handleBrandItemClick('${item.id}')"
-            class="project-card group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+            class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none break-inside-avoid block mb-6">
             
-            <div class="project-img-container relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-900">
+            <div class="project-img-container relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
               <img 
                 src="${item.image}" 
                 alt="${item.title}" 
@@ -2283,36 +2323,45 @@
                 onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
               />
 
+              <!-- Badge Format -->
               <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1">
                 ${typeBadge}
               </div>
 
-              ${(isVideo || (isReels && item.subtype !== 'feed')) ? `
+              <!-- Indikator Slide Feed -->
+              ${isFeed ? `
+                <div class="absolute top-3.5 left-3.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
+                  <span>${totalSlides} Slide</span>
+                </div>
+              ` : ''}
+
+              <!-- Tombol Play untuk Video / Reels -->
+              ${(isVideo || (isReels && !isFeed)) ? `
                 <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115">
-                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                  <div class="w-11 h-11 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 ${isVideo ? 'group-hover:bg-rose-600' : 'group-hover:bg-purple-600'} group-hover:text-white">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
                   </div>
                 </div>
               ` : `
                 <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                  <i data-lucide="${cornerIcon}" class="w-3.5 h-3.5"></i>
                 </div>
               `}
             </div>
 
             <div class="pt-3 pb-2 px-1.5 flex items-center justify-between">
-              <div>
-                <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1">
+              <div class="min-w-0 pr-2">
+                <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors truncate">
                   ${item.title}
                 </h3>
-                <p class="text-[11px] text-neutral-400 mt-0.5 flex items-center gap-1 font-normal">
-                  <i data-lucide="map-pin" class="w-2.5 h-2.5"></i>
+                <p class="text-[11px] text-neutral-400 mt-0.5 flex items-center gap-1 font-normal truncate">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5 shrink-0"></i>
                   <span class="truncate">${item.location || 'Indonesia'}</span>
                 </p>
               </div>
 
-              <span class="text-[11px] text-appleGray font-medium group-hover:text-appleDark transition-colors shrink-0 ml-2">
-                Lihat <i data-lucide="chevron-right" class="w-3 h-3 inline"></i>
+              <span class="text-[11px] text-appleGray font-medium group-hover:text-appleDark transition-colors shrink-0">
+                ${(isVideo || (isReels && !isFeed)) ? 'Tonton' : 'Lihat'} <i data-lucide="chevron-right" class="w-3 h-3 inline"></i>
               </span>
             </div>
           </div>
