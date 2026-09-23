@@ -281,6 +281,59 @@
     </div>
   </section>
 
+  <!-- ================= SECTION: FEATURED CLIENT SPOTLIGHT / CASE STUDY ================= -->
+  <section id="section-clients" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-4">
+    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2">
+          <i data-lucide="award" class="w-3.5 h-3.5"></i>
+          <span>Client Spotlight & Case Study</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Dokumentasi Menyeluruh Brand</h2>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ekosistem media kit lengkap yang FORIOR produksi khusus untuk brand hospitality & arsitektur ternama.</p>
+      </div>
+    </div>
+
+    <!-- Grid Kartu Brand Showcase -->
+    <div id="clientSpotlightGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"></div>
+  </section>
+
+  <!-- ================= SECTION KHUSUS: DETAIL HALAMAN BRAND CASE STUDY ================= -->
+  <section id="section-brand-detail" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-6 pb-28 md:pb-36">
+    <!-- Brand Banner Info -->
+    <div class="relative w-full rounded-3xl overflow-hidden bg-neutral-900 text-white p-6 sm:p-12 mb-10 shadow-xl border border-black/[0.06]">
+      <img id="brandHeroBg" src="" alt="Hero Brand" class="absolute inset-0 w-full h-full object-cover opacity-30 blur-xs">
+      <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-transparent"></div>
+
+      <div class="relative z-10 max-w-3xl space-y-3">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider text-amber-300 border border-white/20">
+          <i data-lucide="check-circle" class="w-3 h-3"></i>
+          <span>Official Brand Documentation</span>
+        </div>
+        <h1 id="brandDetailTitle" class="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">Nama Brand Klien</h1>
+        <p id="brandDetailLocation" class="text-xs sm:text-sm text-neutral-300 flex items-center gap-1.5 font-normal">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-400 shrink-0"></i>
+          <span>Lokasi Hotel</span>
+        </p>
+        <p id="brandDetailDesc" class="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed max-w-2xl pt-1">
+          Kompilasi dokumentasi multimedia menyeluruh dari foto arsitektural interior, film walkthrough 16:9, konten social media, hingga rekaman drone udara.
+        </p>
+      </div>
+    </div>
+
+    <!-- Internal Tab Filter Brand Case Study -->
+    <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-6 mb-8 border-b border-appleBorder">
+      <button type="button" onclick="setBrandTab('all')" id="brandTab-all" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-semibold bg-appleDark text-white shadow-sm cursor-pointer whitespace-nowrap">Semua Karya</button>
+      <button type="button" onclick="setBrandTab('foto')" id="brandTab-foto" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap">Foto Interior</button>
+      <button type="button" onclick="setBrandTab('video')" id="brandTab-video" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap">Video Tour</button>
+      <button type="button" onclick="setBrandTab('reels')" id="brandTab-reels" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap">Social Media</button>
+      <button type="button" onclick="setBrandTab('drone')" id="brandTab-drone" class="category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap">Drone Aerial</button>
+    </div>
+
+    <!-- Grid Gabungan Semua Format Brand -->
+    <div id="brandProjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
+  </section>
+
   <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
   <section id="section-foto" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-16 md:pb-24">
     <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-6 md:mb-8 gap-3">
@@ -625,20 +678,18 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO & FEED (SPLIT VIEW ALA INSTAGRAM) ================= -->
+  <!-- ================= SECTION 6: MODAL LIGHTBOX FOTO & SPLIT VIEW INSTAGRAM MODAL ================= -->
   <div 
     id="lightboxModal" 
     class="fixed inset-0 z-50 opacity-0 pointer-events-none transition-opacity duration-150 ease-out flex items-center justify-center p-0 sm:p-4 select-none bg-black/90 backdrop-blur-2xl">
     
-    <!-- Backdrop klik untuk tutup -->
     <div onclick="closeProjectLightbox()" class="absolute inset-0"></div>
 
-    <!-- Container Dialog Modal (Bisa Mode Klasik atau Mode Split Instagram) -->
     <div 
       id="lightboxDialogWrapper" 
       class="relative z-10 w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-6xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden">
       
-      <!-- Topbar (Hanya muncul jika mode Classic Lightbox / bukan Instagram mode) -->
+      <!-- Topbar Klasik -->
       <div id="lightboxClassicTopbar" class="px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md shrink-0">
         <div class="min-w-0">
           <div class="flex items-center gap-2 flex-wrap">
@@ -663,7 +714,7 @@
             href="#" 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
+            class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-appleDark hover:bg-neutral-100 text-xs font-semibold shadow-sm transition-all active:scale-95">
             <span>Buka Album</span>
             <i data-lucide="external-link" class="w-3.5 h-3.5 ml-0.5"></i>
           </a>
@@ -693,7 +744,6 @@
           </button>
 
           <div class="relative max-w-full max-h-full flex items-center justify-center">
-            <!-- Foto Utama -->
             <img 
               id="lightboxMainImage" 
               src="" 
@@ -744,7 +794,6 @@
           id="lightboxInstagramSidebar" 
           class="hidden w-full md:w-[380px] lg:w-[420px] bg-neutral-900 border-t md:border-t-0 md:border-l border-white/10 flex flex-col shrink-0">
           
-          <!-- Header Akun & Close Desktop -->
           <div class="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-neutral-900/90">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-[2px]">
@@ -769,7 +818,6 @@
             </button>
           </div>
 
-          <!-- Body Teks Caption Instagram -->
           <div class="p-4 flex-1 overflow-y-auto space-y-3.5 text-xs text-neutral-200 leading-relaxed font-normal">
             <div class="space-y-2">
               <h4 id="igSidebarTitle" class="text-sm font-bold text-white">Judul Postingan</h4>
@@ -777,7 +825,6 @@
             </div>
           </div>
 
-          <!-- Footer Interaksi & Link -->
           <div class="p-4 border-t border-white/10 bg-neutral-950/80 space-y-3 shrink-0">
             <div class="flex items-center justify-between text-neutral-300">
               <div class="flex items-center gap-4">
@@ -1117,8 +1164,22 @@
                 type="text" 
                 id="inputTitle" 
                 required 
-                placeholder="Contoh: Kirei Castle Villa Lembang"
+                placeholder="Contoh: Deluxe Ocean Suite Room"
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+              />
+            </div>
+
+            <!-- INPUT BRAND CASE STUDY (OPSIONAL) -->
+            <div>
+              <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
+                <span>Nama Brand / Klien Khusus (Opsional)</span>
+                <span class="text-[10px] text-amber-600 font-semibold">Brand Spotlight</span>
+              </label>
+              <input 
+                type="text" 
+                id="inputBrand" 
+                placeholder="Contoh: Swiss-Belresort Belitung atau Mövenpick Resort"
+                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
               />
             </div>
 
@@ -1131,7 +1192,7 @@
               <textarea 
                 id="inputCaption" 
                 rows="4"
-                placeholder="Tulis caption lengkap, deskripsi suasana, hingga hashtag Instagram di sini..."
+                placeholder="Tulis caption lengkap, narasi arsitektur, hingga hashtag Instagram di sini..."
                 class="w-full text-xs bg-white border border-appleBorder rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-all leading-relaxed"></textarea>
             </div>
 
@@ -1149,7 +1210,7 @@
                 type="text" 
                 id="inputLocation" 
                 required 
-                placeholder="Contoh: Serang, Banten"
+                placeholder="Contoh: Tanjung Binga, Belitung"
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
               />
             </div>
@@ -1360,6 +1421,26 @@
 
     let selectedFormCategories = ["Hotel"];
 
+    // DAFTAR BRAND SPOTLIGHT UTAMA (Case Study)
+    const FEATURED_BRANDS = [
+      {
+        slug: "swiss-belhotel",
+        name: "Swiss-Belresort Belitung",
+        location: "Tanjung Binga, Kepulauan Bangka Belitung",
+        desc: "Dokumentasi komprehensif mulai dari interior suites, fasilitas hotel, video tour sinematik, hingga rekaman udara pesisir pantai.",
+        keywords: ["swiss-belresort", "swiss-belhotel", "swiss belhotel"],
+        cover: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop"
+      },
+      {
+        slug: "movenpick",
+        name: "Mövenpick Resort & Spa",
+        location: "Jimbaran, Bali",
+        desc: "Media kit lengkap dokumentasi arsitektur tropis, restoran mewah, fasilitas kolam laguna, dan video vertikal social media.",
+        keywords: ["movenpick", "mövenpick"],
+        cover: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop"
+      }
+    ];
+
     function getProjectCategories(p) {
       if (!p) return ["Lainnya"];
       let rawList = [];
@@ -1401,11 +1482,12 @@
       {
         id: "foto-1",
         type: "foto",
-        title: "Kirei Castle Villa",
-        category: "Vila",
-        categories: ["Vila"],
-        location: "Lembang, Bandung",
-        image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200&auto=format&fit=crop",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort Belitung Deluxe Suite",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
         gallery: [
           "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
           "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop"
@@ -1414,6 +1496,18 @@
       },
       {
         id: "foto-2",
+        type: "foto",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort The Kitchen Resto",
+        category: "Resto",
+        categories: ["Resto", "Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+        gallery: [],
+        link: ""
+      },
+      {
+        id: "foto-3",
         type: "foto",
         title: "Villa Mariposa Tropical",
         category: "Vila",
@@ -1426,35 +1520,26 @@
         link: ""
       },
       {
-        id: "foto-3",
-        type: "foto",
-        title: "Pine Breeze Loft House",
-        category: "Rumah",
-        categories: ["Rumah"],
-        location: "Serang, Banten",
-        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-        gallery: [],
-        link: "https://photos.google.com/"
-      },
-      {
         id: "vid-1",
         type: "video",
-        title: "Architectural Interior Film — PERP Burger",
-        category: "Resto",
-        categories: ["Resto"],
-        location: "Cipete, Jakarta Selatan",
-        image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1200&auto=format&fit=crop",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort Belitung Architectural Film",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
         link: "https://www.youtube.com/watch?v=4jnzf1yj48M"
       },
       {
         id: "reels-1",
         type: "reels",
         subtype: "reels",
-        title: "Morning Sauna with Mountain View",
-        category: "Vila",
-        categories: ["Vila"],
-        location: "Cisarua, Puncak",
-        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop",
+        brand: "Swiss-Belresort Belitung",
+        title: "Sunset Infinity Pool Swiss-Belresort",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
         link: "https://www.youtube.com/shorts/5qap5aO4i9A"
       },
       {
@@ -1476,15 +1561,14 @@
       {
         id: "drone-1",
         type: "drone",
-        title: "Menara BRILiaN Jakarta",
-        category: "Office",
-        categories: ["Office"],
-        location: "Jakarta Selatan",
+        brand: "Swiss-Belresort Belitung",
+        title: "Aerial Coastal Swiss-Belresort Belitung",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
         image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop",
         gallery: [
-          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"
         ],
         link: "https://photos.google.com/"
       }
@@ -1502,7 +1586,9 @@
 
     let photoDisplayLimit = 9;
     let videoDisplayLimit = 6;
-    let activeInstagramTab = "feed"; // Default tab di /sosmed adalah 'feed'
+    let activeInstagramTab = "feed";
+    let activeBrandTab = "all"; // 'all', 'foto', 'video', 'reels', 'drone'
+    let currentBrandSlug = null;
 
     let activeLightboxProject = null;
     let currentLightboxPhotos = [];
@@ -1553,7 +1639,7 @@
       }
       if (hash.startsWith("#")) {
         const h = hash.substring(1).toLowerCase();
-        if (["foto", "video", "reels", "sosmed", "drone"].includes(h)) {
+        if (["foto", "video", "reels", "sosmed", "drone"].includes(h) || h.startsWith("client/")) {
           return "/" + h;
         }
       }
@@ -1602,6 +1688,8 @@
       const title = document.getElementById("subpageTitle");
       const desc = document.getElementById("subpageDesc");
 
+      const secClients = document.getElementById("section-clients");
+      const secBrandDetail = document.getElementById("section-brand-detail");
       const secFoto = document.getElementById("section-foto");
       const secVideo = document.getElementById("section-video");
       const secReels = document.getElementById("section-reels");
@@ -1620,11 +1708,29 @@
         droneTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
       }
 
-      if (r === "/" || r === "" || r === "/index.html") {
+      if (r.startsWith("/client/")) {
+        // ================= ROUTE KHUSUS BRAND CASE STUDY =================
+        const slug = r.replace("/client/", "").trim();
+        currentBrandSlug = slug;
+        
+        hero.classList.add("hidden");
+        banner.classList.add("hidden");
+        secClients.classList.add("hidden");
+        secFoto.classList.add("hidden");
+        secVideo.classList.add("hidden");
+        secReels.classList.add("hidden");
+        secDrone.classList.add("hidden");
+
+        secBrandDetail.classList.remove("hidden");
+        renderBrandCaseStudyPage(slug);
+
+      } else if (r === "/" || r === "" || r === "/index.html") {
         document.title = "FORIOR — Interior Photo Services";
         hero.classList.remove("hidden");
         banner.classList.add("hidden");
+        secBrandDetail.classList.add("hidden");
 
+        secClients.classList.remove("hidden");
         secFoto.classList.remove("hidden");
         secVideo.classList.remove("hidden");
         secReels.classList.remove("hidden");
@@ -1644,6 +1750,8 @@
       } else {
         hero.classList.add("hidden");
         banner.classList.remove("hidden");
+        secBrandDetail.classList.add("hidden");
+        secClients.classList.add("hidden");
 
         secFoto.classList.add("hidden");
         secVideo.classList.add("hidden");
@@ -1924,6 +2032,213 @@
       }
     }
 
+    // ================= LOGIKA BRAND CASE STUDY / CLIENT SPOTLIGHT =================
+    function getProjectsForBrand(brandConfig) {
+      if (!brandConfig) return [];
+      return projects.filter(p => {
+        // Cek field brand langsung
+        if (p.brand && p.brand.toLowerCase().includes(brandConfig.slug.replace("-", " "))) return true;
+        // Cek kata kunci pada judul & lokasi
+        const fullText = `${p.title || ''} ${p.location || ''} ${p.brand || ''}`.toLowerCase();
+        return brandConfig.keywords.some(k => fullText.includes(k.toLowerCase()));
+      });
+    }
+
+    function renderFeaturedBrandsSection() {
+      const container = document.getElementById("clientSpotlightGrid");
+      if (!container) return;
+
+      container.innerHTML = FEATURED_BRANDS.map(brand => {
+        const brandProjects = getProjectsForBrand(brand);
+        const countFoto = brandProjects.filter(p => !p.type || p.type === 'foto').length;
+        const countVideo = brandProjects.filter(p => p.type === 'video').length;
+        const countSosmed = brandProjects.filter(p => p.type === 'reels').length;
+        const countDrone = brandProjects.filter(p => p.type === 'drone').length;
+
+        // Ambil gambar cover terbaik dari proyek brand jika ada
+        const coverImg = brandProjects.length > 0 ? brandProjects[0].image : brand.cover;
+
+        return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleNavRoute(event, '/client/${brand.slug}')"
+            class="project-card group block cursor-pointer bg-appleCard rounded-[30px] p-3.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+            
+            <div class="relative w-full aspect-[16/9] rounded-[22px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${coverImg}" 
+                alt="${brand.name}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='${brand.cover}'"
+              />
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
+
+              <div class="absolute top-3.5 left-3.5">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-appleDark shadow-xs border border-white/40">
+                  <i data-lucide="award" class="w-3 h-3 text-amber-500"></i>
+                  <span>Brand Spotlight</span>
+                </span>
+              </div>
+
+              <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                <h3 class="text-base sm:text-xl font-bold tracking-tight line-clamp-1 drop-shadow-sm">
+                  ${brand.name}
+                </h3>
+                <p class="text-xs text-neutral-300 flex items-center gap-1 mt-0.5 font-light">
+                  <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400"></i>
+                  <span>${brand.location}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-3.5 pb-2 px-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-neutral-100 mt-2">
+              <div class="flex items-center gap-2 flex-wrap text-[11px] font-medium text-appleGray">
+                ${countFoto > 0 ? `<span class="bg-neutral-100 px-2 py-0.5 rounded-md text-appleDark">📸 ${countFoto} Foto</span>` : ''}
+                ${countVideo > 0 ? `<span class="bg-rose-50 text-rose-700 px-2 py-0.5 rounded-md">🎬 ${countVideo} Video</span>` : ''}
+                ${countSosmed > 0 ? `<span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md">📱 ${countSosmed} Reels & Feed</span>` : ''}
+                ${countDrone > 0 ? `<span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded-md">🛸 ${countDrone} Drone</span>` : ''}
+              </div>
+
+              <span class="inline-flex items-center gap-1 text-xs font-semibold text-foriorBrand group-hover:translate-x-1 transition-transform">
+                <span>Eksplorasi Case Study</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    function setBrandTab(tab) {
+      activeBrandTab = tab;
+      const tabs = ['all', 'foto', 'video', 'reels', 'drone'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`brandTab-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.className = "category-pill inline-flex items-center justify-center rounded-full text-xs font-semibold bg-appleDark text-white shadow-sm cursor-pointer whitespace-nowrap";
+          } else {
+            btn.className = "category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap";
+          }
+        }
+      });
+      if (currentBrandSlug) renderBrandCaseStudyPage(currentBrandSlug);
+    }
+
+    function renderBrandCaseStudyPage(slug) {
+      const brand = FEATURED_BRANDS.find(b => b.slug === slug);
+      if (!brand) return;
+
+      document.title = `${brand.name} — Brand Case Study | FORIOR`;
+      document.getElementById("brandDetailTitle").textContent = brand.name;
+      document.getElementById("brandDetailLocation").innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-400 shrink-0"></i><span>${brand.location}</span>`;
+      document.getElementById("brandDetailDesc").textContent = brand.desc;
+
+      const allBrandProjects = getProjectsForBrand(brand);
+      if (allBrandProjects.length > 0) {
+        document.getElementById("brandHeroBg").src = allBrandProjects[0].image;
+      }
+
+      // Filter berdasarkan Tab Internal
+      let filtered = allBrandProjects;
+      if (activeBrandTab !== 'all') {
+        filtered = allBrandProjects.filter(p => (p.type || 'foto') === activeBrandTab);
+      }
+
+      const grid = document.getElementById("brandProjectsGrid");
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
+            <p class="text-xs text-appleGray">Belum ada aset proyek untuk kategori ini.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isVideo = item.type === 'video';
+        const isReels = item.type === 'reels';
+        const isDrone = item.type === 'drone';
+
+        let typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">Foto</span>`;
+        if (isVideo) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-rose-600 text-white shadow-xs">Video 16:9</span>`;
+        if (isReels) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Social Media</span>`;
+        if (isDrone) typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-sky-600 text-white shadow-xs">Aerial Drone</span>`;
+
+        return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleBrandItemClick('${item.id}')"
+            class="project-card group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+            
+            <div class="project-img-container relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${item.image}" 
+                alt="${item.title}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
+              />
+
+              <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1">
+                ${typeBadge}
+              </div>
+
+              ${(isVideo || (isReels && item.subtype !== 'feed')) ? `
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115">
+                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                  </div>
+                </div>
+              ` : `
+                <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                </div>
+              `}
+            </div>
+
+            <div class="pt-3 pb-2 px-1.5 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1">
+                  ${item.title}
+                </h3>
+                <p class="text-[11px] text-neutral-400 mt-0.5 flex items-center gap-1 font-normal">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5"></i>
+                  <span class="truncate">${item.location || 'Indonesia'}</span>
+                </p>
+              </div>
+
+              <span class="text-[11px] text-appleGray font-medium group-hover:text-appleDark transition-colors shrink-0 ml-2">
+                Lihat <i data-lucide="chevron-right" class="w-3 h-3 inline"></i>
+              </span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    function handleBrandItemClick(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      const isVideo = item.type === 'video' || (item.type === 'reels' && item.subtype !== 'feed') || (item.type === 'drone' && item.link && item.link.includes('youtube'));
+      if (isVideo) {
+        openVideoModal(id);
+      } else {
+        openProjectLightbox(id);
+      }
+    }
+
     // FILTER FOTO DINAMIS: URUT TERBANYAK & HANYA KATEGORI BERISI
     function renderCategoryFilters() {
       const container = document.getElementById("categoryFilterContainer");
@@ -2014,6 +2329,7 @@
     }
 
     function renderAllSections() {
+      renderFeaturedBrandsSection();
       renderPhotoSection();
       renderVideoSection();
       renderReelsSection();
@@ -2306,7 +2622,6 @@
                 ${badgesHtml}
               </div>
 
-              <!-- Ikon Sudut Format -->
               <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
                 <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
               </div>
@@ -2342,11 +2657,10 @@
         }
 
       } else {
-        // DI HALAMAN KHUSUS /sosmed
+        // DI SUB-HALAMAN /sosmed
         if (navControls) navControls.classList.add("hidden");
 
         if (activeInstagramTab === 'reels') {
-          // TAB REELS: Rasio Vertikal 9:16
           const filteredReels = allSosmedProjects.filter(p => p.subtype !== 'feed' && p.subtype !== 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
@@ -2395,7 +2709,6 @@
           `).join("");
 
         } else {
-          // TAB FEED: Rasio Vertikal 3:4 Bersih Tanpa Metadata di Foto (Metadata hanya tampil di Lightbox)
           const filteredFeed = allSosmedProjects.filter(p => p.subtype === 'feed' || p.subtype === 'carousel');
           track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
 
@@ -2409,7 +2722,6 @@
               onclick="handleSocialItemClick('${item.id}')"
               class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
               
-              <!-- Rasio Vertikal 3:4 Bersih Ala Feed Instagram -->
               <div class="relative w-full aspect-[3/4] rounded-[20px] overflow-hidden bg-neutral-900">
                 <img 
                   src="${item.image}" 
@@ -2419,17 +2731,14 @@
                   onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
                 />
 
-                <!-- Ikon Sudut Kanan -->
                 <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                 </div>
 
-                <!-- Indikator Slide Sudut Kiri -->
                 <div class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
                   <span>${totalSlides} Slide</span>
                 </div>
 
-                <!-- Ikon Interaksi Tengah -->
                 <div class="absolute inset-0 flex items-center justify-center">
                   <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
                     <i data-lucide="images" class="w-4 h-4"></i>
@@ -2445,8 +2754,8 @@
       lucide.createIcons();
     }
 
-    function slideDrone(direction) {
-      const track = document.getElementById("dronePortfolioGrid");
+    function slideReels(direction) {
+      const track = document.getElementById("reelsPortfolioGrid");
       if (!track) return;
       const cards = track.querySelectorAll(".snap-start");
       const step = cards.length >= 2 ? (cards[1].offsetLeft - cards[0].offsetLeft) : 300;
@@ -2587,7 +2896,6 @@
       const dialogWrapper = document.getElementById("lightboxDialogWrapper");
 
       if (isInstagramFeed) {
-        // AKTIFKAN MODE SPLIT VIEW INSTAGRAM
         classicTopbar.classList.add("hidden");
         classicThumbBar.classList.add("hidden");
         igSidebar.classList.remove("hidden");
@@ -2597,7 +2905,6 @@
         document.getElementById("igSidebarTitle").textContent = project.title;
         document.getElementById("igSidebarLocation").textContent = project.location || "Indonesia";
         
-        // Render Teks Caption Instagram
         const captionContent = project.caption && project.caption.trim() !== "" 
           ? project.caption 
           : `${project.title}\n\nDokumentasi visual profesional oleh @forior.id\n\n#FORIOR #InteriorPhotography #ArchitectureShowcase`;
@@ -2612,7 +2919,6 @@
         }
 
       } else {
-        // AKTIFKAN MODE KLASIK LIGHTBOX (FOTO BIASA & DRONE)
         igSidebar.classList.add("hidden");
         classicTopbar.classList.remove("hidden");
         classicThumbBar.classList.remove("hidden");
@@ -2704,13 +3010,11 @@
       document.getElementById("lightboxMobileIndex").textContent = displayIndex;
       document.getElementById("lightboxMobileTotal").textContent = totalSlides;
 
-      // Update counter di sidebar Instagram
       const igSlideCounter = document.getElementById("igSidebarSlideCount");
       if (igSlideCounter) {
         igSlideCounter.textContent = `Slide ${displayIndex} / ${totalSlides}`;
       }
 
-      // Render thumbnail bar klasik jika bukan Instagram mode
       if (!isInstagramFeed) {
         const thumbContainer = document.getElementById("lightboxThumbnails");
         let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
@@ -3186,6 +3490,7 @@
               <p class="text-xs font-semibold text-appleDark truncate">${item.title}</p>
               <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
                 <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${typeBadgeColor}">${typeLabel}</span>
+                ${item.brand ? `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold truncate max-w-[120px]">${item.brand}</span>` : ''}
                 <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-neutral-100 text-appleGray font-medium truncate max-w-[150px]">${cats}</span>
                 <span class="text-[10px] text-neutral-400 flex items-center gap-0.5 truncate">
                   <i data-lucide="map-pin" class="w-2.5 h-2.5"></i> ${item.location || 'Indonesia'}
@@ -3226,6 +3531,7 @@
       const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed') : null;
 
       const title = document.getElementById("inputTitle").value.trim();
+      const brand = document.getElementById("inputBrand") ? document.getElementById("inputBrand").value.trim() : "";
       const caption = document.getElementById("inputCaption") ? document.getElementById("inputCaption").value.trim() : "";
       const location = document.getElementById("inputLocation").value.trim();
       const link = document.getElementById("inputLink").value.trim();
@@ -3267,6 +3573,7 @@
           type,
           subtype: sosmedSubtype,
           title,
+          brand,
           caption,
           category: selectedFormCategories.join(", "),
           categories: [...selectedFormCategories],
@@ -3329,6 +3636,9 @@
       }
 
       document.getElementById("inputTitle").value = item.title;
+      if (document.getElementById("inputBrand")) {
+        document.getElementById("inputBrand").value = item.brand || "";
+      }
       if (document.getElementById("inputCaption")) {
         document.getElementById("inputCaption").value = item.caption || "";
       }
@@ -3370,6 +3680,9 @@
       selectedFormCategories = ["Hotel"];
       renderFormCategoryPills();
 
+      if (document.getElementById("inputBrand")) {
+        document.getElementById("inputBrand").value = "";
+      }
       if (document.getElementById("inputCaption")) {
         document.getElementById("inputCaption").value = "";
       }
