@@ -281,10 +281,43 @@
     </div>
   </section>
 
-  <!-- ================= SECTION: CLIENT SPOTLIGHT (EDITORIAL BENTO TERKURASI) ================= -->
-  <section id="section-clients" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-8">
-    <div id="spotlightEditorialContainer">
-      <!-- Di-render oleh JavaScript renderSpotlightEditorial() -->
+  <!-- ================= SECTION: CLIENT SPOTLIGHT (CAROUSEL SLIDER) ================= -->
+  <section id="section-clients" class="max-w-7xl mx-auto px-4 sm:px-8 pt-16 md:pt-24 pb-4">
+    <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-3">
+      <div>
+        <div class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2">
+          <i data-lucide="award" class="w-3.5 h-3.5"></i>
+          <span>Client Spotlight & Case Study</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-appleDark">Client Spotlight</h2>
+        <p class="text-xs sm:text-sm text-appleGray mt-1">Eksplorasi ekosistem media kit lengkap yang FORIOR produksi khusus untuk brand hospitality & arsitektur ternama.</p>
+      </div>
+
+      <!-- Tombol Navigasi Slider Client Spotlight -->
+      <div id="brandNavControls" class="flex items-center gap-1.5 self-start sm:self-auto shrink-0">
+        <button 
+          type="button" 
+          onclick="slideBrands(-1)" 
+          aria-label="Geser Brand ke Kiri"
+          class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+        <button 
+          type="button" 
+          onclick="slideBrands(1)" 
+          aria-label="Geser Brand ke Kanan"
+          class="w-8 h-8 rounded-full bg-white hover:bg-neutral-100 text-appleDark border border-appleBorder shadow-2xs flex items-center justify-center transition-all active:scale-95 cursor-pointer">
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Container Slider Horisontal untuk Client Spotlight -->
+    <div class="relative">
+      <div 
+        id="clientSpotlightGrid" 
+        class="flex items-stretch gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1">
+      </div>
     </div>
   </section>
 
@@ -566,7 +599,7 @@
         type="button" 
         onclick="setInstagramTab('all')" 
         id="igTab-all" 
-        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
         <i data-lucide="layers" class="w-4 h-4"></i>
         <span>Semua</span>
       </button>
@@ -575,7 +608,7 @@
         type="button" 
         onclick="setInstagramTab('feed')" 
         id="igTab-feed" 
-        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+        class="ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">
         <i data-lucide="grid" class="w-4 h-4"></i>
         <span>Feed (3:4)</span>
       </button>
@@ -859,7 +892,7 @@
                 rel="noopener noreferrer" 
                 class="hidden inline-flex items-center gap-1.5 text-xs font-semibold text-purple-400 hover:text-purple-300 hover:underline">
                 <span>Lihat di Instagram</span>
-                <i data-lucide="external-link" class="w-3 h-3"></i>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
               </a>
             </div>
           </div>
@@ -1084,7 +1117,7 @@
     </div>
   </div>
 
-  <!-- ================= BACKEND / ADMIN DRAWER (2 TAB TERPADU) ================= -->
+  <!-- ================= BACKEND / ADMIN DRAWER ================= -->
   <div id="adminModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300 ease-out flex justify-end">
     <div onclick="toggleAdminPanel(false)" class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
 
@@ -1115,141 +1148,121 @@
 
       <!-- Drawer Body -->
       <div class="p-4 sm:p-6 space-y-6 flex-1">
+        <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-4 sm:p-5 space-y-3.5">
+          <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-foriorBrand"></i>
+            <span id="formHeaderTitle">Tambah Portofolio Baru</span>
+          </h4>
 
-        <!-- TAB SWITCHER PANEL ADMIN: PORTOFOLIO VS CLIENT SPOTLIGHT -->
-        <div class="flex items-center gap-2 p-1 bg-neutral-100 rounded-xl border border-appleBorder">
-          <button 
-            type="button" 
-            onclick="switchAdminTab('portfolio')" 
-            id="tabAdminBtn-portfolio" 
-            class="flex-1 text-xs py-2 rounded-lg font-semibold bg-white text-appleDark shadow-xs transition-all cursor-pointer">
-            Kelola Portofolio
-          </button>
-          <button 
-            type="button" 
-            onclick="switchAdminTab('spotlight')" 
-            id="tabAdminBtn-spotlight" 
-            class="flex-1 text-xs py-2 rounded-lg font-medium text-appleGray hover:text-appleDark transition-all cursor-pointer">
-            ⭐ Client Spotlight
-          </button>
-        </div>
+          <form id="projectForm" onsubmit="handleSaveProject(event)" class="space-y-3.5">
+            <input type="hidden" id="editProjectId" value="">
 
-        <!-- PANEL 1: KELOLA PORTOFOLIO BIASA -->
-        <div id="adminPortfolioPanelSection" class="space-y-6">
-          <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-4 sm:p-5 space-y-3.5">
-            <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="plus-circle" class="w-4 h-4 text-foriorBrand"></i>
-              <span id="formHeaderTitle">Tambah Portofolio Baru</span>
-            </h4>
+            <div>
+              <label class="block text-xs font-medium text-appleDark mb-1">Tipe Portofolio</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="projectType" value="foto" checked onchange="toggleFormTypeFields()" class="hidden peer">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-foriorBrand peer-checked:bg-foriorBrand peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="camera" class="w-3.5 h-3.5"></i> <span>Foto</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="projectType" value="video" onchange="toggleFormTypeFields()" class="hidden peer">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-rose-600 peer-checked:bg-rose-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="play" class="w-3.5 h-3.5"></i> <span>Video 16:9</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="projectType" value="reels" onchange="toggleFormTypeFields()" class="hidden peer">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-purple-600 peer-checked:bg-purple-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> <span>Sosmed</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="projectType" value="drone" onchange="toggleFormTypeFields()" class="hidden peer">
+                  <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-sky-600 peer-checked:bg-sky-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="plane" class="w-3.5 h-3.5"></i> <span>Drone</span>
+                  </div>
+                </label>
+              </div>
+            </div>
 
-            <form id="projectForm" onsubmit="handleSaveProject(event)" class="space-y-3.5">
-              <input type="hidden" id="editProjectId" value="">
+            <!-- SUB-PILIHAN TIPE SOSMED -->
+            <div id="sosmedSubtypeWrapper" class="hidden p-3 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1.5">
+              <label class="block text-[11px] font-semibold text-purple-900">Format Konten Sosial Media:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="sosmedSubtype" value="feed" checked onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Feed (3:4)</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="sosmedSubtype" value="reels" onchange="handleSosmedSubtypeChange()" class="hidden peer">
+                  <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
+                    <i data-lucide="film" class="w-3.5 h-3.5"></i> <span>Reels (9:16)</span>
+                  </div>
+                </label>
+              </div>
+            </div>
 
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Tipe Portofolio</label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  <label class="cursor-pointer">
-                    <input type="radio" name="projectType" value="foto" checked onchange="toggleFormTypeFields()" class="hidden peer">
-                    <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-foriorBrand peer-checked:bg-foriorBrand peer-checked:text-white transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="camera" class="w-3.5 h-3.5"></i> <span>Foto</span>
-                    </div>
-                  </label>
-                  <label class="cursor-pointer">
-                    <input type="radio" name="projectType" value="video" onchange="toggleFormTypeFields()" class="hidden peer">
-                    <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-rose-600 peer-checked:bg-rose-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="play" class="w-3.5 h-3.5"></i> <span>Video 16:9</span>
-                    </div>
-                  </label>
-                  <label class="cursor-pointer">
-                    <input type="radio" name="projectType" value="reels" onchange="toggleFormTypeFields()" class="hidden peer">
-                    <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-purple-600 peer-checked:bg-purple-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> <span>Sosmed</span>
-                    </div>
-                  </label>
-                  <label class="cursor-pointer">
-                    <input type="radio" name="projectType" value="drone" onchange="toggleFormTypeFields()" class="hidden peer">
-                    <div class="text-center py-2 px-2 rounded-xl border border-appleBorder bg-white text-xs font-medium peer-checked:border-sky-600 peer-checked:bg-sky-600 peer-checked:text-white transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="plane" class="w-3.5 h-3.5"></i> <span>Drone</span>
-                    </div>
-                  </label>
-                </div>
+            <div>
+              <label class="block text-xs font-medium text-appleDark mb-1">Judul Portofolio</label>
+              <input 
+                type="text" 
+                id="inputTitle" 
+                required 
+                placeholder="Contoh: Deluxe Ocean Suite Room"
+                class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+              />
+            </div>
+
+            <!-- DROPDOWN PILIHAN BRAND / TAMBAH & HAPUS BRAND -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-appleDark">Pilih Brand / Klien Khusus (Opsional)</label>
+                <span class="text-[10px] text-amber-600 font-semibold">Client Spotlight</span>
+              </div>
+              
+              <div class="flex items-center gap-2">
+                <select 
+                  id="selectBrand" 
+                  onchange="handleBrandSelectChange(this.value)"
+                  class="flex-1 text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all cursor-pointer">
+                </select>
+
+                <!-- Tombol Hapus Brand Terpilih -->
+                <button 
+                  type="button" 
+                  id="btnDeleteSelectedBrand"
+                  onclick="promptDeleteBrand()" 
+                  title="Hapus Brand Ini dari Semua Portofolio" 
+                  class="hidden w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100 flex items-center justify-center transition-colors shrink-0 cursor-pointer">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
               </div>
 
-              <!-- SUB-PILIHAN TIPE SOSMED -->
-              <div id="sosmedSubtypeWrapper" class="hidden p-3 rounded-xl bg-purple-50/70 border border-purple-100 space-y-1.5">
-                <label class="block text-[11px] font-semibold text-purple-900">Format Konten Sosial Media:</label>
-                <div class="grid grid-cols-2 gap-2">
-                  <label class="cursor-pointer">
-                    <input type="radio" name="sosmedSubtype" value="feed" checked onchange="handleSosmedSubtypeChange()" class="hidden peer">
-                    <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Feed (3:4)</span>
-                    </div>
-                  </label>
-                  <label class="cursor-pointer">
-                    <input type="radio" name="sosmedSubtype" value="reels" onchange="handleSosmedSubtypeChange()" class="hidden peer">
-                    <div class="text-center py-1.5 px-2 rounded-lg border border-purple-200 bg-white text-xs font-medium peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-600 transition-all flex items-center justify-center gap-1">
-                      <i data-lucide="film" class="w-3.5 h-3.5"></i> <span>Reels (9:16)</span>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Judul Portofolio</label>
+              <div id="newBrandInputBox" class="hidden mt-2">
                 <input 
                   type="text" 
-                  id="inputTitle" 
-                  required 
-                  placeholder="Contoh: Deluxe Ocean Suite Room"
-                  class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
+                  id="inputNewBrand" 
+                  placeholder="Ketik nama brand baru (contoh: Swiss-Belresort Belitung)"
+                  class="w-full text-xs sm:text-sm bg-amber-50/50 border border-amber-300 rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
                 />
               </div>
+            </div>
 
-              <!-- DROPDOWN PILIHAN BRAND / TAMBAH & HAPUS BRAND -->
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <label class="block text-xs font-medium text-appleDark">Pilih Brand / Klien Khusus (Opsional)</label>
-                  <span class="text-[10px] text-amber-600 font-semibold">Client Spotlight</span>
-                </div>
-                
-                <div class="flex items-center gap-2">
-                  <select 
-                    id="selectBrand" 
-                    onchange="handleBrandSelectChange(this.value)"
-                    class="flex-1 text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all cursor-pointer">
-                  </select>
-
-                  <button 
-                    type="button" 
-                    id="btnDeleteSelectedBrand"
-                    onclick="promptDeleteBrand()" 
-                    title="Hapus Brand Ini dari Semua Portofolio" 
-                    class="hidden w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100 flex items-center justify-center transition-colors shrink-0 cursor-pointer">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                  </button>
-                </div>
-
-                <div id="newBrandInputBox" class="hidden mt-2">
-                  <input 
-                    type="text" 
-                    id="inputNewBrand" 
-                    placeholder="Ketik nama brand baru (contoh: The Residences St. Regis)"
-                    class="w-full text-xs sm:text-sm bg-amber-50/50 border border-amber-300 rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all"
-                  />
-                </div>
-              </div>
-
-              <!-- INPUT CAPTION INSTAGRAM (KHUSUS SOSMED FEED) -->
-              <div id="captionFieldWrapper" class="hidden">
-                <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
-                  <span>Caption Postingan Instagram (Opsional)</span>
-                  <span class="text-[10px] text-appleGray">Tampil di sidebar lightbox</span>
-                </label>
-                <textarea 
-                  id="inputCaption" 
-                  rows="4"
-                  placeholder="Tulis caption lengkap, narasi arsitektur, hingga hashtag Instagram di sini..."
-                  class="w-full text-xs bg-white border border-appleBorder rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-all leading-relaxed"></textarea>
+            <!-- INPUT CAPTION INSTAGRAM (KHUSUS SOSMED FEED) -->
+            <div id="captionFieldWrapper" class="hidden">
+              <label class="block text-xs font-medium text-appleDark mb-1 flex items-center justify-between">
+                <span>Caption Postingan Instagram (Opsional)</span>
+                <span class="text-[10px] text-appleGray">Tampil di sidebar lightbox</span>
+              </label>
+              <textarea 
+                id="inputCaption" 
+                rows="4"
+                placeholder="Tulis caption lengkap, narasi arsitektur, hingga hashtag Instagram di sini..."
+                class="w-full text-xs bg-white border border-appleBorder rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-purple-600/20 focus:border-purple-600 transition-all leading-relaxed"></textarea>
             </div>
 
             <div>
@@ -1266,7 +1279,7 @@
                 type="text" 
                 id="inputLocation" 
                 required 
-                placeholder="Contoh: Jakarta, Indonesia"
+                placeholder="Contoh: Tanjung Binga, Belitung"
                 class="w-full text-xs sm:text-sm bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20 focus:border-foriorBrand transition-all"
               />
             </div>
@@ -1317,7 +1330,7 @@
               <div class="flex items-center gap-2">
                 <span class="text-[10px] text-appleGray">Upload berkas ke Cloud Storage:</span>
                 <label class="cursor-pointer text-[11px] font-medium bg-white border border-appleBorder px-3 py-1 rounded-lg hover:bg-neutral-100 transition-colors inline-flex items-center gap-1 shadow-2xs">
-                  <i data-lucide="upload-cloud" class="w-3 h-3 text-foriorBrand"></i>
+                  <i data-lucide="upload-cloud" class="w-3.5 h-3.5 text-foriorBrand"></i>
                   <span>Pilih Berkas</span>
                   <input type="file" id="inputFileUpload" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
                 </label>
@@ -1399,228 +1412,2942 @@
         </div>
       </div>
 
-      <!-- PANEL 2: TAB KHUSUS CLIENT SPOTLIGHT (FOTO CUSTOM EDITORIAL BENTO) -->
-      <div id="adminSpotlightPanelSection" class="hidden space-y-6">
-        <div class="bg-neutral-50/90 border border-appleBorder rounded-2xl p-4 sm:p-5 space-y-4">
-          <div>
-            <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider flex items-center gap-2">
-              <i data-lucide="award" class="w-4 h-4 text-amber-500"></i>
-              <span id="spotlightFormTitle">Atur Featured Client Spotlight</span>
-            </h4>
-            <p class="text-[11px] text-appleGray mt-1">Pilih 1 foto hero utama dan 3 foto pendukung agar tampil statis dan presisi sesuai layout editorial bento.</p>
+      <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray gap-2">
+        <button onclick="restoreFromDeviceCache()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors cursor-pointer">
+          <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+          Pulihkan Proyek dari Perangkat
+        </button>
+        <button onclick="promptResetData()" class="hover:text-appleDark underline transition-colors cursor-pointer shrink-0">
+          Reset Data Awal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Hapus Proyek -->
+  <div id="confirmModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
+    <div onclick="closeConfirmModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
+      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
+        <i data-lucide="trash-2" class="w-5 h-5"></i>
+      </div>
+      <h4 class="text-sm font-semibold text-appleDark">Hapus Portofolio Ini?</h4>
+      <p class="text-xs text-appleGray leading-relaxed">Karya akan dihapus secara permanen dari showcase dan database cloud.</p>
+      <div class="flex items-center gap-2 pt-2">
+        <button onclick="closeConfirmModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
+          Batal
+        </button>
+        <button id="confirmDeleteBtn" onclick="executeDeleteProject()" class="flex-1 text-xs py-2 rounded-xl bg-rose-600 hover:bg-rose-700 font-medium text-white transition-colors cursor-pointer">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Hapus Brand -->
+  <div id="confirmDeleteBrandModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
+    <div onclick="closeDeleteBrandModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
+      <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
+        <i data-lucide="trash-2" class="w-5 h-5"></i>
+      </div>
+      <h4 class="text-sm font-semibold text-appleDark">Hapus Brand Spotlight Ini?</h4>
+      <p class="text-xs text-appleGray leading-relaxed">
+        Brand <strong id="deleteBrandTargetName" class="text-appleDark"></strong> akan dihapus dari spotlight. Portofolio terkait tetap aman, hanya status ikatannya yang dilepas.
+      </p>
+      <div class="flex items-center gap-2 pt-2">
+        <button onclick="closeDeleteBrandModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
+          Batal
+        </button>
+        <button onclick="executeDeleteBrand()" class="flex-1 text-xs py-2 rounded-xl bg-rose-600 hover:bg-rose-700 font-medium text-white transition-colors cursor-pointer">
+          Ya, Hapus Brand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Reset Data -->
+  <div id="confirmResetModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
+    <div onclick="closeResetModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
+    <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
+      <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 mx-auto flex items-center justify-center">
+        <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+      </div>
+      <h4 class="text-sm font-semibold text-appleDark">Kembalikan Data Awal?</h4>
+      <p class="text-xs text-appleGray leading-relaxed">Seluruh portofolio awal bawaan akan disinkronisasikan ulang ke cloud Firebase Anda.</p>
+      <div class="flex items-center gap-2 pt-2">
+        <button onclick="closeResetModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
+          Batal
+        </button>
+        <button onclick="executeResetData()" class="flex-1 text-xs py-2 rounded-xl bg-appleDark hover:bg-neutral-800 font-medium text-white transition-colors cursor-pointer">
+          Ya, Reset Data
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 max-w-[92vw]">
+    <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toastMsg" class="leading-snug">Perubahan berhasil disimpan</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    const CATEGORIES = [
+      "Semua",
+      "Rumah",
+      "Apartemen",
+      "Hotel",
+      "Vila",
+      "Kost",
+      "Co-Living",
+      "Resto",
+      "Store",
+      "Gym Studio",
+      "Klinik",
+      "Office",
+      "Lainnya"
+    ];
+
+    let selectedFormCategories = ["Hotel"];
+
+    function getProjectCategories(p) {
+      if (!p) return ["Lainnya"];
+      let rawList = [];
+      if (Array.isArray(p.categories) && p.categories.length > 0) rawList = p.categories;
+      else if (Array.isArray(p.category) && p.category.length > 0) rawList = p.category;
+      else if (typeof p.category === "string" && p.category.trim()) {
+        rawList = p.category.split(",").map(c => c.trim()).filter(Boolean);
+      } else if (typeof p.categories === "string" && p.categories.trim()) {
+        rawList = p.categories.split(",").map(c => c.trim()).filter(Boolean);
+      }
+
+      const cleanList = rawList.filter(c => c.toLowerCase() !== "komersial");
+      return cleanList.length > 0 ? cleanList : ["Lainnya"];
+    }
+
+    function projectMatchesCategory(p, catFilter) {
+      if (!catFilter || catFilter.trim() === "" || catFilter.toLowerCase() === "semua") return true;
+      const cats = getProjectCategories(p).map(c => String(c).toLowerCase());
+      return cats.includes(catFilter.toLowerCase());
+    }
+
+    const WHITELIST_EMAILS = [
+      "foriorid@gmail.com",
+      "foriorproject@gmail.com",
+      "foriormedia@gmail.com"
+    ];
+    const ADMIN_PASSWORD_DEFAULT = "forior2026";
+
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyCJR4mH6VE3ci81zF3NzH9CtRtscZP_SqY",
+      authDomain: "forior-showcase.firebaseapp.com",
+      projectId: "forior-showcase",
+      storageBucket: "forior-showcase.firebasestorage.app",
+      messagingSenderId: "684061034338",
+      appId: "1:684061034338:web:0a5f8e42e8442f8c7a0e3b"
+    };
+
+    const INITIAL_PROJECTS = [
+      {
+        id: "foto-1",
+        type: "foto",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort Belitung Deluxe Suite",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1200&auto=format&fit=crop"
+        ],
+        link: "https://photos.google.com/"
+      },
+      {
+        id: "foto-2",
+        type: "foto",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort The Kitchen Resto",
+        category: "Resto",
+        categories: ["Resto", "Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop",
+        gallery: [],
+        link: ""
+      },
+      {
+        id: "foto-3",
+        type: "foto",
+        title: "Villa Mariposa Tropical",
+        category: "Vila",
+        categories: ["Vila"],
+        location: "Bandung, Jawa Barat",
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1200&auto=format&fit=crop"
+        ],
+        link: ""
+      },
+      {
+        id: "vid-1",
+        type: "video",
+        brand: "Swiss-Belresort Belitung",
+        title: "Swiss-Belresort Belitung Architectural Film",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+        link: "https://www.youtube.com/watch?v=4jnzf1yj48M"
+      },
+      {
+        id: "reels-1",
+        type: "reels",
+        subtype: "reels",
+        brand: "Swiss-Belresort Belitung",
+        title: "Sunset Infinity Pool Swiss-Belresort",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=800&auto=format&fit=crop",
+        link: "https://www.youtube.com/shorts/5qap5aO4i9A"
+      },
+      {
+        id: "reels-2",
+        type: "reels",
+        subtype: "feed",
+        title: "Intragama Villa Puncak",
+        caption: "Step away from the rush and into a slower kind of luxury.\n\nAt Intragama Villa, nature feels closer, the atmosphere feels calmer, and every corner is made for you to unwind in complete comfort.\n\nYour private escape is waiting.\nScan to book your stay.\n\n#IntragamaVilla #PuncakEscape #LuxuryVilla",
+        category: "Vila",
+        categories: ["Vila"],
+        location: "Puncak, Bogor",
+        image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=1000&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1000&auto=format&fit=crop"
+        ],
+        link: "https://instagram.com/"
+      },
+      {
+        id: "drone-1",
+        type: "drone",
+        brand: "Swiss-Belresort Belitung",
+        title: "Aerial Coastal Swiss-Belresort Belitung",
+        category: "Hotel",
+        categories: ["Hotel"],
+        location: "Tanjung Binga, Belitung",
+        image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=1200&auto=format&fit=crop",
+        gallery: [
+          "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"
+        ],
+        link: "https://photos.google.com/"
+      }
+    ];
+
+    let projects = [...INITIAL_PROJECTS];
+    let deviceCacheBackup = [];
+    let isDataLoaded = true;
+    let activeCategory = "Semua";
+    let adminFilterType = "all";
+    let isCloudConnected = false;
+    let dbInstance = null;
+    let storageInstance = null;
+    let pendingDeleteId = null;
+    let brandToDelete = null;
+
+    let photoDisplayLimit = 9;
+    let videoDisplayLimit = 6;
+    let activeInstagramTab = "all";
+    let activeBrandTab = "all";
+    let currentBrandSlug = null;
+
+    let activeLightboxProject = null;
+    let currentLightboxPhotos = [];
+    let currentLightboxIndex = 0;
+
+    let pendingCoverFile = null;
+    let pendingGalleryItems = [];
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    let currentRoute = "/";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        renderFormCategoryPills();
+        populateBrandDropdown();
+        checkAuthStatus();
+        loadInitialCache();
+        
+        initRouter();
+        initFirebaseConnection();
+        setupLightboxKeyboardAndSwipe();
+        lucide.createIcons();
+      } catch (err) {
+        console.error("Init error:", err);
+      }
+    });
+
+    // ================= CLIENT-SIDE ROUTER =================
+    function initRouter() {
+      window.addEventListener("popstate", () => {
+        applyRoute(parsePath());
+      });
+      applyRoute(parsePath());
+    }
+
+    function parsePath(targetPath = null) {
+      if (targetPath) {
+        let clean = targetPath.toLowerCase().trim();
+        if (clean.startsWith("#/")) clean = clean.substring(1);
+        if (clean.startsWith("#")) clean = clean.substring(1);
+        if (!clean.startsWith("/")) clean = "/" + clean;
+        return clean;
+      }
+
+      const hash = window.location.hash || "";
+      if (hash.startsWith("#/")) {
+        return hash.substring(1).toLowerCase();
+      }
+      if (hash.startsWith("#")) {
+        const h = hash.substring(1).toLowerCase();
+        if (["foto", "video", "reels", "sosmed", "drone"].includes(h) || h.startsWith("client/")) {
+          return "/" + h;
+        }
+      }
+
+      if (window.location.protocol === "file:") {
+        return "/";
+      }
+
+      let pathname = window.location.pathname || "/";
+      if (pathname.length > 1 && pathname.endsWith("/")) {
+        pathname = pathname.slice(0, -1);
+      }
+      return pathname.toLowerCase();
+    }
+
+    function navigateTo(path) {
+      const normalized = path.startsWith("/") ? path : "/" + path;
+      const isLocal = window.location.protocol === "file:";
+
+      if (isLocal) {
+        window.location.hash = "#" + normalized;
+      } else {
+        try {
+          window.history.pushState({}, "", normalized);
+        } catch (_) {
+          window.location.hash = "#" + normalized;
+        }
+      }
+      applyRoute(normalized);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function handleNavRoute(e, targetPath) {
+      if (e) e.preventDefault();
+      navigateTo(targetPath);
+    }
+
+    function applyRoute(route) {
+      let r = route.toLowerCase();
+      if (r === "/reels") r = "/sosmed";
+      currentRoute = r;
+
+      const hero = document.getElementById("heroSection");
+      const banner = document.getElementById("subpageHeaderBanner");
+      const badge = document.getElementById("subpageBadge");
+      const title = document.getElementById("subpageTitle");
+      const desc = document.getElementById("subpageDesc");
+
+      const secClients = document.getElementById("section-clients");
+      const secBrandDetail = document.getElementById("section-brand-detail");
+      const secFoto = document.getElementById("section-foto");
+      const secVideo = document.getElementById("section-video");
+      const secReels = document.getElementById("section-reels");
+      const secDrone = document.getElementById("section-drone");
+
+      const btnLihatSemuaFoto = document.getElementById("btnLihatSemuaFoto");
+      const btnLihatSemuaVideo = document.getElementById("btnLihatSemuaVideo");
+      const btnLihatSemuaReels = document.getElementById("btnLihatSemuaReels");
+      const btnLihatSemuaDrone = document.getElementById("btnLihatSemuaDrone");
+
+      const igTabs = document.getElementById("instagramTabsContainer");
+      const reelsTrack = document.getElementById("reelsPortfolioGrid");
+      const droneTrack = document.getElementById("dronePortfolioGrid");
+
+      if (droneTrack) {
+        droneTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+      }
+
+      if (r.startsWith("/client/")) {
+        const slug = r.replace("/client/", "").trim();
+        currentBrandSlug = slug;
+        
+        hero.classList.add("hidden");
+        banner.classList.add("hidden");
+        secClients.classList.add("hidden");
+        secFoto.classList.add("hidden");
+        secVideo.classList.add("hidden");
+        secReels.classList.add("hidden");
+        secDrone.classList.add("hidden");
+
+        secBrandDetail.classList.remove("hidden");
+        renderBrandCaseStudyPage(slug);
+
+      } else if (r === "/" || r === "" || r === "/index.html") {
+        document.title = "FORIOR — Interior Photo Services";
+        hero.classList.remove("hidden");
+        banner.classList.add("hidden");
+        secBrandDetail.classList.add("hidden");
+
+        secClients.classList.remove("hidden");
+        secFoto.classList.remove("hidden");
+        secVideo.classList.remove("hidden");
+        secReels.classList.remove("hidden");
+        secDrone.classList.remove("hidden");
+
+        if (igTabs) igTabs.classList.add("hidden");
+        if (reelsTrack) {
+          reelsTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        }
+
+        if (btnLihatSemuaFoto) btnLihatSemuaFoto.classList.remove("hidden");
+        if (btnLihatSemuaVideo) btnLihatSemuaVideo.classList.remove("hidden");
+        if (btnLihatSemuaReels) btnLihatSemuaReels.classList.remove("hidden");
+        if (btnLihatSemuaDrone) btnLihatSemuaDrone.classList.remove("hidden");
+
+        renderAllSections();
+      } else {
+        hero.classList.add("hidden");
+        banner.classList.remove("hidden");
+        secBrandDetail.classList.add("hidden");
+        secClients.classList.add("hidden");
+
+        secFoto.classList.add("hidden");
+        secVideo.classList.add("hidden");
+        secReels.classList.add("hidden");
+        secDrone.classList.add("hidden");
+
+        if (r === "/foto") {
+          document.title = "Portofolio Fotografi Interior & Arsitektur — FORIOR";
+          badge.textContent = "Katalog Khusus Fotografi";
+          title.textContent = "Interior & Arsitektur";
+          desc.textContent = "Dokumentasi fotografi profesional beresolusi tinggi dengan komposisi simetris, pencahayaan alami yang lembut, dan detail material ruang.";
+          
+          secFoto.classList.remove("hidden");
+          if (btnLihatSemuaFoto) btnLihatSemuaFoto.classList.add("hidden");
+          photoDisplayLimit = 999;
+          renderPhotoSection();
+
+        } else if (r === "/video") {
+          document.title = "Portofolio Video Walkthrough Sinematik — FORIOR";
+          badge.textContent = "Katalog Khusus Video 16:9";
+          title.textContent = "Cinema & Walkthrough 16:9";
+          desc.textContent = "Eksplorasi ruang dengan pergerakan kamera sinematik, visual atmosferik, dan transisi halus dalam rasio lanskap 16:9.";
+          
+          secVideo.classList.remove("hidden");
+          if (btnLihatSemuaVideo) btnLihatSemuaVideo.classList.add("hidden");
+          videoDisplayLimit = 999;
+          renderVideoSection();
+
+        } else if (r === "/sosmed") {
+          document.title = "Portofolio Social Media & Reels — FORIOR";
+          badge.textContent = "Instagram Profile Showcase";
+          title.textContent = "Social Media & Vertical Cinema";
+          desc.textContent = "Kumpulan konten micro-tours video reels vertikal 9:16 dan feed carousel 3:4 yang dioptimalkan untuk media sosial.";
+          
+          secReels.classList.remove("hidden");
+          if (btnLihatSemuaReels) btnLihatSemuaReels.classList.add("hidden");
+          if (igTabs) igTabs.classList.remove("hidden");
+          renderReelsSection();
+
+        } else if (r === "/drone") {
+          document.title = "Portofolio Aerial & Drone Masterplan — FORIOR";
+          badge.textContent = "Katalog Khusus Drone Aerial";
+          title.textContent = "Aerial & Masterplan Perspective";
+          desc.textContent = "Dokumentasi udara fasad bangunan, keindahan bentang lanskap kawasan, dan tata ruang megah dari sudut pandang luas.";
+          
+          secDrone.classList.remove("hidden");
+          if (btnLihatSemuaDrone) btnLihatSemuaDrone.classList.add("hidden");
+          if (droneTrack) {
+            droneTrack.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-2 px-1";
+          }
+          renderDroneSection();
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function shareCurrentPage() {
+      const shareUrl = window.location.href;
+      const title = document.title;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile && navigator.share) {
+        navigator.share({ title: title, text: `Eksplorasi katalog resmi FORIOR:`, url: shareUrl })
+          .catch((e) => { if (e.name !== 'AbortError') copyTextToClipboard(shareUrl); });
+      } else {
+        copyTextToClipboard(shareUrl);
+        showToast("Tautan halaman berhasil disalin ke clipboard!");
+      }
+    }
+
+    function cacheProjectsSafely(data) {
+      try {
+        localStorage.setItem("forior_portfolio_projects", JSON.stringify(data));
+      } catch (e) {
+        console.warn("Cache lokal dilewati:", e && e.name);
+      }
+    }
+
+    function loadInitialCache() {
+      const saved = localStorage.getItem("forior_portfolio_projects");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            deviceCacheBackup = JSON.parse(JSON.stringify(parsed));
+            projects = parsed.map(p => ({
+              ...p,
+              type: p.type || "foto",
+              categories: getProjectCategories(p)
+            }));
+          }
+        } catch(e) {}
+      }
+    }
+
+    function initFirebaseConnection() {
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        dbInstance = firebase.firestore();
+        try {
+          dbInstance.settings({ experimentalAutoDetectLongPolling: true, merge: true });
+        } catch (_) {}
+        try {
+          dbInstance.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+        } catch (_) {}
+
+        storageInstance = firebase.storage();
+
+        dbInstance.collection("showcase_projects").onSnapshot({
+          includeMetadataChanges: false
+        }, (snapshot) => {
+          isCloudConnected = true;
+          updateCloudUIStatus(true);
+          
+          if (!snapshot.empty) {
+            const cloudData = [];
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              cloudData.push({ 
+                id: doc.id, 
+                type: data.type || "foto", 
+                ...data,
+                categories: getProjectCategories(data)
+              });
+            });
+            projects = cloudData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            cacheProjectsSafely(projects);
+          } else {
+            seedInitialDataToCloud();
+          }
+
+          populateBrandDropdown();
+          applyRoute(currentRoute);
+          renderAdminList();
+        }, (err) => {
+          console.warn("Koneksi Firestore dialihkan ke lokal:", err.message);
+          fallbackToLocalStorage();
+        });
+
+      } catch (e) {
+        console.warn("Inisialisasi Firebase fallback:", e);
+        fallbackToLocalStorage();
+      }
+    }
+
+    // ================= CLIENT-SIDE IMAGE COMPRESSOR =================
+    async function compressImageIfNeeded(file) {
+      if (!file) return file;
+      
+      let processFile = file;
+      if (file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) && window.heic2any) {
+        try {
+          const blob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.85 });
+          const singleBlob = Array.isArray(blob) ? blob[0] : blob;
+          processFile = new File([singleBlob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg" });
+        } catch (e) {
+          console.warn("Konversi HEIC gagal, gunakan file asli:", e);
+        }
+      }
+
+      if (!processFile.type.startsWith('image/') || processFile.size <= 600 * 1024) {
+        return processFile;
+      }
+
+      return new Promise((resolve) => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(processFile);
+        
+        img.onload = () => {
+          URL.revokeObjectURL(objectUrl);
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxLongEdge = 1920;
+
+          if (width > height && width > maxLongEdge) {
+            height = Math.round((height * maxLongEdge) / width);
+            width = maxLongEdge;
+          } else if (height > maxLongEdge) {
+            width = Math.round((width * maxLongEdge) / height);
+            height = maxLongEdge;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            if (blob && blob.size < processFile.size) {
+              const compressedFile = new File([blob], processFile.name.replace(/\.[^/.]+$/, ".jpg"), {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(compressedFile);
+            } else {
+              resolve(processFile);
+            }
+          }, 'image/jpeg', 0.85);
+        };
+
+        img.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          resolve(processFile);
+        };
+
+        img.src = objectUrl;
+      });
+    }
+
+    async function uploadToFirebaseStorage(fileOrBlob, folderPath = "projects") {
+      if (!storageInstance) throw new Error("Storage belum terhubung.");
+      
+      const safeFile = await compressImageIfNeeded(fileOrBlob);
+
+      const fileExt = safeFile.name ? safeFile.name.split('.').pop() : 'jpg';
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+      const fileRef = storageInstance.ref().child(`${folderPath}/${fileName}`);
+      
+      const snapshot = await fileRef.put(safeFile, {
+        contentType: safeFile.type || 'image/jpeg'
+      });
+      return await snapshot.ref.getDownloadURL();
+    }
+
+    async function seedInitialDataToCloud() {
+      if (!dbInstance) return;
+      try {
+        const batch = dbInstance.batch();
+        INITIAL_PROJECTS.forEach((item, index) => {
+          const docRef = dbInstance.collection("showcase_projects").doc(item.id);
+          batch.set(docRef, {
+            ...item,
+            timestamp: Date.now() - (index * 1000)
+          });
+        });
+        await batch.commit();
+      } catch (err) {
+        fallbackToLocalStorage();
+      }
+    }
+
+    function fallbackToLocalStorage() {
+      isCloudConnected = false;
+      updateCloudUIStatus(false);
+      isDataLoaded = true;
+
+      const saved = localStorage.getItem("forior_portfolio_projects");
+      if (saved) {
+        try { projects = JSON.parse(saved); } catch(e) { projects = [...INITIAL_PROJECTS]; }
+      } else {
+        projects = [...INITIAL_PROJECTS];
+      }
+      populateBrandDropdown();
+      applyRoute(currentRoute);
+      renderAdminList();
+    }
+
+    function updateCloudUIStatus(connected) {
+      const dot = document.getElementById("cloudStatusDot");
+      const navContainer = document.getElementById("cloudStatusNav");
+      const drawerBadge = document.getElementById("drawerCloudBadge");
+
+      if (connected) {
+        dot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
+        navContainer.setAttribute("title", "Cloud & Storage Aktif");
+        if (drawerBadge) {
+          drawerBadge.className = "text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-700 shrink-0";
+          drawerBadge.textContent = "Storage Aktif";
+        }
+      } else {
+        dot.className = "w-2 h-2 rounded-full bg-amber-400";
+        navContainer.setAttribute("title", "Mode Lokal (Offline)");
+        if (drawerBadge) {
+          drawerBadge.className = "text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-700 shrink-0";
+          drawerBadge.textContent = "Lokal Mode";
+        }
+      }
+    }
+
+    // ================= LOGIKA BRAND CASE STUDY: DINAMIS & TANPA DUPLIKASI =================
+    function createSlug(text) {
+      return String(text || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    // Ekstrak brand MURNI DARI DATABASE PROJECT (Otomatis & Tanpa Duplikasi)
+    function getAllBrands() {
+      const brandMap = new Map();
+
+      projects.forEach(p => {
+        if (p.brand && typeof p.brand === 'string' && p.brand.trim() !== "") {
+          const rawName = p.brand.trim();
+          const slug = createSlug(rawName);
+
+          if (!brandMap.has(slug)) {
+            brandMap.set(slug, {
+              slug: slug,
+              name: rawName,
+              location: p.location || "Indonesia",
+              desc: `Dokumentasi visual komprehensif untuk ${rawName} oleh FORIOR.`
+            });
+          }
+        }
+      });
+
+      return Array.from(brandMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    function getProjectsForBrand(brandConfig) {
+      if (!brandConfig) return [];
+      return projects.filter(p => {
+        if (!p.brand) return false;
+        return createSlug(p.brand) === brandConfig.slug;
+      });
+    }
+
+    function populateBrandDropdown(selectedBrandName = "") {
+      const select = document.getElementById("selectBrand");
+      if (!select) return;
+
+      const allBrands = getAllBrands();
+      let html = `<option value="">— Tidak terikat brand khusus —</option>`;
+
+      allBrands.forEach(b => {
+        const isSel = (selectedBrandName && (selectedBrandName.toLowerCase() === b.name.toLowerCase() || createSlug(selectedBrandName) === b.slug));
+        html += `<option value="${b.name}" ${isSel ? 'selected' : ''}>${b.name}</option>`;
+      });
+
+      html += `<option value="__NEW_BRAND__" class="font-bold text-amber-700">+ Tambah Brand Baru...</option>`;
+      select.innerHTML = html;
+
+      handleBrandSelectChange(select.value);
+    }
+
+    function handleBrandSelectChange(val) {
+      const newBox = document.getElementById("newBrandInputBox");
+      const newInput = document.getElementById("inputNewBrand");
+      const delBtn = document.getElementById("btnDeleteSelectedBrand");
+
+      if (val === "__NEW_BRAND__") {
+        if (newBox) newBox.classList.remove("hidden");
+        if (newInput) setTimeout(() => newInput.focus(), 100);
+        if (delBtn) delBtn.classList.add("hidden");
+      } else {
+        if (newBox) newBox.classList.add("hidden");
+        if (newInput) newInput.value = "";
+        if (delBtn) {
+          if (val && val.trim() !== "") {
+            delBtn.classList.remove("hidden");
+          } else {
+            delBtn.classList.add("hidden");
+          }
+        }
+      }
+      lucide.createIcons();
+    }
+
+    function promptDeleteBrand() {
+      const select = document.getElementById("selectBrand");
+      const val = select.value;
+      if (!val || val === "__NEW_BRAND__") return;
+
+      brandToDelete = val;
+      document.getElementById("deleteBrandTargetName").textContent = `"${val}"`;
+      
+      const modal = document.getElementById("confirmDeleteBrandModal");
+      if (modal) {
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+      }
+      lucide.createIcons();
+    }
+
+    function closeDeleteBrandModal() {
+      brandToDelete = null;
+      const modal = document.getElementById("confirmDeleteBrandModal");
+      if (modal) {
+        modal.classList.add("opacity-0");
+        modal.classList.add("invisible");
+      }
+    }
+
+    async function executeDeleteBrand() {
+      if (!brandToDelete) return;
+      const targetName = brandToDelete;
+      const targetSlug = createSlug(targetName);
+      closeDeleteBrandModal();
+
+      showToast(`Menghapus brand "${targetName}"...`);
+
+      const affectedProjects = projects.filter(p => p.brand && createSlug(p.brand) === targetSlug);
+
+      try {
+        if (isCloudConnected && dbInstance) {
+          const batch = dbInstance.batch();
+          affectedProjects.forEach(p => {
+            const docRef = dbInstance.collection("showcase_projects").doc(p.id);
+            batch.update(docRef, { brand: "" });
+          });
+          await batch.commit();
+        }
+
+        projects = projects.map(p => {
+          if (p.brand && createSlug(p.brand) === targetSlug) {
+            return { ...p, brand: "" };
+          }
+          return p;
+        });
+
+        cacheProjectsSafely(projects);
+        populateBrandDropdown("");
+        renderFeaturedBrandsSection();
+        renderAdminList();
+        
+        if (currentRoute.startsWith("/client/")) {
+          navigateTo("/");
+        }
+
+        showToast(`Brand "${targetName}" berhasil dihapus dari spotlight!`);
+      } catch (err) {
+        console.error("Gagal menghapus brand:", err);
+        showToast("Gagal menghapus brand: " + err.message, "error");
+      }
+    }
+
+    function renderFeaturedBrandsSection() {
+      const container = document.getElementById("clientSpotlightGrid");
+      const navControls = document.getElementById("brandNavControls");
+      if (!container) return;
+
+      const allBrands = getAllBrands();
+      const filledBrands = allBrands.filter(brand => getProjectsForBrand(brand).length > 0);
+
+      if (filledBrands.length === 0) {
+        container.innerHTML = `<p class="text-xs text-appleGray col-span-full py-4 text-center">Belum ada brand yang terdaftar.</p>`;
+        if (navControls) navControls.classList.add("hidden");
+        return;
+      }
+
+      if (navControls) {
+        navControls.classList.toggle("hidden", filledBrands.length <= 1);
+      }
+
+      container.innerHTML = filledBrands.map(brand => {
+        const brandProjects = getProjectsForBrand(brand);
+        const countFoto = brandProjects.filter(p => !p.type || p.type === 'foto').length;
+        const countVideo = brandProjects.filter(p => p.type === 'video').length;
+        const countSosmed = brandProjects.filter(p => p.type === 'reels').length;
+        const countDrone = brandProjects.filter(p => p.type === 'drone').length;
+
+        const coverImg = brandProjects.length > 0 ? brandProjects[0].image : 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop';
+
+        return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleNavRoute(event, '/client/${brand.slug}')"
+            class="project-card group cursor-pointer bg-appleCard rounded-[30px] p-3.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none shrink-0 w-[84vw] sm:w-[58vw] md:w-[48vw] lg:w-[calc((100%-1.5rem)/2)] snap-start">
+            
+            <div class="relative w-full aspect-[16/9] rounded-[22px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${coverImg}" 
+                alt="${brand.name}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+              />
+              
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none"></div>
+
+              <div class="absolute top-3.5 left-3.5">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-appleDark shadow-xs border border-white/40">
+                  <i data-lucide="award" class="w-3 h-3 text-amber-500"></i>
+                  <span>Client Spotlight</span>
+                </span>
+              </div>
+
+              <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                <h3 class="text-base sm:text-xl font-bold tracking-tight line-clamp-1 drop-shadow-sm">
+                  ${brand.name}
+                </h3>
+                <p class="text-xs text-neutral-300 flex items-center gap-1 mt-0.5 font-light">
+                  <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400"></i>
+                  <span>${brand.location}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-3.5 pb-2 px-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-neutral-100 mt-2">
+              <div class="flex items-center gap-2 flex-wrap text-[11px] font-medium text-appleGray">
+                ${countFoto > 0 ? `<span class="bg-neutral-100 px-2 py-0.5 rounded-md text-appleDark">📸 ${countFoto} Foto</span>` : ''}
+                ${countVideo > 0 ? `<span class="bg-rose-50 text-rose-700 px-2 py-0.5 rounded-md">🎬 ${countVideo} Video</span>` : ''}
+                ${countSosmed > 0 ? `<span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md">📱 ${countSosmed} Reels & Feed</span>` : ''}
+                ${countDrone > 0 ? `<span class="bg-sky-50 text-sky-700 px-2 py-0.5 rounded-md">🛸 ${countDrone} Drone</span>` : ''}
+              </div>
+
+              <span class="inline-flex items-center gap-1 text-xs font-semibold text-foriorBrand group-hover:translate-x-1 transition-transform">
+                <span>Eksplorasi Case Study</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    function slideBrands(direction) {
+      const track = document.getElementById("clientSpotlightGrid");
+      if (!track) return;
+      const cards = track.querySelectorAll(".snap-start");
+      const step = cards.length >= 2 ? (cards[1].offsetLeft - cards[0].offsetLeft) : 340;
+      track.scrollBy({ left: direction * step, behavior: "smooth" });
+    }
+
+    function setBrandTab(tab) {
+      activeBrandTab = tab;
+      const tabs = ['all', 'foto', 'video', 'reels', 'drone'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`brandTab-${t}`);
+        if (btn) {
+          if (t === tab) {
+            btn.className = "category-pill inline-flex items-center justify-center rounded-full text-xs font-semibold bg-appleDark text-white shadow-sm cursor-pointer whitespace-nowrap";
+          } else {
+            btn.className = "category-pill inline-flex items-center justify-center rounded-full text-xs font-medium bg-white text-appleGray border border-appleBorder hover:text-appleDark cursor-pointer whitespace-nowrap";
+          }
+        }
+      });
+      if (currentBrandSlug) renderBrandCaseStudyPage(currentBrandSlug);
+    }
+
+    function renderBrandCaseStudyPage(slug) {
+      const allBrands = getAllBrands();
+      const brand = allBrands.find(b => b.slug === slug);
+      if (!brand) return;
+
+      document.title = `${brand.name} — Client Spotlight | FORIOR`;
+      document.getElementById("brandDetailTitle").textContent = brand.name;
+      document.getElementById("brandDetailLocation").innerHTML = `<i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-400 shrink-0"></i><span>${brand.location}</span>`;
+      document.getElementById("brandDetailDesc").textContent = brand.desc;
+
+      const allBrandProjects = getProjectsForBrand(brand);
+      if (allBrandProjects.length > 0) {
+        document.getElementById("brandHeroBg").src = allBrandProjects[0].image;
+      }
+
+      let filtered = allBrandProjects;
+      if (activeBrandTab !== 'all') {
+        filtered = allBrandProjects.filter(p => (p.type || 'foto') === activeBrandTab);
+      }
+
+      const grid = document.getElementById("brandProjectsGrid");
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full w-full text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8">
+            <p class="text-xs text-appleGray">Belum ada aset proyek untuk kategori ini.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isVideo = item.type === 'video';
+        const isReels = item.type === 'reels';
+        const isDrone = item.type === 'drone';
+        const isFeed = isReels && (item.subtype === 'feed' || item.subtype === 'carousel');
+
+        let aspectClass = "aspect-[4/3]";
+        let typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">Foto</span>`;
+        let cornerIcon = "maximize-2";
+
+        if (isVideo) {
+          aspectClass = "aspect-video"; // 16:9
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-rose-600 text-white shadow-xs">Video 16:9</span>`;
+          cornerIcon = "play";
+        } else if (isReels && !isFeed) {
+          aspectClass = "aspect-[9/16]"; // 9:16 Vertikal
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Reels 9:16</span>`;
+          cornerIcon = "film";
+        } else if (isFeed) {
+          aspectClass = "aspect-[3/4]"; // 3:4 Vertikal Feed
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-purple-600 text-white shadow-xs">Feed Post</span>`;
+          cornerIcon = "copy";
+        } else if (isDrone) {
+          aspectClass = "aspect-[16/10]"; // 16:10 Udara
+          typeBadge = `<span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-sky-600 text-white shadow-xs">Aerial Drone</span>`;
+          cornerIcon = "plane";
+        }
+
+        const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+        return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleBrandItemClick('${item.id}')"
+            class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none break-inside-avoid block mb-6">
+            
+            <div class="project-img-container relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${item.image}" 
+                alt="${item.title}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
+              />
+
+              <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1">
+                ${typeBadge}
+              </div>
+
+              ${isFeed ? `
+                <div class="absolute top-3.5 left-3.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
+                  <span>${totalSlides} Slide</span>
+                </div>
+              ` : ''}
+
+              ${(isVideo || (isReels && !isFeed)) ? `
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 ${isVideo ? 'group-hover:bg-rose-600' : 'group-hover:bg-purple-600'} group-hover:text-white">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </div>
+                </div>
+              ` : `
+                <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <i data-lucide="${cornerIcon}" class="w-3.5 h-3.5"></i>
+                </div>
+              `}
+            </div>
+
+            <div class="pt-3 pb-2 px-1.5 flex items-center justify-between">
+              <div class="min-w-0 pr-2">
+                <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors truncate">
+                  ${item.title}
+                </h3>
+                <p class="text-[11px] text-neutral-400 mt-0.5 flex items-center gap-1 font-normal truncate">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5 shrink-0"></i>
+                  <span class="truncate">${item.location || 'Indonesia'}</span>
+                </p>
+              </div>
+
+              <span class="text-[11px] text-appleGray font-medium group-hover:text-appleDark transition-colors shrink-0">
+                ${(isVideo || (isReels && !isFeed)) ? 'Tonton' : 'Lihat'} <i data-lucide="chevron-right" class="w-3 h-3 inline"></i>
+              </span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    function handleBrandItemClick(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      const isVideo = item.type === 'video' || (item.type === 'reels' && item.subtype !== 'feed') || (item.type === 'drone' && item.link && item.link.includes('youtube'));
+      if (isVideo) {
+        openVideoModal(id);
+      } else {
+        openProjectLightbox(id);
+      }
+    }
+
+    function renderCategoryFilters() {
+      const container = document.getElementById("categoryFilterContainer");
+      if (!container) return;
+
+      const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
+
+      const categoryCounts = {};
+      photoProjects.forEach(p => {
+        const cats = getProjectCategories(p);
+        cats.forEach(c => {
+          const catName = c.trim();
+          if (catName.toLowerCase() === "komersial") return;
+          categoryCounts[catName] = (categoryCounts[catName] || 0) + 1;
+        });
+      });
+
+      const activeFilledCategories = Object.keys(categoryCounts)
+        .filter(cat => categoryCounts[cat] > 0)
+        .sort((a, b) => categoryCounts[b] - categoryCounts[a]);
+
+      const displayCategories = ["Semua", ...activeFilledCategories];
+
+      if (!displayCategories.map(c => c.toLowerCase()).includes(activeCategory.toLowerCase())) {
+        activeCategory = "Semua";
+      }
+
+      container.innerHTML = displayCategories.map(cat => {
+        const isActive = cat.toLowerCase() === activeCategory.toLowerCase();
+        const baseClass = "category-pill inline-flex items-center justify-center rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer select-none";
+        const activeClass = isActive 
+          ? "bg-appleDark text-white shadow-sm font-semibold" 
+          : "bg-white text-appleGray border border-appleBorder hover:text-appleDark hover:border-neutral-400";
+
+        return `
+          <button 
+            type="button" 
+            onclick="setCategoryFilter('${cat}')" 
+            class="${baseClass} ${activeClass}">
+            ${cat}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function setCategoryFilter(category) {
+      activeCategory = category;
+      photoDisplayLimit = 9;
+      renderCategoryFilters();
+      renderPhotoSection();
+      lucide.createIcons();
+    }
+
+    function renderFormCategoryPills() {
+      const container = document.getElementById("formCategoryPillsContainer");
+      if (!container) return;
+      const availableCats = CATEGORIES.filter(c => c !== "Semua" && c !== "Komersial");
+
+      container.innerHTML = availableCats.map(cat => {
+        const isSelected = selectedFormCategories.includes(cat);
+        const activeClass = isSelected
+          ? "bg-foriorBrand text-white shadow-xs font-semibold"
+          : "bg-neutral-100 text-appleGray hover:bg-neutral-200 hover:text-appleDark";
+
+        return `
+          <button 
+            type="button" 
+            onclick="toggleFormCategory('${cat}')" 
+            class="category-pill text-xs px-3 rounded-full transition-all cursor-pointer select-none ${activeClass}">
+            ${isSelected ? "✓ " : ""}${cat}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function toggleFormCategory(cat) {
+      if (selectedFormCategories.includes(cat)) {
+        if (selectedFormCategories.length > 1) {
+          selectedFormCategories = selectedFormCategories.filter(c => c !== cat);
+        } else {
+          showToast("Minimal pilih satu kategori!", "error");
+          return;
+        }
+      } else {
+        selectedFormCategories.push(cat);
+      }
+      renderFormCategoryPills();
+    }
+
+    function renderAllSections() {
+      renderFeaturedBrandsSection();
+      renderPhotoSection();
+      renderVideoSection();
+      renderReelsSection();
+      renderDroneSection();
+      lucide.createIcons();
+    }
+
+    function renderPhotoSection() {
+      const grid = document.getElementById("photoPortfolioGrid");
+      const emptyState = document.getElementById("emptyPhotoState");
+      const loadMoreContainer = document.getElementById("photoLoadMoreContainer");
+      const loadMoreText = document.getElementById("photoLoadMoreText");
+      
+      if (!isDataLoaded) return;
+
+      renderCategoryFilters();
+
+      const photoProjects = projects.filter(p => (!p.type || p.type === 'foto'));
+      const filtered = photoProjects.filter(p => projectMatchesCategory(p, activeCategory));
+
+      document.getElementById("photoProjectCount").textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        loadMoreContainer.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      const visibleItems = filtered.slice(0, photoDisplayLimit);
+
+      grid.innerHTML = visibleItems.map(item => {
+        const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[11px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
+            ${c}
+          </span>
+        `).join("");
+
+        return `
+        <div 
+          role="button"
+          tabindex="0"
+          onclick="openProjectLightbox('${item.id}')" 
+          onkeydown="if(event.key==='Enter') openProjectLightbox('${item.id}')"
+          class="project-card group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+          
+          <div class="project-img-container relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-100">
+            <img 
+              src="${item.image}" 
+              alt="${item.title}" 
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'"
+            />
+
+            <div class="absolute top-3.5 right-3.5 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              ${badgesHtml}
+            </div>
+
+            <div class="absolute bottom-3.5 left-3.5">
+              <span class="badge-counter inline-flex items-center justify-center gap-1 rounded-full text-[10px] font-medium bg-black/70 text-white border border-white/20">
+                <i data-lucide="layers" class="w-3 h-3 shrink-0"></i>
+                <span>${totalPhotos} Foto</span>
+              </span>
+            </div>
+
+            <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+            </div>
           </div>
 
-          <form id="spotlightForm" onsubmit="handleSaveSpotlight(event)" class="space-y-3.5">
-            <input type="hidden" id="editSpotlightId" value="">
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Tipe / Kategori Ruang</label>
-                <input 
-                  type="text" 
-                  id="inputSpotlightCategory" 
-                  required 
-                  placeholder="Contoh: Apartment / Luxury Villa / Hotel"
-                  class="w-full text-xs bg-white border border-appleBorder rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20"
-                />
-              </div>
-
-              <div>
-                <label class="block text-xs font-medium text-appleDark mb-1">Tautan / Link Visit (Opsional)</label>
-                <input 
-                  type="text" 
-                  id="inputSpotlightLink" 
-                  placeholder="Contoh: #/client/st-regis atau url website"
-                  class="w-full text-xs bg-white border border-appleBorder rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20"
-                />
-              </div>
+          <div class="pt-3 pb-2.5 px-1.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-foriorBrand transition-colors line-clamp-1 leading-snug">
+                ${item.title}
+              </h3>
+              <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
+                Galeri <i data-lucide="chevron-right" class="w-3 h-3"></i>
+              </span>
             </div>
 
-            <div>
-              <label class="block text-xs font-medium text-appleDark mb-1">Nama Brand / Properti</label>
-              <input 
-                type="text" 
-                id="inputSpotlightTitle" 
-                required 
-                placeholder="Contoh: The Residences St. Regis Jakarta"
-                class="w-full text-xs sm:text-sm font-semibold bg-white border border-appleBorder rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20"
-              />
+            <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+              <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
+              <span class="truncate">${item.location || 'Indonesia'}</span>
             </div>
-
-            <div>
-              <label class="block text-xs font-medium text-appleDark mb-1">Lokasi Kota & Negara</label>
-              <input 
-                type="text" 
-                id="inputSpotlightLocation" 
-                required 
-                placeholder="Contoh: Jakarta, Indonesia"
-                class="w-full text-xs bg-white border border-appleBorder rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-foriorBrand/20"
-              />
-            </div>
-
-            <!-- FOTO HERO (FOTO 1 UTAMA) -->
-            <div class="p-3 bg-white rounded-xl border border-appleBorder space-y-2">
-              <label class="block text-xs font-bold text-appleDark">1. Foto Utama Besar (Hero 16:9 / 16:10)</label>
-              <input 
-                type="url" 
-                id="spotlightImgHero" 
-                placeholder="URL Foto atau unggah di samping" 
-                class="w-full text-xs bg-neutral-50 border border-appleBorder rounded-lg px-2.5 py-1.5 focus:outline-none"
-                oninput="previewSpotlightThumb('spotlightImgHero', 'prevHero')"
-              />
-              <div class="flex items-center gap-2">
-                <label class="cursor-pointer text-[11px] font-medium bg-neutral-100 hover:bg-neutral-200 border border-appleBorder px-2.5 py-1 rounded-md inline-flex items-center gap-1 shadow-2xs">
-                  <i data-lucide="upload" class="w-3 h-3 text-foriorBrand"></i> Upload
-                  <input type="file" accept="image/*" class="hidden" onchange="uploadSpotlightFile(event, 'spotlightImgHero', 'prevHero')">
-                </label>
-                <img id="prevHero" src="" class="w-16 h-10 object-cover rounded border border-appleBorder hidden">
-              </div>
-            </div>
-
-            <!-- FOTO STRIP (3 FOTO PENDUKUNG DI BAWAH) -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <!-- Foto 2 -->
-              <div class="p-2.5 bg-white rounded-xl border border-appleBorder space-y-1.5">
-                <label class="block text-[11px] font-semibold text-appleDark">2. Foto Pendukung Kiri</label>
-                <input type="url" id="spotlightImgSub1" placeholder="URL Foto..." class="w-full text-[11px] bg-neutral-50 border border-appleBorder rounded px-2 py-1" oninput="previewSpotlightThumb('spotlightImgSub1', 'prevSub1')">
-                <div class="flex items-center gap-1.5">
-                  <label class="cursor-pointer text-[10px] font-medium bg-neutral-100 border border-appleBorder px-2 py-0.5 rounded inline-flex items-center gap-1">
-                    Upload <input type="file" accept="image/*" class="hidden" onchange="uploadSpotlightFile(event, 'spotlightImgSub1', 'prevSub1')">
-                  </label>
-                  <img id="prevSub1" src="" class="w-10 h-7 object-cover rounded border border-appleBorder hidden">
-                </div>
-              </div>
-
-              <!-- Foto 3 -->
-              <div class="p-2.5 bg-white rounded-xl border border-appleBorder space-y-1.5">
-                <label class="block text-[11px] font-semibold text-appleDark">3. Foto Pendukung Tengah</label>
-                <input type="url" id="spotlightImgSub2" placeholder="URL Foto..." class="w-full text-[11px] bg-neutral-50 border border-appleBorder rounded px-2 py-1" oninput="previewSpotlightThumb('spotlightImgSub2', 'prevSub2')">
-                <div class="flex items-center gap-1.5">
-                  <label class="cursor-pointer text-[10px] font-medium bg-neutral-100 border border-appleBorder px-2 py-0.5 rounded inline-flex items-center gap-1">
-                    Upload <input type="file" accept="image/*" class="hidden" onchange="uploadSpotlightFile(event, 'spotlightImgSub2', 'prevSub2')">
-                  </label>
-                  <img id="prevSub2" src="" class="w-10 h-7 object-cover rounded border border-appleBorder hidden">
-                </div>
-              </div>
-
-              <!-- Foto 4 -->
-              <div class="p-2.5 bg-white rounded-xl border border-appleBorder space-y-1.5">
-                <label class="block text-[11px] font-semibold text-appleDark">4. Foto Pendukung Kanan</label>
-                <input type="url" id="spotlightImgSub3" placeholder="URL Foto..." class="w-full text-[11px] bg-neutral-50 border border-appleBorder rounded px-2 py-1" oninput="previewSpotlightThumb('spotlightImgSub3', 'prevSub3')">
-                <div class="flex items-center gap-1.5">
-                  <label class="cursor-pointer text-[10px] font-medium bg-neutral-100 border border-appleBorder px-2 py-0.5 rounded inline-flex items-center gap-1">
-                    Upload <input type="file" accept="image/*" class="hidden" onchange="uploadSpotlightFile(event, 'spotlightImgSub3', 'prevSub3')">
-                  </label>
-                  <img id="prevSub3" src="" class="w-10 h-7 object-cover rounded border border-appleBorder hidden">
-                </div>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2 pt-2">
-              <button 
-                type="submit" 
-                id="btnSaveSpotlight" 
-                class="flex-1 bg-foriorBrand text-white text-xs font-semibold py-2.5 px-4 rounded-xl hover:opacity-90 transition-all shadow-sm cursor-pointer">
-                Simpan Client Spotlight
-              </button>
-              <button 
-                type="button" 
-                id="btnCancelSpotlight" 
-                onclick="resetSpotlightForm()" 
-                class="hidden text-xs text-appleGray px-3 py-2 rounded-xl hover:bg-neutral-200 transition-colors cursor-pointer">
-                Batal
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
+      `;
+      }).join("");
 
-        <div>
-          <h4 class="text-xs font-semibold text-appleDark uppercase tracking-wider mb-2.5">Daftar Client Spotlight Tersimpan</h4>
-          <div id="adminSpotlightList" class="space-y-2"></div>
+      if (filtered.length > photoDisplayLimit) {
+        const remaining = filtered.length - photoDisplayLimit;
+        loadMoreText.textContent = `Tampilkan Lebih Banyak Foto (+${remaining})`;
+        loadMoreContainer.classList.remove("hidden");
+      } else {
+        loadMoreContainer.classList.add("hidden");
+      }
+    }
+
+    function loadMorePhotos() {
+      photoDisplayLimit += 9;
+      renderPhotoSection();
+      lucide.createIcons();
+    }
+
+    function renderVideoSection() {
+      const grid = document.getElementById("videoPortfolioGrid");
+      const emptyState = document.getElementById("emptyVideoState");
+      const loadMoreContainer = document.getElementById("videoLoadMoreContainer");
+      const loadMoreText = document.getElementById("videoLoadMoreText");
+
+      if (!isDataLoaded) return;
+
+      const videoProjects = projects.filter(p => p.type === 'video');
+      document.getElementById("videoProjectCount").textContent = videoProjects.length;
+
+      if (videoProjects.length === 0) {
+        grid.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        loadMoreContainer.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      const visibleItems = videoProjects.slice(0, videoDisplayLimit);
+
+      grid.innerHTML = visibleItems.map(item => {
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-rose-600 text-white shadow-xs">
+            ${c}
+          </span>
+        `).join("");
+
+        return `
+        <div 
+          role="button"
+          tabindex="0"
+          onclick="openVideoModal('${item.id}')"
+          class="project-card group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
+          
+          <div class="project-img-container relative w-full aspect-video rounded-[20px] overflow-hidden bg-neutral-900">
+            <img 
+              src="${item.image}" 
+              alt="${item.title}" 
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              onerror="this.src='https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop'"
+            />
+
+            <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
+              ${badgesHtml}
+            </div>
+
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-rose-600 group-hover:text-white">
+                <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+              </div>
+            </div>
+
+            <div class="absolute bottom-3 left-3">
+              <span class="badge-counter inline-flex items-center justify-center gap-1 rounded-full text-[10px] font-medium bg-black/70 text-white border border-white/20">
+                <i data-lucide="film" class="w-2.5 h-2.5 shrink-0"></i> <span>Video Tour</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="pt-3 pb-2.5 px-1.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-rose-600 transition-colors line-clamp-1 leading-snug">
+                ${item.title}
+              </h3>
+              <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
+                Tonton <i data-lucide="chevron-right" class="w-3 h-3"></i>
+              </span>
+            </div>
+
+            <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+              <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
+              <span class="truncate">${item.location || 'Indonesia'}</span>
+            </div>
+          </div>
         </div>
-      </div>
+      `;
+      }).join("");
 
-    </div>
+      if (videoProjects.length > videoDisplayLimit) {
+        const remaining = videoProjects.length - videoDisplayLimit;
+        loadMoreText.textContent = `Tampilkan Lebih Banyak Video (+${remaining})`;
+        loadMoreContainer.classList.remove("hidden");
+      } else {
+        loadMoreContainer.classList.add("hidden");
+      }
+    }
 
-    <div class="border-t border-appleBorder p-4 bg-neutral-50 flex items-center justify-between text-xs text-appleGray gap-2">
-      <button onclick="restoreFromDeviceCache()" class="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-medium transition-colors cursor-pointer">
-        <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
-        Pulihkan Proyek dari Perangkat
-      </button>
-      <button onclick="promptResetData()" class="hover:text-appleDark underline transition-colors cursor-pointer shrink-0">
-        Reset Data Awal
-      </button>
-    </div>
-  </div>
-</div>
+    function loadMoreVideos() {
+      videoDisplayLimit += 6;
+      renderVideoSection();
+      lucide.createIcons();
+    }
 
-<!-- Modal Konfirmasi Hapus Proyek -->
-<div id="confirmModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
-  <div onclick="closeConfirmModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
-  <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
-    <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
-      <i data-lucide="trash-2" class="w-5 h-5"></i>
-    </div>
-    <h4 class="text-sm font-semibold text-appleDark">Hapus Portofolio Ini?</h4>
-    <p class="text-xs text-appleGray leading-relaxed">Karya akan dihapus secara permanen dari showcase dan database cloud.</p>
-    <div class="flex items-center gap-2 pt-2">
-      <button onclick="closeConfirmModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
-        Batal
-      </button>
-      <button id="confirmDeleteBtn" onclick="executeDeleteProject()" class="flex-1 text-xs py-2 rounded-xl bg-rose-600 hover:bg-rose-700 font-medium text-white transition-colors cursor-pointer">
-        Ya, Hapus
-      </button>
-    </div>
-  </div>
-</div>
+    // ================= SECTION 4: SOCIAL MEDIA & REELS =================
+    function setInstagramTab(tab) {
+      activeInstagramTab = tab;
+      
+      const tabs = ['all', 'feed', 'reels'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`igTab-${t}`);
+        if (el) {
+          if (t === tab) {
+            el.className = "ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-appleDark text-appleDark text-xs font-bold uppercase tracking-wider transition-all cursor-pointer";
+          } else {
+            el.className = "ig-tab-btn flex items-center gap-2 py-3 border-b-2 border-transparent text-appleGray hover:text-appleDark text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer";
+          }
+        }
+      });
 
-<!-- Modal Konfirmasi Hapus Brand -->
-<div id="confirmDeleteBrandModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
-  <div onclick="closeDeleteBrandModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
-  <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
-    <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-500 mx-auto flex items-center justify-center">
-      <i data-lucide="trash-2" class="w-5 h-5"></i>
-    </div>
-    <h4 class="text-sm font-semibold text-appleDark">Hapus Brand Spotlight Ini?</h4>
-    <p class="text-xs text-appleGray leading-relaxed">
-      Brand <strong id="deleteBrandTargetName" class="text-appleDark"></strong> akan dihapus dari spotlight. Portofolio terkait tetap aman, hanya status ikatannya yang dilepas.
-    </p>
-    <div class="flex items-center gap-2 pt-2">
-      <button onclick="closeDeleteBrandModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
-        Batal
-      </button>
-      <button onclick="executeDeleteBrand()" class="flex-1 text-xs py-2 rounded-xl bg-rose-600 hover:bg-rose-700 font-medium text-white transition-colors cursor-pointer">
-        Ya, Hapus Brand
-      </button>
-    </div>
-  </div>
-</div>
+      renderReelsSection();
+    }
 
-<!-- Modal Konfirmasi Reset Data -->
-<div id="confirmResetModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-200 flex items-center justify-center p-4">
-  <div onclick="closeResetModal()" class="absolute inset-0 bg-black/40 backdrop-blur-xs"></div>
-  <div class="relative bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl border border-appleBorder z-10 text-center space-y-3">
-    <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 mx-auto flex items-center justify-center">
-      <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-    </div>
-    <h4 class="text-sm font-semibold text-appleDark">Kembalikan Data Awal?</h4>
-    <p class="text-xs text-appleGray leading-relaxed">Seluruh portofolio awal bawaan akan disinkronisasikan ulang ke cloud Firebase Anda.</p>
-    <div class="flex items-center gap-2 pt-2">
-      <button onclick="closeResetModal()" class="flex-1 text-xs py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 font-medium text-appleDark transition-colors cursor-pointer">
-        Batal
-      </button>
-      <button onclick="executeResetData()" class="flex-1 text-xs py-2 rounded-xl bg-appleDark hover:bg-neutral-800 font-medium text-white transition-colors cursor-pointer">
-        Ya, Reset Data
-      </button>
-    </div>
-  </div>
-</div>
+    function handleSocialItemClick(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
 
-<!-- Toast Notification -->
-<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-appleDark/90 backdrop-blur-md text-white text-xs font-medium px-4 py-2.5 rounded-full shadow-xl flex items-center gap-2.5 transition-all duration-300 opacity-0 pointer-events-none translate-y-4 max-w-[92vw]">
-  <i id="toastIcon" data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-  <span id="toastMsg" class="leading-snug">Perubahan berhasil disimpan</span>
-</div>
+      const isVideo = (item.subtype === 'reels' || (!item.subtype && item.link && (item.link.includes("youtube") || item.link.includes("youtu.be"))));
+      if (isVideo) {
+        openVideoModal(id);
+      } else {
+        openProjectLightbox(id);
+      }
+    }
+
+    function renderReelsSection() {
+      const track = document.getElementById("reelsPortfolioGrid");
+      const emptyState = document.getElementById("emptyReelsState");
+      const navControls = document.getElementById("reelsNavControls");
+
+      if (!isDataLoaded) return;
+
+      const isSubpage = currentRoute === "/sosmed";
+      let allSosmedProjects = projects.filter(p => p.type === 'reels');
+
+      document.getElementById("reelsProjectCount").textContent = allSosmedProjects.length;
+
+      if (allSosmedProjects.length === 0) {
+        track.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        if (navControls) navControls.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+
+      if (!isSubpage) {
+        // DI BERANDA UTAMA: Carousel Horisontal (9:16)
+        track.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
+        
+        track.innerHTML = allSosmedProjects.map(item => {
+          const cats = getProjectCategories(item);
+          const badgesHtml = cats.map(c => `
+            <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/40">
+              ${c}
+            </span>
+          `).join("");
+
+          const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
+
+          return `
+          <div 
+            role="button"
+            tabindex="0"
+            onclick="handleSocialItemClick('${item.id}')"
+            class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none shrink-0 w-[78vw] sm:w-[46vw] md:w-[31vw] lg:w-[calc((100%-4.5rem)/4)] snap-start project-card">
+            
+            <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+              <img 
+                src="${item.image}" 
+                alt="${item.title}" 
+                decoding="async"
+                class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+              />
+              
+              <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+
+              <div class="absolute top-3 right-3 flex flex-wrap justify-end gap-1 max-w-[80%]">
+                ${badgesHtml}
+              </div>
+
+              <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
+                <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+              </div>
+
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isFeed ? '' : 'pl-0.5'}">
+                  <i data-lucide="${isFeed ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
+                </div>
+              </div>
+
+              <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5 drop-shadow-xs">
+                  <i data-lucide="${isFeed ? 'copy' : 'smartphone'}" class="w-3 h-3"></i> 
+                  <span>${isFeed ? 'Feed Post' : 'Reels 9:16'}</span>
+                </span>
+                <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2 drop-shadow-sm">
+                  ${item.title}
+                </h3>
+                <p class="text-[11px] text-neutral-200 flex items-center gap-1 mt-1 font-normal drop-shadow-xs">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-300 shrink-0"></i>
+                  <span class="truncate">${item.location || 'Indonesia'}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+        }).join("");
+
+        if (allSosmedProjects.length > 1) {
+          if (navControls) navControls.classList.remove("hidden");
+        } else {
+          if (navControls) navControls.classList.add("hidden");
+        }
+
+      } else {
+        // DI SUB-HALAMAN /sosmed (3 TAB INSTAGRAM)
+        if (navControls) navControls.classList.add("hidden");
+
+        if (activeInstagramTab === 'all') {
+          // TAB "SEMUA": Masonry Grid Multi-Rasio (Feed 3:4 & Reels 9:16 bergabung rapi)
+          track.className = "columns-2 sm:columns-3 lg:columns-4 gap-4 sm:gap-6 space-y-4 sm:space-y-6 py-2 px-1";
+
+          track.innerHTML = allSosmedProjects.map(item => {
+            const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
+            const aspectClass = isFeed ? 'aspect-[3/4]' : 'aspect-[9/16]';
+            const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+            return `
+              <div 
+                role="button"
+                tabindex="0"
+                onclick="handleSocialItemClick('${item.id}')"
+                class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full break-inside-avoid block mb-4 sm:mb-6 project-card">
+                
+                <div class="relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
+                  <img 
+                    src="${item.image}" 
+                    alt="${item.title}" 
+                    decoding="async"
+                    class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                  />
+
+                  <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
+                    <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3.5 h-3.5"></i>
+                  </div>
+
+                  ${isFeed ? `
+                    <div class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
+                      <span>${totalSlides} Slide</span>
+                    </div>
+                  ` : ''}
+
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white ${isFeed ? '' : 'pl-0.5'}">
+                      <i data-lucide="${isFeed ? 'images' : 'play'}" class="w-4 h-4 fill-current"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2 px-1 text-appleDark">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-600 uppercase tracking-wider mb-0.5">
+                    <i data-lucide="${isFeed ? 'copy' : 'film'}" class="w-3 h-3"></i> ${isFeed ? 'Feed (3:4)' : 'Reels (9:16)'}
+                  </span>
+                  <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-1">
+                    ${item.title}
+                  </h3>
+                  <p class="text-[11px] text-appleGray flex items-center gap-1 mt-0.5 font-normal">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-400"></i>
+                    <span class="truncate">${item.location || 'Indonesia'}</span>
+                  </p>
+                </div>
+
+              </div>
+            `;
+          }).join("");
+
+        } else if (activeInstagramTab === 'reels') {
+          const filteredReels = allSosmedProjects.filter(p => p.subtype !== 'feed' && p.subtype !== 'carousel');
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
+
+          track.innerHTML = filteredReels.map(item => `
+            <div 
+              role="button"
+              tabindex="0"
+              onclick="handleSocialItemClick('${item.id}')"
+              class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
+              
+              <div class="relative w-full aspect-[9/16] rounded-[20px] overflow-hidden bg-neutral-900">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.title}" 
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                />
+                
+                <div class="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-black/85 via-black/35 to-transparent pointer-events-none"></div>
+
+                <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20">
+                  <i data-lucide="film" class="w-3.5 h-3.5"></i>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </div>
+                </div>
+
+                <div class="absolute bottom-3.5 left-3.5 right-3.5 text-white">
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-purple-300 uppercase tracking-wider mb-0.5">
+                    <i data-lucide="film" class="w-3 h-3"></i> Reels
+                  </span>
+                  <h3 class="text-xs sm:text-sm font-semibold leading-snug line-clamp-2">
+                    ${item.title}
+                  </h3>
+                  <p class="text-[11px] text-neutral-300 flex items-center gap-1 mt-0.5 font-normal">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5 text-neutral-400"></i>
+                    <span class="truncate">${item.location || 'Indonesia'}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          `).join("");
+
+        } else {
+          const filteredFeed = allSosmedProjects.filter(p => p.subtype === 'feed' || p.subtype === 'carousel');
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 py-2 px-1";
+
+          track.innerHTML = filteredFeed.map(item => {
+            const totalSlides = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+            return `
+            <div 
+              role="button"
+              tabindex="0"
+              onclick="handleSocialItemClick('${item.id}')"
+              class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
+              
+              <div class="relative w-full aspect-[3/4] rounded-[20px] overflow-hidden bg-neutral-900">
+                <img 
+                  src="${item.image}" 
+                  alt="${item.title}" 
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  onerror="this.src='https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop'"
+                />
+
+                <div class="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 shadow-md">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </div>
+
+                <div class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-mono text-white border border-white/20 shadow-md">
+                  <span>${totalSlides} Slide</span>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="w-11 h-11 rounded-full bg-white/90 text-neutral-950 flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white">
+                    <i data-lucide="images" class="w-4 h-4"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `;
+          }).join("");
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    function slideReels(direction) {
+      const track = document.getElementById("reelsPortfolioGrid");
+      if (!track) return;
+      const cards = track.querySelectorAll(".snap-start");
+      const step = cards.length >= 2 ? (cards[1].offsetLeft - cards[0].offsetLeft) : 300;
+      track.scrollBy({ left: direction * step, behavior: "smooth" });
+    }
+
+    function renderDroneSection() {
+      const track = document.getElementById("dronePortfolioGrid");
+      const emptyState = document.getElementById("emptyDroneState");
+      const navControls = document.getElementById("droneNavControls");
+
+      if (!isDataLoaded) return;
+
+      const droneProjects = projects.filter(p => p.type === 'drone');
+      document.getElementById("droneProjectCount").textContent = droneProjects.length;
+
+      if (droneProjects.length === 0) {
+        track.innerHTML = "";
+        emptyState.classList.remove("hidden");
+        if (navControls) navControls.classList.add("hidden");
+        return;
+      }
+
+      emptyState.classList.add("hidden");
+      const isSubpage = currentRoute === "/drone";
+
+      track.innerHTML = droneProjects.map(item => {
+        const cats = getProjectCategories(item);
+        const badgesHtml = cats.map(c => `
+          <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium bg-white/90 backdrop-blur-md text-appleDark shadow-xs border border-white/30">
+            ${c}
+          </span>
+        `).join("");
+
+        const isVideo = item.link && (item.link.includes('youtube') || item.link.includes('youtu.be') || item.link.endsWith('.mp4'));
+        const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
+
+        const itemWidthClass = isSubpage 
+          ? "w-full" 
+          : "shrink-0 w-[82vw] sm:w-[46vw] lg:w-[calc((100%-3rem)/3)] snap-start";
+
+        return `
+        <div 
+          role="button"
+          tabindex="0"
+          onclick="handleDroneClick('${item.id}')"
+          class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none ${itemWidthClass}">
+          
+          <div class="project-img-container relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-neutral-900">
+            <img 
+              src="${item.image}" 
+              alt="${item.title}" 
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              onerror="this.src='https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?q=80&w=800&auto=format&fit=crop'"
+            />
+
+            <div class="absolute top-3.5 right-3.5 flex items-center gap-1.5 flex-wrap justify-end max-w-[80%]">
+              <span class="badge-counter inline-flex items-center justify-center gap-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-sky-600 text-white shadow-xs">
+                <i data-lucide="plane" class="w-2.5 h-2.5 shrink-0"></i> <span>Aerial</span>
+              </span>
+              ${badgesHtml}
+            </div>
+
+            ${isVideo ? `
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-12 h-12 rounded-full bg-white/95 text-neutral-950 flex items-center justify-center pl-0.5 shadow-xl transition-all duration-300 group-hover:scale-115 group-hover:bg-sky-600 group-hover:text-white">
+                  <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                </div>
+              </div>
+            ` : `
+              <div class="absolute bottom-3.5 left-3.5">
+                <span class="badge-counter inline-flex items-center justify-center gap-1 rounded-full text-[10px] font-medium bg-black/70 text-white border border-white/20">
+                  <i data-lucide="layers" class="w-3 h-3 shrink-0"></i>
+                  <span>${totalPhotos} Foto</span>
+                </span>
+              </div>
+              <div class="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+              </div>
+            `}
+          </div>
+
+          <div class="pt-3 pb-2.5 px-1.5">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-semibold tracking-tight text-appleDark group-hover:text-sky-600 transition-colors line-clamp-1 leading-snug">
+                ${item.title}
+              </h3>
+              <span class="text-[11px] text-appleGray font-normal flex items-center gap-0.5 shrink-0 ml-2 group-hover:text-appleDark transition-colors">
+                ${isVideo ? 'Tonton' : 'Galeri'} <i data-lucide="chevron-right" class="w-3 h-3"></i>
+              </span>
+            </div>
+
+            <div class="mt-1 flex items-center gap-1 text-[11px] text-neutral-500 font-normal">
+              <i data-lucide="map-pin" class="w-3 h-3 text-neutral-400 shrink-0"></i>
+              <span class="truncate">${item.location || 'Indonesia'}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      }).join("");
+
+      if (!isSubpage && droneProjects.length > 1) {
+        if (navControls) navControls.classList.remove("hidden");
+      } else {
+        if (navControls) navControls.classList.add("hidden");
+      }
+    }
+
+    function handleDroneClick(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      if (item.link && (item.link.includes("youtube") || item.link.includes("youtu.be") || item.link.endsWith(".mp4"))) {
+        openVideoModal(id);
+      } else {
+        openProjectLightbox(id);
+      }
+    }
+
+    // ================= LIGHTBOX DENGAN RESPON CEPAT (ZERO DELAY & PRELOADING) =================
+    function preloadAdjacentImages() {
+      if (!currentLightboxPhotos || currentLightboxPhotos.length <= 1) return;
+      const nextIdx = (currentLightboxIndex + 1) % currentLightboxPhotos.length;
+      const prevIdx = (currentLightboxIndex - 1 + currentLightboxPhotos.length) % currentLightboxPhotos.length;
+
+      const nextImg = new Image();
+      nextImg.src = currentLightboxPhotos[nextIdx];
+      const prevImg = new Image();
+      prevImg.src = currentLightboxPhotos[prevIdx];
+    }
+
+    function openProjectLightbox(id) {
+      const project = projects.find(p => p.id === id);
+      if (!project) return;
+
+      activeLightboxProject = project;
+      currentLightboxPhotos = [project.image];
+      if (project.gallery && Array.isArray(project.gallery) && project.gallery.length > 0) {
+        currentLightboxPhotos = [project.image, ...project.gallery];
+      }
+      currentLightboxIndex = 0;
+
+      const isInstagramFeed = (project.type === 'reels' && (project.subtype === 'feed' || project.subtype === 'carousel'));
+
+      const classicTopbar = document.getElementById("lightboxClassicTopbar");
+      const classicThumbBar = document.getElementById("lightboxClassicThumbBar");
+      const igSidebar = document.getElementById("lightboxInstagramSidebar");
+      const dialogWrapper = document.getElementById("lightboxDialogWrapper");
+
+      if (isInstagramFeed) {
+        classicTopbar.classList.add("hidden");
+        classicThumbBar.classList.add("hidden");
+        igSidebar.classList.remove("hidden");
+        
+        dialogWrapper.className = "relative z-10 w-full h-full sm:h-auto sm:max-h-[88vh] sm:max-w-5xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden";
+
+        document.getElementById("igSidebarTitle").textContent = project.title;
+        document.getElementById("igSidebarLocation").textContent = project.location || "Indonesia";
+        
+        const captionContent = project.caption && project.caption.trim() !== "" 
+          ? project.caption 
+          : `${project.title}\n\nDokumentasi visual profesional oleh @forior.id\n\n#FORIOR #InteriorPhotography #ArchitectureShowcase`;
+        document.getElementById("igSidebarCaptionText").textContent = captionContent;
+
+        const igExtBtn = document.getElementById("igSidebarExtBtn");
+        if (project.link && project.link.trim() !== "" && !project.link.includes("photos.app.goo.gl") && !project.link.includes("photos.google.com")) {
+          igExtBtn.href = project.link;
+          igExtBtn.classList.remove("hidden");
+        } else {
+          igExtBtn.classList.add("hidden");
+        }
+
+      } else {
+        igSidebar.classList.add("hidden");
+        classicTopbar.classList.remove("hidden");
+        classicThumbBar.classList.remove("hidden");
+        
+        dialogWrapper.className = "relative z-10 w-full h-full sm:h-auto sm:max-h-[92vh] sm:max-w-6xl bg-neutral-950 sm:rounded-3xl border-0 sm:border border-white/10 shadow-2xl flex flex-col overflow-hidden";
+
+        document.getElementById("lightboxProjectTitle").textContent = project.title;
+        
+        const cats = getProjectCategories(project);
+        document.getElementById("lightboxProjectCategories").innerHTML = cats.map(c => `
+          <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-white/20 text-white font-medium border border-white/20 shadow-xs">
+            ${c}
+          </span>
+        `).join("");
+
+        document.getElementById("lightboxProjectLocation").innerHTML = `
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-neutral-300 shrink-0"></i>
+          <span>${project.location || 'Indonesia'}</span>
+        `;
+
+        const hasAlbumLink = project.link && project.link.trim() !== "" && !project.link.includes("youtube") && !project.link.includes("youtu.be");
+        const extBtn = document.getElementById("lightboxExternalBtn");
+        const mobileBtnWrapper = document.getElementById("lightboxMobileBtnWrapper");
+        const mobilePill = document.getElementById("lightboxMobilePillBtn");
+
+        if (hasAlbumLink) {
+          extBtn.href = project.link;
+          extBtn.classList.remove("hidden");
+          document.getElementById("lightboxEndCardBtn").href = project.link;
+          if (mobileBtnWrapper && mobilePill) {
+            mobilePill.href = project.link;
+            mobileBtnWrapper.classList.remove("hidden");
+          }
+        } else {
+          extBtn.classList.add("hidden");
+          if (mobileBtnWrapper) mobileBtnWrapper.classList.add("hidden");
+        }
+      }
+
+      updateLightboxDisplay();
+
+      const modal = document.getElementById("lightboxModal");
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.style.overflow = "hidden";
+
+      lucide.createIcons();
+    }
+
+    function closeProjectLightbox() {
+      const modal = document.getElementById("lightboxModal");
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.style.overflow = "";
+
+      setTimeout(() => {
+        activeLightboxProject = null;
+      }, 150);
+    }
+
+    function updateLightboxDisplay() {
+      const mainImg = document.getElementById("lightboxMainImage");
+      const endCardSlide = document.getElementById("lightboxEndCardSlide");
+      const isInstagramFeed = activeLightboxProject && (activeLightboxProject.type === 'reels' && (activeLightboxProject.subtype === 'feed' || activeLightboxProject.subtype === 'carousel'));
+
+      const hasAlbumLink = !isInstagramFeed && activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
+      
+      const photoCount = currentLightboxPhotos.length;
+      const totalSlides = hasAlbumLink ? photoCount + 1 : photoCount;
+      const isEndCardActive = hasAlbumLink && currentLightboxIndex === photoCount;
+
+      if (isEndCardActive) {
+        mainImg.classList.add("hidden");
+        endCardSlide.classList.remove("hidden");
+      } else {
+        endCardSlide.classList.add("hidden");
+        mainImg.classList.remove("hidden");
+        const currentUrl = currentLightboxPhotos[currentLightboxIndex];
+        
+        mainImg.src = currentUrl;
+        preloadAdjacentImages();
+      }
+
+      const displayIndex = currentLightboxIndex + 1;
+      document.getElementById("lightboxIndexDisplay").textContent = displayIndex;
+      document.getElementById("lightboxTotalDisplay").textContent = totalSlides;
+      document.getElementById("lightboxMobileIndex").textContent = displayIndex;
+      document.getElementById("lightboxMobileTotal").textContent = totalSlides;
+
+      const igSlideCounter = document.getElementById("igSidebarSlideCount");
+      if (igSlideCounter) {
+        igSlideCounter.textContent = `Slide ${displayIndex} / ${totalSlides}`;
+      }
+
+      if (!isInstagramFeed) {
+        const thumbContainer = document.getElementById("lightboxThumbnails");
+        let thumbsHtml = currentLightboxPhotos.map((url, idx) => {
+          const isActive = idx === currentLightboxIndex;
+          const borderClass = isActive 
+            ? "border-2 border-white scale-105 shadow-md brightness-110" 
+            : "border border-white/20 opacity-50 hover:opacity-90";
+          return `
+            <button 
+              type="button" 
+              onclick="setLightboxPhotoIndex(${idx})" 
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shrink-0 transition-all duration-150 ${borderClass} cursor-pointer">
+              <img src="${url}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
+            </button>
+          `;
+        }).join("");
+
+        if (hasAlbumLink) {
+          const isCardActive = currentLightboxIndex === photoCount;
+          const cardBorder = isCardActive 
+            ? "border-2 border-white scale-105 bg-white/30 text-white" 
+            : "border border-dashed border-white/40 bg-white/10 opacity-60 hover:opacity-100 text-neutral-300";
+          
+          thumbsHtml += `
+            <button 
+              type="button" 
+              onclick="setLightboxPhotoIndex(${photoCount})" 
+              title="Buka Slide Album Lengkap"
+              class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl shrink-0 flex flex-col items-center justify-center text-[9px] font-semibold transition-all p-1 leading-tight cursor-pointer ${cardBorder}">
+              <i data-lucide="external-link" class="w-3.5 h-3.5 mb-0.5"></i>
+              <span>Album</span>
+            </button>
+          `;
+        }
+
+        thumbContainer.innerHTML = thumbsHtml;
+      }
+
+      const prevBtn = document.getElementById("lightboxPrevBtn");
+      const nextBtn = document.getElementById("lightboxNextBtn");
+      if (totalSlides <= 1) {
+        prevBtn.classList.add("hidden");
+        nextBtn.classList.add("hidden");
+      } else {
+        prevBtn.classList.remove("hidden");
+        nextBtn.classList.remove("hidden");
+      }
+
+      lucide.createIcons();
+    }
+
+    function navigateLightbox(direction) {
+      const isInstagramFeed = activeLightboxProject && (activeLightboxProject.type === 'reels' && (activeLightboxProject.subtype === 'feed' || activeLightboxProject.subtype === 'carousel'));
+      const hasAlbumLink = !isInstagramFeed && activeLightboxProject && activeLightboxProject.link && activeLightboxProject.link.trim() !== "" && !activeLightboxProject.link.includes("youtube");
+      
+      const totalSlides = hasAlbumLink ? currentLightboxPhotos.length + 1 : currentLightboxPhotos.length;
+      if (totalSlides <= 1) return;
+
+      currentLightboxIndex += direction;
+      if (currentLightboxIndex < 0) {
+        currentLightboxIndex = totalSlides - 1;
+      } else if (currentLightboxIndex >= totalSlides) {
+        currentLightboxIndex = 0;
+      }
+      updateLightboxDisplay();
+    }
+
+    function setLightboxPhotoIndex(index) {
+      currentLightboxIndex = index;
+      updateLightboxDisplay();
+    }
+
+    function extractYouTubeId(url) {
+      if (!url) return null;
+      const clean = url.trim();
+      if (clean.includes("youtu.be/")) return clean.split("youtu.be/")[1]?.split("?")[0];
+      if (clean.includes("youtube.com/shorts/")) return clean.split("youtube.com/shorts/")[1]?.split("?")[0];
+      if (clean.includes("watch?v=")) return clean.split("watch?v=")[1]?.split("&")[0];
+      if (clean.includes("youtube.com/embed/")) return clean.split("youtube.com/embed/")[1]?.split("?")[0];
+      return null;
+    }
+
+    async function getYouTubeThumbnail(url) {
+      const id = extractYouTubeId(url);
+      if (!id) return null;
+      const maxRes = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+      const hqRes = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          if (img.naturalWidth === 120 && img.naturalHeight === 90) resolve(hqRes);
+          else resolve(maxRes);
+        };
+        img.onerror = () => resolve(hqRes);
+        img.src = maxRes;
+      });
+    }
+
+    async function handleFetchVideoCover() {
+      const link = document.getElementById("inputLink").value.trim();
+      if (!link) {
+        showToast("Masukkan tautan video YouTube/Shorts terlebih dahulu!", "error");
+        document.getElementById("inputLink").focus();
+        return;
+      }
+
+      const ytId = extractYouTubeId(link);
+      if (!ytId) {
+        showToast("Tautan bukan video YouTube/Shorts yang didukung.", "error");
+        return;
+      }
+
+      showToast("Mengambil thumbnail dari video...");
+      const thumbUrl = await getYouTubeThumbnail(link);
+      if (thumbUrl) {
+        pendingCoverFile = null;
+        document.getElementById("coverFileNameDisplay").textContent = "";
+        document.getElementById("inputImageUrl").value = thumbUrl;
+        previewImageUrl(thumbUrl);
+        showToast("Cover berhasil diambil dari video!");
+      } else {
+        showToast("Gagal mengambil cover video.", "error");
+      }
+    }
+
+    function handleVideoLinkChange(val) {
+      const ytId = extractYouTubeId(val);
+      const currentImg = document.getElementById("inputImageUrl").value.trim();
+      if (ytId && !currentImg && !pendingCoverFile) {
+        const extractBtn = document.getElementById("btnExtractVideoCover");
+        if (extractBtn) {
+          extractBtn.classList.add("ring-2", "ring-foriorBrand/40", "animate-pulse");
+          setTimeout(() => extractBtn.classList.remove("ring-2", "ring-foriorBrand/40", "animate-pulse"), 2500);
+        }
+      }
+    }
+
+    function clearCoverImage() {
+      pendingCoverFile = null;
+      document.getElementById("coverFileNameDisplay").textContent = "";
+      document.getElementById("inputImageUrl").value = "";
+      document.getElementById("inputFileUpload").value = "";
+      document.getElementById("imagePreviewContainer").classList.add("hidden");
+      document.getElementById("imagePreview").src = "";
+    }
+
+    function openVideoModal(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      const isReels = item.type === 'reels';
+      const dialog = document.getElementById("videoModalDialog");
+      const screen = document.getElementById("videoScreenContainer");
+      const badge = document.getElementById("videoModalBadge");
+      const iframe = document.getElementById("videoModalIframe");
+
+      if (isReels) {
+        dialog.className = "relative w-full max-w-sm sm:max-w-md bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300";
+        screen.className = "relative w-full aspect-[9/16] bg-black flex items-center justify-center overflow-hidden transition-all duration-300 max-h-[78vh]";
+        badge.className = "text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-400 border border-purple-500/30";
+        badge.textContent = "Social Reels 9:16";
+      } else {
+        dialog.className = "relative w-full max-w-4xl bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-white/15 z-10 flex flex-col transition-all duration-300";
+        screen.className = "relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden transition-all duration-300";
+        badge.className = "text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-400 border border-rose-500/30";
+        badge.textContent = "Video Showcase";
+      }
+
+      document.getElementById("videoModalTitle").textContent = item.title;
+      document.getElementById("videoModalLocation").innerHTML = `
+        <i data-lucide="map-pin" class="w-3 text-neutral-400"></i>
+        <span>${item.location || 'Indonesia'}</span>
+      `;
+
+      const videoPlayer = document.getElementById("videoModalPlayer");
+      const fallback = document.getElementById("videoModalFallback");
+      const fallbackBtn = document.getElementById("videoModalFallbackBtn");
+
+      iframe.classList.add("hidden");
+      videoPlayer.classList.add("hidden");
+      fallback.classList.add("hidden");
+      iframe.src = "";
+      videoPlayer.src = "";
+
+      const rawLink = (item.link || '').trim();
+      const ytId = extractYouTubeId(rawLink);
+
+      if (ytId) {
+        iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&enablejsapi=1&rel=0&modestbranding=1`;
+        iframe.classList.remove("hidden");
+      } else if (rawLink.endsWith(".mp4") || rawLink.endsWith(".webm")) {
+        videoPlayer.src = rawLink;
+        videoPlayer.classList.remove("hidden");
+        videoPlayer.play();
+      } else {
+        fallbackBtn.href = rawLink || "https://photos.google.com/";
+        fallback.classList.remove("hidden");
+      }
+
+      const modal = document.getElementById("videoModal");
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.style.overflow = "hidden";
+      lucide.createIcons();
+    }
+
+    function closeVideoModal() {
+      const modal = document.getElementById("videoModal");
+      const iframe = document.getElementById("videoModalIframe");
+      const videoPlayer = document.getElementById("videoModalPlayer");
+      
+      iframe.src = "";
+      videoPlayer.pause();
+      videoPlayer.src = "";
+
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.style.overflow = "";
+    }
+
+    function setupLightboxKeyboardAndSwipe() {
+      window.addEventListener("keydown", (e) => {
+        const lbModal = document.getElementById("lightboxModal");
+        const vModal = document.getElementById("videoModal");
+
+        if (lbModal && !lbModal.classList.contains("opacity-0")) {
+          if (e.key === "Escape") closeProjectLightbox();
+          else if (e.key === "ArrowLeft") navigateLightbox(-1);
+          else if (e.key === "ArrowRight") navigateLightbox(1);
+        }
+
+        if (vModal && !vModal.classList.contains("opacity-0")) {
+          if (e.key === "Escape") closeVideoModal();
+        }
+      });
+
+      const stage = document.getElementById("lightboxStage");
+      if (stage) {
+        stage.addEventListener("touchstart", (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        stage.addEventListener("touchend", (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const swipeDistance = touchEndX - touchStartX;
+          if (swipeDistance > 45) navigateLightbox(-1);
+          else if (swipeDistance < -45) navigateLightbox(1);
+        }, { passive: true });
+      }
+    }
+
+    async function takeFullPageScreenshot() {
+      const btn = document.getElementById("btnScreenshotFull");
+      const iconBox = document.getElementById("screenshotIconBox");
+      const btnText = document.getElementById("screenshotBtnText");
+
+      btn.disabled = true;
+      btnText.textContent = "Memproses...";
+      iconBox.innerHTML = `
+        <svg class="animate-spin w-3.5 h-3.5 text-appleDark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      `;
+
+      try {
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+        const canvas = await html2canvas(document.body, {
+          scale: 1.5,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          ignoreElements: (el) => el.getAttribute('data-html2canvas-ignore') === 'true'
+        });
+
+        const dataUrl = canvas.toDataURL("image/png");
+        openScreenshotPreview(dataUrl, "Tangkapan Layar Satu Halaman Penuh", "FORIOR-Showcase-Fullpage.png");
+      } catch (err) {
+        console.error("Screenshot error:", err);
+        showToast("Gagal mengambil tangkapan layar.", "error");
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = "Screenshot Web";
+        iconBox.innerHTML = `<i data-lucide="camera" class="w-3.5 h-3.5 text-appleGray"></i>`;
+        lucide.createIcons();
+      }
+    }
+
+    async function takeSectionScreenshot(sectionId, filenamePrefix) {
+      const sectionEl = document.getElementById(sectionId);
+      if (!sectionEl) return;
+
+      showToast("Mengambil tangkapan layar section...");
+
+      try {
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+        const canvas = await html2canvas(sectionEl, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          backgroundColor: "#F5F5F7",
+          ignoreElements: (el) => el.getAttribute('data-html2canvas-ignore') === 'true'
+        });
+
+        const dataUrl = canvas.toDataURL("image/png");
+        openScreenshotPreview(dataUrl, `Tangkapan Layar: ${filenamePrefix}`, `FORIOR-${filenamePrefix}.png`);
+      } catch (err) {
+        console.error("Section screenshot error:", err);
+        showToast("Gagal mengambil tangkapan section.", "error");
+      }
+    }
+
+    function openScreenshotPreview(dataUrl, subtitle, downloadName) {
+      const modal = document.getElementById("screenshotPreviewModal");
+      const img = document.getElementById("screenshotPreviewImg");
+      const dlBtn = document.getElementById("screenshotDownloadBtn");
+      const subEl = document.getElementById("screenshotModalSubtitle");
+
+      img.src = dataUrl;
+      dlBtn.href = dataUrl;
+      dlBtn.download = downloadName;
+      subEl.textContent = subtitle;
+
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      lucide.createIcons();
+    }
+
+    function closeScreenshotPreview() {
+      const modal = document.getElementById("screenshotPreviewModal");
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.getElementById("screenshotPreviewImg").src = "";
+    }
+
+    function handleShareSection(type) {
+      let routePath = "/foto";
+      if (type === 'video') routePath = "/video";
+      else if (type === 'reels') routePath = "/sosmed";
+      else if (type === 'drone') routePath = "/drone";
+
+      const isLocal = window.location.protocol === "file:";
+      const shareUrl = isLocal 
+        ? `${window.location.origin}${window.location.pathname}#${routePath}`
+        : `${window.location.origin}${routePath}`;
+
+      const title = type === 'video' ? 'Portofolio Video Sinematik FORIOR' : (type === 'reels' ? 'Portofolio Social Media FORIOR' : (type === 'drone' ? 'Portofolio Drone Aerial FORIOR' : 'Portofolio Fotografi FORIOR'));
+
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile && navigator.share) {
+        navigator.share({ title: title, text: `Eksplorasi ${title} di website resmi:`, url: shareUrl })
+          .catch((err) => { if (err.name !== 'AbortError') copyTextToClipboard(shareUrl); });
+      } else {
+        copyTextToClipboard(shareUrl);
+        showToast("Tautan section berhasil disalin ke clipboard!");
+      }
+    }
+
+    function copyTextToClipboard(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.top = "-9999px";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(textArea);
+    }
+
+    function toggleFormTypeFields() {
+      const selectedType = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
+      const sosmedSubtypeBox = document.getElementById("sosmedSubtypeWrapper");
+      const galleryWrapper = document.getElementById("formGalleryWrapper");
+      const linkLabel = document.getElementById("linkFieldLabel");
+      const linkHint = document.getElementById("linkFieldHint");
+      const linkInput = document.getElementById("inputLink");
+      const captionWrapper = document.getElementById("captionFieldWrapper");
+
+      if (selectedType === 'reels') {
+        sosmedSubtypeBox.classList.remove("hidden");
+        handleSosmedSubtypeChange();
+      } else {
+        sosmedSubtypeBox.classList.add("hidden");
+        if (captionWrapper) captionWrapper.classList.add("hidden");
+
+        if (selectedType === 'video') {
+          galleryWrapper.classList.add("hidden");
+          linkInput.required = true;
+          linkLabel.textContent = "Tautan Video (YouTube / MP4)";
+          linkHint.textContent = "Wajib diisi URL video";
+        } else {
+          galleryWrapper.classList.remove("hidden");
+          linkInput.required = false;
+          linkLabel.textContent = "Tautan Album Google Photos (Opsional)";
+          linkHint.textContent = "Bisa dikosongkan jika foto terbatas";
+        }
+      }
+    }
+
+    function handleSosmedSubtypeChange() {
+      const subtype = document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed';
+      const galleryWrapper = document.getElementById("formGalleryWrapper");
+      const linkLabel = document.getElementById("linkFieldLabel");
+      const linkHint = document.getElementById("linkFieldHint");
+      const linkInput = document.getElementById("inputLink");
+      const captionWrapper = document.getElementById("captionFieldWrapper");
+
+      if (subtype === 'feed') {
+        galleryWrapper.classList.remove("hidden");
+        if (captionWrapper) captionWrapper.classList.remove("hidden");
+        linkInput.required = false;
+        linkLabel.textContent = "Tautan Postingan Instagram (Opsional)";
+        linkHint.textContent = "Bisa diisi link postingan Instagram";
+      } else {
+        galleryWrapper.classList.add("hidden");
+        if (captionWrapper) captionWrapper.classList.add("hidden");
+        linkInput.required = true;
+        linkLabel.textContent = "Tautan Reels / Shorts / TikTok";
+        linkHint.textContent = "Wajib diisi link video";
+      }
+    }
+
+    function setAdminListFilter(type, btnEl) {
+      adminFilterType = type;
+      document.querySelectorAll(".admin-tab-btn").forEach(btn => {
+        btn.classList.remove("bg-white", "shadow-xs", "text-appleDark");
+        btn.classList.add("text-appleGray");
+      });
+      if (btnEl) {
+        btnEl.classList.add("bg-white", "shadow-xs", "text-appleDark");
+        btnEl.classList.remove("text-appleGray");
+      }
+      renderAdminList();
+    }
+
+    function renderAdminList() {
+      const container = document.getElementById("adminProjectList");
+      if (!container) return;
+
+      const listProjects = Array.isArray(projects) ? projects : [];
+      const filtered = adminFilterType === "all" 
+        ? listProjects 
+        : listProjects.filter(p => (p.type || 'foto') === adminFilterType);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-xs text-appleGray py-4 text-center">Belum ada portofolio tersimpan untuk tipe ini.</p>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        let typeBadgeColor = 'bg-neutral-100 text-appleGray';
+        if (item.type === 'video') typeBadgeColor = 'bg-rose-100 text-rose-700';
+        else if (item.type === 'reels') typeBadgeColor = 'bg-purple-100 text-purple-700';
+        else if (item.type === 'drone') typeBadgeColor = 'bg-sky-100 text-sky-700';
+
+        let typeLabel = (item.type || 'foto').toUpperCase();
+        if (item.type === 'reels' && (item.subtype === 'feed' || item.subtype === 'carousel')) typeLabel = 'FEED';
+        const cats = getProjectCategories(item).join(", ");
+
+        return `
+        <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-white border border-appleBorder hover:border-neutral-300 transition-all">
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${item.image}" alt="${item.title}" class="w-12 h-12 rounded-lg object-cover bg-neutral-200 shrink-0" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=200&auto=format&fit=crop'">
+            <div class="min-w-0">
+              <p class="text-xs font-semibold text-appleDark truncate">${item.title}</p>
+              <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+                <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${typeBadgeColor}">${typeLabel}</span>
+                ${item.brand ? `<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-bold truncate max-w-[120px]">${item.brand}</span>` : ''}
+                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-neutral-100 text-appleGray font-medium truncate max-w-[150px]">${cats}</span>
+                <span class="text-[10px] text-neutral-400 flex items-center gap-0.5 truncate">
+                  <i data-lucide="map-pin" class="w-2.5 h-2.5"></i> ${item.location || 'Indonesia'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 shrink-0">
+            <button type="button" onclick="editProject('${item.id}')" title="Edit Portofolio" class="p-1.5 rounded-lg text-appleGray hover:text-appleDark hover:bg-neutral-100 transition-colors cursor-pointer">
+              <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            </button>
+            <button type="button" onclick="promptDeleteProject('${item.id}')" title="Hapus Portofolio" class="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 transition-colors cursor-pointer">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      }).join("");
+
+      lucide.createIcons();
+    }
+
+    // SIMPAN PROYEK KE FIREBASE STORAGE & FIRESTORE
+    async function handleSaveProject(event) {
+      event.preventDefault();
+      const submitBtn = document.getElementById("submitBtn");
+      const submitText = document.getElementById("btnSubmitText");
+      const progBar = document.getElementById("uploadProgressBar");
+      const progText = document.getElementById("uploadProgressText");
+
+      submitBtn.disabled = true;
+      submitText.textContent = "Menyimpan...";
+      progBar.classList.remove("hidden");
+
+      const editId = document.getElementById("editProjectId").value;
+      const type = document.querySelector('input[name="projectType"]:checked')?.value || 'foto';
+      const sosmedSubtype = type === 'reels' ? (document.querySelector('input[name="sosmedSubtype"]:checked')?.value || 'feed') : null;
+
+      const title = document.getElementById("inputTitle").value.trim();
+
+      const brandSelectVal = document.getElementById("selectBrand").value;
+      let brand = "";
+      if (brandSelectVal === "__NEW_BRAND__") {
+        brand = document.getElementById("inputNewBrand").value.trim();
+      } else {
+        brand = brandSelectVal.trim();
+      }
+
+      const caption = document.getElementById("inputCaption") ? document.getElementById("inputCaption").value.trim() : "";
+      const location = document.getElementById("inputLocation").value.trim();
+      const link = document.getElementById("inputLink").value.trim();
+      let image = document.getElementById("inputImageUrl").value.trim();
+
+      try {
+        if (pendingCoverFile) {
+          progText.textContent = "Mengompresi & mengunggah cover...";
+          image = await uploadToFirebaseStorage(pendingCoverFile, "covers");
+        } else if (!image) {
+          const ytId = extractYouTubeId(link);
+          if (ytId) {
+            image = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+          } else if (type === 'reels') {
+            image = "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=800&auto=format&fit=crop";
+          } else if (type === 'video') {
+            image = "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop";
+          } else {
+            image = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop";
+          }
+        }
+
+        const finalGallery = [];
+        if (type === 'foto' || type === 'drone' || (type === 'reels' && sosmedSubtype === 'feed')) {
+          let count = 1;
+          for (const item of pendingGalleryItems) {
+            if (item.type === 'file' && item.file) {
+              progText.textContent = `Mengompresi & mengunggah galeri (${count}/${pendingGalleryItems.length})...`;
+              const uploadedUrl = await uploadToFirebaseStorage(item.file, "galleries");
+              finalGallery.push(uploadedUrl);
+            } else if (item.url) {
+              finalGallery.push(item.url);
+            }
+            count++;
+          }
+        }
+
+        const projectData = {
+          type,
+          subtype: sosmedSubtype,
+          title,
+          brand,
+          caption,
+          category: selectedFormCategories.join(", "),
+          categories: [...selectedFormCategories],
+          location,
+          link,
+          image,
+          gallery: finalGallery,
+          timestamp: Date.now()
+        };
+
+        if (isCloudConnected && dbInstance) {
+          const docId = editId || (type + "-" + Date.now());
+          await dbInstance.collection("showcase_projects").doc(docId).set(projectData, { merge: true });
+          showToast(editId ? "Portofolio diperbarui di Cloud!" : "Portofolio tersimpan di Firebase Storage & Cloud!");
+          resetForm();
+        } else {
+          saveLocally(editId, projectData);
+        }
+      } catch (error) {
+        console.error("Kesalahan penyimpanan:", error);
+        showToast("Gagal mengunggah ke Firebase Storage: " + (error.message || "Periksa koneksi"), "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = "Simpan & Publikasikan";
+        progBar.classList.add("hidden");
+      }
+    }
+
+    function saveLocally(editId, projectData) {
+      if (editId) {
+        const idx = projects.findIndex(p => p.id === editId);
+        if (idx !== -1) projects[idx] = { id: editId, ...projectData };
+      } else {
+        projects.unshift({ id: (projectData.type || 'foto') + "-" + Date.now(), ...projectData });
+      }
+      cacheProjectsSafely(projects);
+      populateBrandDropdown();
+      applyRoute(currentRoute);
+      renderAdminList();
+      resetForm();
+      showToast("Cloud offline — tersimpan LOKAL di perangkat.", "error");
+    }
+
+    function editProject(id) {
+      const item = projects.find(p => p.id === id);
+      if (!item) return;
+
+      document.getElementById("editProjectId").value = item.id;
+      
+      const typeRadio = document.querySelector(`input[name="projectType"][value="${item.type || 'foto'}"]`);
+      if (typeRadio) typeRadio.checked = true;
+      toggleFormTypeFields();
+
+      if (item.type === 'reels' && item.subtype) {
+        const subVal = item.subtype === 'carousel' ? 'feed' : item.subtype;
+        const subRadio = document.querySelector(`input[name="sosmedSubtype"][value="${subVal}"]`);
+        if (subRadio) {
+          subRadio.checked = true;
+          handleSosmedSubtypeChange();
+        }
+      }
+
+      document.getElementById("inputTitle").value = item.title;
+
+      populateBrandDropdown(item.brand || "");
+
+      if (document.getElementById("inputCaption")) {
+        document.getElementById("inputCaption").value = item.caption || "";
+      }
+      document.getElementById("inputLocation").value = item.location || "";
+      document.getElementById("inputLink").value = item.link || "";
+      document.getElementById("inputImageUrl").value = item.image;
+      
+      selectedFormCategories = getProjectCategories(item);
+      renderFormCategoryPills();
+
+      pendingCoverFile = null;
+      document.getElementById("coverFileNameDisplay").textContent = "";
+      previewImageUrl(item.image);
+
+      pendingGalleryItems = (item.gallery && Array.isArray(item.gallery)) 
+        ? item.gallery.map((url, idx) => ({
+            id: 'existing-' + idx + '-' + Date.now(),
+            type: 'url',
+            url: url,
+            preview: url
+          }))
+        : [];
+      renderFormGalleryPreview();
+
+      document.getElementById("formHeaderTitle").textContent = "Edit Portofolio";
+      document.getElementById("btnSubmitText").textContent = "Simpan Perubahan";
+      document.getElementById("cancelEditBtn").classList.remove("hidden");
+
+      document.getElementById("projectForm").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      document.getElementById("projectForm").reset();
+      document.getElementById("editProjectId").value = "";
+      const defaultTypeRadio = document.querySelector('input[name="projectType"][value="foto"]');
+      if (defaultTypeRadio) defaultTypeRadio.checked = true;
+      toggleFormTypeFields();
+
+      selectedFormCategories = ["Hotel"];
+      renderFormCategoryPills();
+      populateBrandDropdown();
+
+      if (document.getElementById("inputCaption")) {
+        document.getElementById("inputCaption").value = "";
+      }
+
+      pendingCoverFile = null;
+      pendingGalleryItems = [];
+      document.getElementById("coverFileNameDisplay").textContent = "";
+      renderFormGalleryPreview();
+      document.getElementById("formHeaderTitle").textContent = "Tambah Portofolio Baru";
+      document.getElementById("btnSubmitText").textContent = "Simpan & Publikasikan";
+      document.getElementById("cancelEditBtn").classList.add("hidden");
+      document.getElementById("imagePreviewContainer").classList.add("hidden");
+    }
+
+    function previewImageUrl(url) {
+      const box = document.getElementById("imagePreviewContainer");
+      const img = document.getElementById("imagePreview");
+      if (url && (url.startsWith("http") || url.startsWith("data:image") || url.startsWith("blob:"))) {
+        img.src = url;
+        box.classList.remove("hidden");
+      } else {
+        box.classList.add("hidden");
+      }
+    }
+
+    function handleCoverUrlInput(val) {
+      pendingCoverFile = null;
+      document.getElementById("coverFileNameDisplay").textContent = "";
+      previewImageUrl(val.trim());
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      pendingCoverFile = file;
+      document.getElementById("coverFileNameDisplay").textContent = file.name;
+      document.getElementById("inputImageUrl").value = "";
+      previewImageUrl(URL.createObjectURL(file));
+    }
+
+    function handleGalleryFilesUpload(event) {
+      const files = Array.from(event.target.files);
+      if (!files || files.length === 0) return;
+
+      files.forEach(file => {
+        pendingGalleryItems.push({
+          id: 'file-' + Math.random().toString(36).substring(2, 9) + '-' + Date.now(),
+          type: 'file',
+          file: file,
+          preview: URL.createObjectURL(file)
+        });
+      });
+
+      renderFormGalleryPreview();
+      event.target.value = "";
+    }
+
+    function removeFormGalleryPhoto(id) {
+      pendingGalleryItems = pendingGalleryItems.filter(item => item.id !== id);
+      renderFormGalleryPreview();
+    }
+
+    function renderFormGalleryPreview() {
+      const container = document.getElementById("formGalleryPreviewContainer");
+      const badge = document.getElementById("formGalleryCount");
+      badge.textContent = `${pendingGalleryItems.length} foto ditambahkan`;
+
+      if (pendingGalleryItems.length === 0) {
+        container.innerHTML = "";
+        return;
+      }
+
+      container.innerHTML = pendingGalleryItems.map(item => `
+        <div class="relative group aspect-square rounded-lg overflow-hidden border border-appleBorder bg-neutral-100">
+          <img src="${item.preview}" alt="Preview" class="w-full h-full object-cover">
+          <button 
+            type="button" 
+            onclick="removeFormGalleryPhoto('${item.id}')" 
+            title="Hapus foto"
+            class="absolute top-1 right-1 w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center opacity-90 hover:opacity-100 transition-opacity shadow-sm cursor-pointer">
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      `).join("");
+
+      lucide.createIcons();
+    }
+
+    function promptDeleteProject(id) {
+      pendingDeleteId = id;
+      const modal = document.getElementById("confirmModal");
+      if (modal) {
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+      }
+      lucide.createIcons();
+    }
+
+    function closeConfirmModal() {
+      pendingDeleteId = null;
+      const modal = document.getElementById("confirmModal");
+      if (modal) {
+        modal.classList.add("opacity-0");
+        modal.classList.add("invisible");
+      }
+    }
+
+    async function executeDeleteProject() {
+      if (!pendingDeleteId) return;
+      const id = pendingDeleteId;
+      closeConfirmModal();
+
+      if (isCloudConnected && dbInstance) {
+        try {
+          await dbInstance.collection("showcase_projects").doc(id).delete();
+          showToast("Portofolio berhasil dihapus dari Cloud");
+        } catch (err) {
+          console.error("Delete error:", err);
+          deleteLocally(id);
+        }
+      } else {
+        deleteLocally(id);
+      }
+    }
+
+    function deleteLocally(id) {
+      projects = projects.filter(p => p.id !== id);
+      cacheProjectsSafely(projects);
+      populateBrandDropdown();
+      applyRoute(currentRoute);
+      renderAdminList();
+      showToast("Portofolio berhasil dihapus");
+    }
+
+    function promptResetData() {
+      const modal = document.getElementById("confirmResetModal");
+      if (modal) {
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+      }
+      lucide.createIcons();
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById("confirmResetModal");
+      if (modal) {
+        modal.classList.add("opacity-0");
+        modal.classList.add("invisible");
+      }
+    }
+
+    function executeResetData() {
+      closeResetModal();
+      seedInitialDataToCloud();
+      showToast("Data awal berhasil di-reset");
+    }
+
+    async function restoreFromDeviceCache() {
+      if (!isCloudConnected || !dbInstance) {
+        showToast("Cloud belum terhubung. Coba lagi saat status Cloud aktif.", "error");
+        return;
+      }
+      if (!Array.isArray(deviceCacheBackup) || deviceCacheBackup.length === 0) {
+        showToast("Tidak ada cadangan proyek di perangkat ini.", "error");
+        return;
+      }
+
+      const cloudIds = new Set(projects.map(p => p.id));
+      const missing = deviceCacheBackup.filter(p => p && p.id && !cloudIds.has(p.id));
+
+      if (missing.length === 0) {
+        showToast("Semua proyek di perangkat ini sudah ada di Cloud.");
+        return;
+      }
+
+      showToast(`Memulihkan ${missing.length} proyek ke Cloud...`);
+      let restored = 0;
+      for (const item of missing) {
+        const { id, ...data } = item;
+        if (typeof data.timestamp !== "number") data.timestamp = Date.now();
+        try {
+          await dbInstance.collection("showcase_projects").doc(id).set(data, { merge: true });
+          restored++;
+        } catch (err) {
+          console.error("Restore gagal untuk", id, err);
+        }
+      }
+      showToast(`Berhasil! ${restored} proyek dipulihkan ke Cloud.`);
+    }
+
+    function handleAdminNavClick() {
+      const loggedUser = sessionStorage.getItem("forior_admin_logged");
+      if (loggedUser) {
+        toggleAdminPanel(true);
+      } else {
+        toggleLoginModal(true);
+      }
+    }
+
+    function toggleLoginModal(show) {
+      const modal = document.getElementById("loginModal");
+      if (!modal) return;
+      const errorDiv = document.getElementById("loginError");
+      if (errorDiv) errorDiv.classList.add("hidden");
+
+      if (show) {
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+        const emailInput = document.getElementById("loginEmail");
+        if (emailInput) setTimeout(() => emailInput.focus(), 150);
+      } else {
+        modal.classList.add("opacity-0");
+        modal.classList.add("invisible");
+      }
+      lucide.createIcons();
+    }
+
+    function selectQuickEmail(email) {
+      document.getElementById("loginEmail").value = email;
+      document.getElementById("loginPassword").focus();
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById("loginPassword");
+      const icon = document.getElementById("passwordEyeIcon");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.setAttribute("data-lucide", "eye-off");
+      } else {
+        input.type = "password";
+        icon.setAttribute("data-lucide", "eye");
+      }
+      lucide.createIcons();
+    }
+
+    function handleAdminLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const password = document.getElementById("loginPassword").value;
+      const errorDiv = document.getElementById("loginError");
+      const errorMsg = document.getElementById("loginErrorMsg");
+
+      if (!WHITELIST_EMAILS.includes(email)) {
+        errorMsg.textContent = "Akses ditolak: Email belum terdaftar di whitelist FORIOR.";
+        errorDiv.classList.remove("hidden");
+        return;
+      }
+
+      if (password !== ADMIN_PASSWORD_DEFAULT) {
+        errorMsg.textContent = "Password yang dimasukkan salah.";
+        errorDiv.classList.remove("hidden");
+        return;
+      }
+
+      sessionStorage.setItem("forior_admin_logged", email);
+      checkAuthStatus();
+      toggleLoginModal(false);
+      toggleAdminPanel(true);
+      showToast(`Selamat datang, ${email}`);
+    }
+
+    function checkAuthStatus() {
+      const loggedUser = sessionStorage.getItem("forior_admin_logged");
+      const navBtn = document.getElementById("navAdminBtn");
+      const navLabel = document.getElementById("navAdminLabel");
+      const navIcon = document.getElementById("navAdminIcon");
+
+      const isMobile = window.innerWidth < 640;
+
+      if (loggedUser) {
+        const displayUser = document.getElementById("activeAdminEmailDisplay");
+        if (displayUser) displayUser.textContent = `Login: ${loggedUser}`;
+        navLabel.textContent = isMobile ? "Panel" : "Panel Portofolio";
+        navIcon.setAttribute("data-lucide", "settings");
+        navBtn.classList.remove("bg-appleDark");
+        navBtn.classList.add("bg-foriorBrand");
+      } else {
+        navLabel.textContent = isMobile ? "Admin" : "Kelola Portofolio";
+        navIcon.setAttribute("data-lucide", "lock");
+        navBtn.classList.remove("bg-foriorBrand");
+        navBtn.classList.add("bg-appleDark");
+      }
+      lucide.createIcons();
+    }
+
+    window.addEventListener("resize", checkAuthStatus);
+
+    function handleAdminLogout() {
+      sessionStorage.removeItem("forior_admin_logged");
+      checkAuthStatus();
+      toggleAdminPanel(false);
+      showToast("Keluar dari panel admin.");
+    }
+
+    function toggleAdminPanel(show) {
+      const modal = document.getElementById("adminModal");
+      if (show) {
+        modal.classList.remove("invisible", "opacity-0");
+        modal.classList.add("opacity-100");
+      } else {
+        modal.classList.add("opacity-0");
+        modal.classList.add("invisible");
+        resetForm();
+      }
+      lucide.createIcons();
+    }
+
+    function showToast(message, type = "success") {
+      const toast = document.getElementById("toast");
+      const icon = document.getElementById("toastIcon");
+      document.getElementById("toastMsg").textContent = message;
+
+      if (icon) {
+        if (type === "error") {
+          icon.setAttribute("data-lucide", "alert-triangle");
+          icon.className = "w-4 h-4 text-rose-400 shrink-0";
+        } else {
+          icon.setAttribute("data-lucide", "check-circle-2");
+          icon.className = "w-4 h-4 text-emerald-400 shrink-0";
+        }
+        if (window.lucide) lucide.createIcons();
+      }
+
+      toast.classList.remove("opacity-0", "pointer-events-none", "translate-y-4");
+      toast.classList.add("opacity-100", "translate-y-0");
+
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.remove("opacity-100", "translate-y-0");
+        toast.classList.add("opacity-0", "pointer-events-none", "translate-y-4");
+      }, type === "error" ? 5200 : 2600);
+    }
+  </script>
 
 </body>
 </html>
