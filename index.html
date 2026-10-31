@@ -370,7 +370,7 @@
     </div>
 
     <!-- Grid Masonry Multirasio (Proporsional mengikuti format asli) -->
-    <div id="brandProjectsGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-6"></div>
+    <div id="brandProjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start"></div>
   </section>
 
   <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
@@ -2355,7 +2355,7 @@
             role="button"
             tabindex="0"
             onclick="handleBrandItemClick('${item.id}')"
-            class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none break-inside-avoid block mb-6">
+            class="project-card group cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
             
             <div class="project-img-container relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
               <img 
@@ -2846,7 +2846,7 @@
 
         if (activeInstagramTab === 'all') {
           // TAB "SEMUA": Masonry Grid Multi-Rasio (Feed 3:4 & Reels 9:16 bergabung rapi)
-          track.className = "columns-2 sm:columns-3 lg:columns-4 gap-4 sm:gap-6 py-2 px-1";
+          track.className = "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 items-start py-2 px-1";
 
           track.innerHTML = allSosmedProjects.map(item => {
             const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
@@ -2858,7 +2858,7 @@
                 role="button"
                 tabindex="0"
                 onclick="handleSocialItemClick('${item.id}')"
-                class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full break-inside-avoid block mb-4 sm:mb-6 project-card">
+                class="group relative cursor-pointer bg-appleCard rounded-[26px] p-2.5 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 outline-none w-full project-card">
                 
                 <div class="relative w-full ${aspectClass} rounded-[20px] overflow-hidden bg-neutral-900">
                   <img 
