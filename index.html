@@ -370,7 +370,7 @@
     </div>
 
     <!-- Grid Masonry Multirasio (Proporsional mengikuti format asli) -->
-    <div id="brandProjectsGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"></div>
+    <div id="brandProjectsGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-6"></div>
   </section>
 
   <!-- ================= SECTION 2: PORTOFOLIO FOTO ================= -->
@@ -1842,7 +1842,7 @@
           secReels.classList.remove("hidden");
           if (btnLihatSemuaReels) btnLihatSemuaReels.classList.add("hidden");
           if (igTabs) igTabs.classList.remove("hidden");
-          renderReelsSection();
+          setInstagramTab(activeInstagramTab);
 
         } else if (r === "/drone") {
           document.title = "Portofolio Aerial & Drone Masterplan — FORIOR";
@@ -2846,7 +2846,7 @@
 
         if (activeInstagramTab === 'all') {
           // TAB "SEMUA": Masonry Grid Multi-Rasio (Feed 3:4 & Reels 9:16 bergabung rapi)
-          track.className = "columns-2 sm:columns-3 lg:columns-4 gap-4 sm:gap-6 space-y-4 sm:space-y-6 py-2 px-1";
+          track.className = "columns-2 sm:columns-3 lg:columns-4 gap-4 sm:gap-6 py-2 px-1";
 
           track.innerHTML = allSosmedProjects.map(item => {
             const isFeed = item.subtype === 'feed' || item.subtype === 'carousel';
