@@ -186,7 +186,7 @@
   </style>
 </head>
 
-<body class="bg-appleBg text-appleDark antialiased selection:bg-foriorBrand selection:text-white">
+<body class="bg-appleBg text-appleDark antialiased selection:bg-foriorBrand selection:text-white pb-24 md:pb-0">
 
   <!-- ================= NAVBAR ================= -->
   <header id="main-header" class="fixed top-0 left-0 right-0 z-40 bg-white/85 backdrop-blur-xl border-b border-black/[0.06] transition-all duration-300">
@@ -359,22 +359,6 @@
           <a href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20jasa%20fotografi%20properti.%20Boleh%20info%20lebih%20lanjut%3F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full active:scale-95 transition-all shadow-md">
             <i data-lucide="message-circle" class="w-4 h-4"></i>
             <span>Konsultasi Gratis</span>
-          </a>
-          <a href="#/foto" onclick="handleNavRoute(event, '/foto')" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md">
-            <span>Foto Interior</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </a>
-          <a href="#/video" onclick="handleNavRoute(event, '/video')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
-            <i data-lucide="play" class="w-3.5 h-3.5 text-rose-400 fill-rose-400"></i>
-            <span>Video Sinematik</span>
-          </a>
-          <a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
-            <i data-lucide="smartphone" class="w-3.5 h-3.5 text-purple-300"></i>
-            <span>Reels & Feed</span>
-          </a>
-          <a href="#/drone" onclick="handleNavRoute(event, '/drone')" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs sm:text-sm font-medium px-4 sm:px-4.5 py-2 sm:py-2.5 rounded-full border border-white/25 transition-all">
-            <i data-lucide="plane" class="w-3.5 h-3.5 text-sky-400"></i>
-            <span>Aerial Drone</span>
           </a>
         </div>
 
@@ -1565,12 +1549,38 @@
     rel="noopener noreferrer"
     data-html2canvas-ignore="true"
     aria-label="Hubungi FORIOR via WhatsApp"
-    class="group fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-30 inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold rounded-full shadow-lg shadow-emerald-600/25 ring-1 ring-black/5 pl-3.5 pr-4 py-3 active:scale-95 transition-all duration-200">
+    class="group fixed bottom-24 right-5 md:bottom-6 md:right-6 z-30 inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold rounded-full shadow-lg shadow-emerald-600/25 ring-1 ring-black/5 pl-3.5 pr-4 py-3 active:scale-95 transition-all duration-200">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="w-6 h-6 fill-current shrink-0" aria-hidden="true">
       <path d="M16.004 3C9.383 3 4 8.383 4 15.004c0 2.117.555 4.183 1.609 6.004L4 29l8.164-1.57a12.03 12.03 0 0 0 3.84.629h.004C22.621 28.059 28 22.676 28 16.055 28 9.434 22.621 3 16.004 3Zm0 21.84h-.004a9.86 9.86 0 0 1-3.5-.645l-.25-.098-4.84.93.93-4.72-.164-.258a9.79 9.79 0 0 1-1.5-5.22c0-5.43 4.42-9.85 9.86-9.85 5.43 0 9.84 4.42 9.84 9.86 0 5.43-4.41 9.85-9.84 9.85Zm5.41-7.37c-.297-.149-1.758-.867-2.03-.965-.273-.098-.47-.148-.668.15-.196.296-.766.964-.94 1.16-.172.198-.347.223-.644.075-.297-.15-1.254-.462-2.39-1.475-.883-.788-1.48-1.76-1.653-2.057-.172-.297-.018-.457.13-.605.134-.133.297-.347.446-.52.148-.173.197-.297.297-.495.099-.198.05-.372-.025-.52-.075-.149-.668-1.611-.916-2.206-.24-.58-.486-.5-.668-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.478s1.065 2.875 1.213 3.073c.148.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.695.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347Z"/>
     </svg>
     <span class="hidden sm:inline text-sm">WhatsApp</span>
   </a>
+
+  <!-- ================= BOTTOM NAVIGATION (MOBILE, APP-STYLE) ================= -->
+  <nav id="bottomNav" class="md:hidden fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pointer-events-none" data-html2canvas-ignore="true">
+    <div class="pointer-events-auto mx-auto max-w-md flex items-stretch justify-around gap-0.5 bg-white/90 backdrop-blur-xl border border-black/[0.06] rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.14)] px-1.5 py-1.5">
+      <a href="#" data-route="/" onclick="handleNavRoute(event, '/')" class="bottomnav-item flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl text-appleGray transition-colors">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium leading-none">Beranda</span>
+      </a>
+      <a href="#/foto" data-route="/foto" onclick="handleNavRoute(event, '/foto')" class="bottomnav-item flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl text-appleGray transition-colors">
+        <i data-lucide="image" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium leading-none">Foto</span>
+      </a>
+      <a href="#/video" data-route="/video" onclick="handleNavRoute(event, '/video')" class="bottomnav-item flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl text-appleGray transition-colors">
+        <i data-lucide="play" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium leading-none">Video</span>
+      </a>
+      <a href="#/sosmed" data-route="/sosmed" onclick="handleNavRoute(event, '/sosmed')" class="bottomnav-item flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl text-appleGray transition-colors">
+        <i data-lucide="smartphone" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium leading-none">Reels</span>
+      </a>
+      <a href="#/drone" data-route="/drone" onclick="handleNavRoute(event, '/drone')" class="bottomnav-item flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl text-appleGray transition-colors">
+        <i data-lucide="plane" class="w-5 h-5"></i>
+        <span class="text-[10px] font-medium leading-none">Drone</span>
+      </a>
+    </div>
+  </nav>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
@@ -1852,6 +1862,7 @@
       currentRoute = r;
 
       if (typeof closeMobileMenu === "function") closeMobileMenu();
+      if (typeof updateBottomNavActive === "function") updateBottomNavActive();
 
       const hero = document.getElementById("heroSection");
       const banner = document.getElementById("subpageHeaderBanner");
@@ -4394,6 +4405,19 @@
       if (icon) icon.setAttribute("data-lucide", "menu");
       if (btn) { btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-label", "Buka menu"); }
       lucide.createIcons();
+    }
+
+    // Sorot tab aktif pada bottom navigation mobile
+    function updateBottomNavActive() {
+      const items = document.querySelectorAll("#bottomNav .bottomnav-item");
+      if (!items.length) return;
+      const cur = (!currentRoute || currentRoute === "/index.html") ? "/" : currentRoute;
+      items.forEach(el => {
+        const active = el.getAttribute("data-route") === cur;
+        el.classList.toggle("text-foriorBrand", active);
+        el.classList.toggle("bg-foriorBrand/10", active);
+        el.classList.toggle("text-appleGray", !active);
+      });
     }
 
     window.addEventListener("resize", checkAuthStatus);
