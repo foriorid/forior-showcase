@@ -87,7 +87,7 @@
             foriorBrand: '#281775',
             appleBg: '#F5F5F7',
             appleDark: '#1D1D1F',
-            appleGray: '#86868B',
+            appleGray: '#6E6E73',
             appleCard: '#FFFFFF',
             appleBorder: '#E5E5EA',
           }
@@ -218,39 +218,83 @@
           forior.id ↗
         </a>
 
-        <!-- Status Cloud Indicator -->
-        <div id="cloudStatusNav" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-neutral-100 border border-appleBorder shadow-2xs" title="Menghubungkan ke Cloud...">
+        <!-- Status Cloud Indicator (hanya untuk admin yang login) -->
+        <div id="cloudStatusNav" class="hidden items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-neutral-100 border border-appleBorder shadow-2xs" title="Menghubungkan ke Cloud...">
           <i data-lucide="cloud" class="w-3.5 h-3.5 text-appleDark"></i>
           <span id="cloudStatusDot" class="w-2 h-2 rounded-full bg-amber-400"></span>
         </div>
 
-        <!-- Tombol Screenshot -->
-        <button 
+        <!-- Tombol Screenshot (sembunyi di mobile untuk mengurangi clutter) -->
+        <button
           id="btnScreenshotFull"
-          type="button" 
-          onclick="takeFullPageScreenshot()" 
-          data-html2canvas-ignore="true" 
-          class="inline-flex items-center gap-1.5 bg-white border border-appleBorder text-appleDark text-xs font-medium px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full hover:bg-neutral-50 active:scale-95 transition-all shadow-2xs whitespace-nowrap shrink-0 cursor-pointer"
+          type="button"
+          onclick="takeFullPageScreenshot()"
+          data-html2canvas-ignore="true"
+          class="hidden sm:inline-flex items-center gap-1.5 bg-white border border-appleBorder text-appleDark text-xs font-medium px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full hover:bg-neutral-50 active:scale-95 transition-all shadow-2xs whitespace-nowrap shrink-0 cursor-pointer"
           title="Tangkapan Layar Satu Halaman Penuh">
           <span id="screenshotIconBox" class="inline-flex items-center justify-center">
             <i data-lucide="camera" class="w-3.5 h-3.5 text-appleGray"></i>
           </span>
-          <span id="screenshotBtnText" class="hidden sm:inline">Screenshot Web</span>
+          <span id="screenshotBtnText" class="hidden lg:inline">Screenshot Web</span>
         </button>
-        
-        <!-- Tombol Akses Kelola Portofolio -->
-        <button 
+
+        <!-- CTA Pengunjung: Hubungi via WhatsApp (aksi utama) -->
+        <a
+          href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20jasa%20fotografi%20properti.%20Boleh%20info%20lebih%20lanjut%3F"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-html2canvas-ignore="true"
+          class="inline-flex items-center gap-1.5 bg-appleDark text-white text-xs font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-neutral-800 active:scale-95 transition-all shadow-sm whitespace-nowrap shrink-0">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+          <span>Hubungi</span>
+        </a>
+
+        <!-- Akses Admin: tampil hanya saat login; pengunjung umum masuk via link di footer -->
+        <button
           id="navAdminBtn"
           type="button"
-          onclick="handleAdminNavClick()" 
-          class="inline-flex items-center gap-1.5 bg-appleDark text-white text-xs font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-neutral-800 active:scale-95 transition-all shadow-sm whitespace-nowrap shrink-0 cursor-pointer">
+          onclick="handleAdminNavClick()"
+          class="hidden items-center gap-1.5 bg-appleDark text-white text-xs font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-full hover:bg-neutral-800 active:scale-95 transition-all shadow-sm whitespace-nowrap shrink-0 cursor-pointer">
           <i data-lucide="lock" class="w-3.5 h-3.5" id="navAdminIcon"></i>
           <span id="navAdminLabel">Kelola Portofolio</span>
+        </button>
+
+        <!-- Tombol Menu Mobile -->
+        <button
+          id="mobileMenuBtn"
+          type="button"
+          onclick="toggleMobileMenu()"
+          aria-label="Buka menu"
+          aria-expanded="false"
+          data-html2canvas-ignore="true"
+          class="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full bg-white border border-appleBorder text-appleDark shadow-2xs active:scale-95 transition-all shrink-0">
+          <i data-lucide="menu" class="w-4 h-4" id="mobileMenuIcon"></i>
         </button>
       </div>
 
     </div>
   </header>
+
+  <!-- ================= MENU NAVIGASI MOBILE ================= -->
+  <div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 right-0 z-30 bg-white/95 backdrop-blur-xl border-b border-black/[0.06] shadow-lg" data-html2canvas-ignore="true">
+    <nav class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
+      <a href="#/foto" onclick="handleNavRoute(event, '/foto'); closeMobileMenu()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-appleDark hover:bg-neutral-100 transition-colors">
+        <i data-lucide="image" class="w-4 h-4 text-appleGray"></i> Foto Interior
+      </a>
+      <a href="#/video" onclick="handleNavRoute(event, '/video'); closeMobileMenu()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-appleDark hover:bg-neutral-100 transition-colors">
+        <i data-lucide="play" class="w-4 h-4 text-rose-500"></i> Video Tour
+      </a>
+      <a href="#/sosmed" onclick="handleNavRoute(event, '/sosmed'); closeMobileMenu()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-appleDark hover:bg-neutral-100 transition-colors">
+        <i data-lucide="smartphone" class="w-4 h-4 text-purple-600"></i> Reels & Feed
+      </a>
+      <a href="#/drone" onclick="handleNavRoute(event, '/drone'); closeMobileMenu()" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-appleDark hover:bg-neutral-100 transition-colors">
+        <i data-lucide="plane" class="w-4 h-4 text-sky-500"></i> Drone Aerial
+      </a>
+      <a href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20jasa%20fotografi%20properti.%20Boleh%20info%20lebih%20lanjut%3F" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" class="mt-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold bg-[#25D366] text-white active:scale-95 transition-all">
+        <i data-lucide="message-circle" class="w-4 h-4"></i> Hubungi via WhatsApp
+      </a>
+    </nav>
+  </div>
 
   <!-- ================= BANNER KHUSUS UNTUK HALAMAN SUB-RUTE ================= -->
   <div id="subpageHeaderBanner" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-24 pb-4">
@@ -312,6 +356,10 @@
         </p>
 
         <div class="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <a href="https://wa.me/6281542048268?text=Halo%20FORIOR%2C%20saya%20tertarik%20dengan%20jasa%20fotografi%20properti.%20Boleh%20info%20lebih%20lanjut%3F" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full active:scale-95 transition-all shadow-md">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>Konsultasi Gratis</span>
+          </a>
           <a href="#/foto" onclick="handleNavRoute(event, '/foto')" class="inline-flex items-center gap-2 bg-white text-appleDark text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full hover:bg-neutral-100 active:scale-95 transition-all shadow-md">
             <span>Foto Interior</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -1802,6 +1850,8 @@
       let r = route.toLowerCase();
       if (r === "/reels") r = "/sosmed";
       currentRoute = r;
+
+      if (typeof closeMobileMenu === "function") closeMobileMenu();
 
       const hero = document.getElementById("heroSection");
       const banner = document.getElementById("subpageHeaderBanner");
@@ -4287,6 +4337,7 @@
       const navBtn = document.getElementById("navAdminBtn");
       const navLabel = document.getElementById("navAdminLabel");
       const navIcon = document.getElementById("navAdminIcon");
+      const cloudNav = document.getElementById("cloudStatusNav");
 
       const isMobile = window.innerWidth < 640;
 
@@ -4297,12 +4348,51 @@
         navIcon.setAttribute("data-lucide", "settings");
         navBtn.classList.remove("bg-appleDark");
         navBtn.classList.add("bg-foriorBrand");
+        // Tampilkan akses admin & status cloud hanya untuk sesi yang login
+        navBtn.classList.remove("hidden");
+        navBtn.classList.add("inline-flex");
+        if (cloudNav) { cloudNav.classList.remove("hidden"); cloudNav.classList.add("inline-flex"); }
       } else {
         navLabel.textContent = isMobile ? "Admin" : "Kelola Portofolio";
         navIcon.setAttribute("data-lucide", "lock");
         navBtn.classList.remove("bg-foriorBrand");
         navBtn.classList.add("bg-appleDark");
+        // Sembunyikan dari pengunjung umum (akses tetap tersedia via link di footer)
+        navBtn.classList.add("hidden");
+        navBtn.classList.remove("inline-flex");
+        if (cloudNav) { cloudNav.classList.add("hidden"); cloudNav.classList.remove("inline-flex"); }
       }
+      lucide.createIcons();
+    }
+
+    // ================= MENU NAVIGASI MOBILE =================
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      if (!menu) return;
+      if (menu.classList.contains("hidden")) {
+        openMobileMenu();
+      } else {
+        closeMobileMenu();
+      }
+    }
+
+    function openMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      const icon = document.getElementById("mobileMenuIcon");
+      const btn = document.getElementById("mobileMenuBtn");
+      if (menu) menu.classList.remove("hidden");
+      if (icon) icon.setAttribute("data-lucide", "x");
+      if (btn) { btn.setAttribute("aria-expanded", "true"); btn.setAttribute("aria-label", "Tutup menu"); }
+      lucide.createIcons();
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      const icon = document.getElementById("mobileMenuIcon");
+      const btn = document.getElementById("mobileMenuBtn");
+      if (menu) menu.classList.add("hidden");
+      if (icon) icon.setAttribute("data-lucide", "menu");
+      if (btn) { btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-label", "Buka menu"); }
       lucide.createIcons();
     }
 
