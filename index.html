@@ -164,6 +164,17 @@
     .badge-counter i {
       margin-top: -1px;
     }
+
+    /* Jarak atas khusus saat sebuah section menjadi elemen pertama di subhalaman
+       (banner sub-rute sudah dihapus), agar tidak menempel di bawah header fixed. */
+    .is-subpage-first {
+      padding-top: 6rem !important;
+    }
+    @media (min-width: 768px) {
+      .is-subpage-first {
+        padding-top: 7rem !important;
+      }
+    }
   </style>
 </head>
 
@@ -277,24 +288,8 @@
     </nav>
   </div>
 
-  <!-- ================= BANNER KHUSUS UNTUK HALAMAN SUB-RUTE ================= -->
-  <div id="subpageHeaderBanner" class="hidden max-w-7xl mx-auto px-4 sm:px-8 pt-20 pb-1">
-    <div class="flex items-center justify-between gap-3">
-      <a href="#" onclick="handleNavRoute(event, '/')" class="inline-flex items-center gap-2 text-xs font-semibold text-appleGray hover:text-appleDark bg-white border border-appleBorder px-4 py-2 rounded-full shadow-2xs transition-all active:scale-95">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-        <span class="sm:hidden">Kembali</span>
-        <span class="hidden sm:inline">Kembali ke Semua Showcase</span>
-      </a>
-
-      <button
-        type="button"
-        onclick="shareCurrentPage()"
-        class="inline-flex items-center gap-1.5 text-xs font-medium text-appleDark bg-white border border-appleBorder px-4 py-2 rounded-full shadow-2xs hover:bg-neutral-50 active:scale-95 transition-all cursor-pointer">
-        <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
-        <span>Bagikan Tautan</span>
-      </button>
-    </div>
-  </div>
+  <!-- Banner sub-rute (tombol Kembali/Bagikan) dihapus: subhalaman langsung ke header kategori.
+       Navigasi kembali tetap tersedia via bottom nav, menu hamburger, dan logo FORIOR. -->
 
   <!-- ================= SECTION 1: HERO CINEMATIC ================= -->
   <section id="heroSection" class="relative w-full h-[88vh] min-h-[560px] max-h-[920px] flex items-end pb-14 md:pb-24 pt-24 overflow-hidden">
@@ -1821,6 +1816,14 @@
       navigateTo(targetPath);
     }
 
+    // Tombol "Lihat Semua ..." memakai .project-count-badge (display:inline-flex !important),
+    // sehingga class "hidden" biasa tidak mempan. Paksa via inline style penting.
+    function showLihatSemua(el, show) {
+      if (!el) return;
+      if (show) el.style.removeProperty("display");
+      else el.style.setProperty("display", "none", "important");
+    }
+
     function applyRoute(route) {
       let r = route.toLowerCase();
       if (r === "/reels") r = "/sosmed";
@@ -1830,7 +1833,8 @@
       if (typeof updateBottomNavActive === "function") updateBottomNavActive();
 
       const hero = document.getElementById("heroSection");
-      const banner = document.getElementById("subpageHeaderBanner");
+      // Banner sub-rute dihapus seluruhnya; stub classList no-op agar pemanggilan lama aman.
+      const banner = document.getElementById("subpageHeaderBanner") || { classList: { add() {}, remove() {} } };
       // Judul/badge/deskripsi banner subhalaman dihapus (redundan dengan header section);
       // stub null-safe agar penetapan .textContent di bawah tidak error.
       const _noSink = {};
@@ -1857,6 +1861,9 @@
       if (droneTrack) {
         droneTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
       }
+
+      // Reset jarak-atas subhalaman; hanya section yang aktif di sub-rute yang menerimanya.
+      [secFoto, secVideo, secReels, secDrone].forEach(s => s && s.classList.remove("is-subpage-first"));
 
       if (r.startsWith("/client/")) {
         const slug = r.replace("/client/", "").trim();
@@ -1890,10 +1897,10 @@
           reelsTrack.className = "flex items-stretch gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1 scroll-pl-1";
         }
 
-        if (btnLihatSemuaFoto) btnLihatSemuaFoto.classList.remove("hidden");
-        if (btnLihatSemuaVideo) btnLihatSemuaVideo.classList.remove("hidden");
-        if (btnLihatSemuaReels) btnLihatSemuaReels.classList.remove("hidden");
-        if (btnLihatSemuaDrone) btnLihatSemuaDrone.classList.remove("hidden");
+        showLihatSemua(btnLihatSemuaFoto, true);
+        showLihatSemua(btnLihatSemuaVideo, true);
+        showLihatSemua(btnLihatSemuaReels, true);
+        showLihatSemua(btnLihatSemuaDrone, true);
 
         renderAllSections();
       } else {
@@ -1914,7 +1921,8 @@
           desc.textContent = "Dokumentasi fotografi profesional beresolusi tinggi dengan komposisi simetris, pencahayaan alami yang lembut, dan detail material ruang.";
           
           secFoto.classList.remove("hidden");
-          if (btnLihatSemuaFoto) btnLihatSemuaFoto.classList.add("hidden");
+          secFoto.classList.add("is-subpage-first");
+          showLihatSemua(btnLihatSemuaFoto, false);
           photoDisplayLimit = 999;
           renderPhotoSection();
 
@@ -1925,7 +1933,8 @@
           desc.textContent = "Eksplorasi ruang dengan pergerakan kamera sinematik, visual atmosferik, dan transisi halus dalam rasio lanskap 16:9.";
           
           secVideo.classList.remove("hidden");
-          if (btnLihatSemuaVideo) btnLihatSemuaVideo.classList.add("hidden");
+          secVideo.classList.add("is-subpage-first");
+          showLihatSemua(btnLihatSemuaVideo, false);
           videoDisplayLimit = 999;
           renderVideoSection();
 
@@ -1936,7 +1945,8 @@
           desc.textContent = "Kumpulan konten micro-tours video reels vertikal 9:16 dan feed carousel 3:4 yang dioptimalkan untuk media sosial.";
           
           secReels.classList.remove("hidden");
-          if (btnLihatSemuaReels) btnLihatSemuaReels.classList.add("hidden");
+          secReels.classList.add("is-subpage-first");
+          showLihatSemua(btnLihatSemuaReels, false);
           if (igTabs) igTabs.classList.remove("hidden");
           setInstagramTab(activeInstagramTab);
 
@@ -1947,7 +1957,8 @@
           desc.textContent = "Dokumentasi udara fasad bangunan, keindahan bentang lanskap kawasan, dan tata ruang megah dari sudut pandang luas.";
           
           secDrone.classList.remove("hidden");
-          if (btnLihatSemuaDrone) btnLihatSemuaDrone.classList.add("hidden");
+          secDrone.classList.add("is-subpage-first");
+          showLihatSemua(btnLihatSemuaDrone, false);
           if (droneTrack) {
             droneTrack.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-2 px-1";
           }
