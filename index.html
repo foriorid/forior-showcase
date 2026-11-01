@@ -85,8 +85,8 @@
     }
   </script>
 
-  <!-- html2canvas Library untuk Screenshot -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- html-to-image: engine screenshot (render via mesin browser asli, akurat untuk layout modern) -->
+  <script src="/html-to-image.js"></script>
 
   <!-- heic2any: konversi foto HEIC/HEIF dari iPhone -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
@@ -3638,6 +3638,45 @@
       }
     }
 
+    // Capture elemen menjadi PNG (dataURL) memakai html-to-image, yang merender lewat
+    // mesin browser asli (SVG foreignObject) sehingga aspect-ratio, line-clamp, bayangan,
+    // dan warna modern tergambar akurat (tidak terpotong seperti html2canvas).
+    // Catatan: gambar lintas-domain hanya ikut tergambar bila host-nya mengirim header CORS.
+    async function captureForScreenshot(el, opts) {
+      opts = opts || {};
+      const imgs = Array.from(el.querySelectorAll("img"));
+      const prevLoading = imgs.map(i => i.getAttribute("loading"));
+      imgs.forEach(i => i.setAttribute("loading", "eager"));
+
+      // pastikan semua gambar sudah dimuat (atau timeout) + font siap sebelum capture
+      await Promise.all(imgs.map(img => (img.complete && img.naturalWidth > 0)
+        ? Promise.resolve()
+        : new Promise(res => {
+            img.addEventListener("load", res, { once: true });
+            img.addEventListener("error", res, { once: true });
+            setTimeout(res, 4000);
+          })));
+      if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (_) {} }
+
+      try {
+        return await htmlToImage.toPng(el, {
+          pixelRatio: opts.pixelRatio || 2,
+          backgroundColor: opts.backgroundColor || "#F5F5F7",
+          cacheBust: true,
+          // Jika sebuah gambar gagal diambil (mis. host tanpa header CORS), pakai placeholder
+          // transparan agar screenshot tetap dihasilkan (teks & layout tetap sempurna),
+          // alih-alih menggagalkan seluruh proses.
+          imagePlaceholder: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+          filter: (node) => !(node && node.getAttribute && node.getAttribute("data-html2canvas-ignore") === "true")
+        });
+      } finally {
+        imgs.forEach((img, i) => {
+          if (prevLoading[i] === null) img.removeAttribute("loading");
+          else img.setAttribute("loading", prevLoading[i]);
+        });
+      }
+    }
+
     async function takeFullPageScreenshot() {
       const btn = document.getElementById("btnScreenshotFull");
       const iconBox = document.getElementById("screenshotIconBox");
@@ -3653,17 +3692,7 @@
       `;
 
       try {
-        if (document.fonts && document.fonts.ready) await document.fonts.ready;
-
-        const canvas = await html2canvas(document.body, {
-          scale: 1.5,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
-          ignoreElements: (el) => el.getAttribute('data-html2canvas-ignore') === 'true'
-        });
-
-        const dataUrl = canvas.toDataURL("image/png");
+        const dataUrl = await captureForScreenshot(document.body, { pixelRatio: 1.5, backgroundColor: "#F5F5F7" });
         openScreenshotPreview(dataUrl, "Tangkapan Layar Satu Halaman Penuh", "FORIOR-Showcase-Fullpage.png");
       } catch (err) {
         console.error("Screenshot error:", err);
@@ -3683,18 +3712,7 @@
       showToast("Mengambil tangkapan layar section...");
 
       try {
-        if (document.fonts && document.fonts.ready) await document.fonts.ready;
-
-        const canvas = await html2canvas(sectionEl, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          logging: false,
-          backgroundColor: "#F5F5F7",
-          ignoreElements: (el) => el.getAttribute('data-html2canvas-ignore') === 'true'
-        });
-
-        const dataUrl = canvas.toDataURL("image/png");
+        const dataUrl = await captureForScreenshot(sectionEl, { pixelRatio: 2, backgroundColor: "#F5F5F7" });
         openScreenshotPreview(dataUrl, `Tangkapan Layar: ${filenamePrefix}`, `FORIOR-${filenamePrefix}.png`);
       } catch (err) {
         console.error("Section screenshot error:", err);
