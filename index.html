@@ -1760,6 +1760,7 @@
 
     // ================= CLIENT-SIDE ROUTER =================
     function initRouter() {
+      captureDefaultMeta();
       window.addEventListener("popstate", () => {
         applyRoute(parsePath());
       });
@@ -1827,6 +1828,56 @@
       else el.style.setProperty("display", "none", "important");
     }
 
+    // ===== SEO: deep-link & meta dinamis per proyek foto =====
+    let projectPushedState = false;
+    let DEFAULT_META = null;
+
+    function slugifyTitle(s) {
+      return (s || "").toString().toLowerCase().trim()
+        .normalize("NFD").replace(/[̀-ͯ]/g, "")
+        .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 80);
+    }
+    function isFotoProject(p) { return !!p && (!p.type || p.type === "foto"); }
+
+    function qMeta(attr, name) { return document.querySelector('meta[' + attr + '="' + name + '"]'); }
+    function setMetaContent(attr, name, val) { const m = qMeta(attr, name); if (m) m.setAttribute("content", val); }
+
+    function captureDefaultMeta() {
+      const g = (a, n) => { const m = qMeta(a, n); return m ? m.getAttribute("content") : ""; };
+      DEFAULT_META = {
+        desc: g("name", "description"),
+        ogTitle: g("property", "og:title"), ogDesc: g("property", "og:description"), ogImage: g("property", "og:image"),
+        twTitle: g("name", "twitter:title"), twDesc: g("name", "twitter:description"), twImage: g("name", "twitter:image")
+      };
+    }
+    function resetMetaToDefault() {
+      if (!DEFAULT_META) return;
+      setMetaContent("name", "description", DEFAULT_META.desc);
+      setMetaContent("property", "og:title", DEFAULT_META.ogTitle);
+      setMetaContent("property", "og:description", DEFAULT_META.ogDesc);
+      setMetaContent("property", "og:image", DEFAULT_META.ogImage);
+      setMetaContent("name", "twitter:title", DEFAULT_META.twTitle);
+      setMetaContent("name", "twitter:description", DEFAULT_META.twDesc);
+      setMetaContent("name", "twitter:image", DEFAULT_META.twImage);
+    }
+    function applyProjectMeta(project, slug) {
+      const loc = project.location || "Indonesia";
+      const cats = (typeof getProjectCategories === "function" ? getProjectCategories(project) : []).join(", ");
+      const url = "https://showcase.forior.id/p/" + slug;
+      const title = project.title + " — " + loc + " | Fotografi Interior & Arsitektur FORIOR";
+      const descText = "Dokumentasi fotografi profesional " + project.title + (cats ? " (" + cats + ")" : "") + " di " + loc + " oleh FORIOR — jasa foto properti, interior & arsitektur.";
+      document.title = title;
+      setMetaContent("name", "description", descText);
+      const canon = document.querySelector('link[rel="canonical"]'); if (canon) canon.setAttribute("href", url);
+      setMetaContent("property", "og:url", url);
+      setMetaContent("property", "og:title", title);
+      setMetaContent("property", "og:description", descText);
+      if (project.image) setMetaContent("property", "og:image", project.image);
+      setMetaContent("name", "twitter:title", title);
+      setMetaContent("name", "twitter:description", descText);
+      if (project.image) setMetaContent("name", "twitter:image", project.image);
+    }
+
     // Perbarui canonical & og:url mengikuti rute aktif supaya tiap halaman kategori
     // punya URL kanonik sendiri (bukan dianggap duplikat homepage oleh Google).
     function updateCanonical(r) {
@@ -1847,6 +1898,18 @@
       if (typeof closeMobileMenu === "function") closeMobileMenu();
       if (typeof updateBottomNavActive === "function") updateBottomNavActive();
       if (typeof updateCanonical === "function") updateCanonical(r);
+
+      // Berpindah ke rute non-proyek: tutup lightbox proyek bila terbuka & pulihkan meta default.
+      if (!r.startsWith("/p/")) {
+        const lbm = document.getElementById("lightboxModal");
+        if (lbm && lbm.classList.contains("opacity-100")) {
+          lbm.classList.remove("opacity-100", "pointer-events-auto");
+          lbm.classList.add("opacity-0", "pointer-events-none");
+          document.body.style.overflow = "";
+          activeLightboxProject = null;
+        }
+        resetMetaToDefault();
+      }
 
       const hero = document.getElementById("heroSection");
       // Banner sub-rute dihapus seluruhnya; stub classList no-op agar pemanggilan lama aman.
@@ -1930,12 +1993,34 @@
         secReels.classList.add("hidden");
         secDrone.classList.add("hidden");
 
-        if (r === "/foto") {
+        if (r.startsWith("/p/")) {
+          // Deep-link proyek foto: tampilkan halaman kategori foto sebagai latar, lalu buka lightbox.
+          secFoto.classList.remove("hidden");
+          secFoto.classList.add("is-subpage-first");
+          showLihatSemua(btnLihatSemuaFoto, false);
+          photoDisplayLimit = 999;
+          renderPhotoSection();
+
+          const slug = r.slice(3);
+          const proj = projects.find(p => isFotoProject(p) && slugifyTitle(p.title) === slug);
+          if (proj) {
+            if (!(activeLightboxProject && activeLightboxProject.id === proj.id)) {
+              openProjectLightbox(proj.id, { fromRoute: true });
+            } else {
+              applyProjectMeta(proj, slug);
+            }
+          } else {
+            // Proyek belum ketemu (data Firestore mungkin belum termuat). onSnapshot akan
+            // memanggil applyRoute(currentRoute) lagi dan membukanya saat data tersedia.
+            document.title = "Portofolio Fotografi Interior & Arsitektur — FORIOR";
+          }
+
+        } else if (r === "/foto") {
           document.title = "Portofolio Fotografi Interior & Arsitektur — FORIOR";
           badge.textContent = "Katalog Khusus Fotografi";
           title.textContent = "Interior & Arsitektur";
           desc.textContent = "Dokumentasi fotografi profesional beresolusi tinggi dengan komposisi simetris, pencahayaan alami yang lembut, dan detail material ruang.";
-          
+
           secFoto.classList.remove("hidden");
           secFoto.classList.add("is-subpage-first");
           showLihatSemua(btnLihatSemuaFoto, false);
@@ -2680,12 +2765,13 @@
           </span>
         `).join("");
 
+        const slug = slugifyTitle(item.title);
+
         return `
-        <div 
-          role="button"
-          tabindex="0"
-          onclick="openProjectLightbox('${item.id}')" 
-          onkeydown="if(event.key==='Enter') openProjectLightbox('${item.id}')"
+        <a
+          href="/p/${slug}"
+          onclick="event.preventDefault(); openProjectLightbox('${item.id}')"
+          aria-label="${item.title} — ${item.location || 'Indonesia'}"
           class="project-card group block cursor-pointer bg-appleCard rounded-[26px] p-3 border border-black/[0.04] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 outline-none">
           
           <div class="project-img-container relative w-full aspect-[4/3] rounded-[20px] overflow-hidden bg-neutral-100">
@@ -2729,7 +2815,7 @@
               <span class="truncate">${item.location || 'Indonesia'}</span>
             </div>
           </div>
-        </div>
+        </a>
       `;
       }).join("");
 
@@ -3265,7 +3351,7 @@
       prevImg.src = currentLightboxPhotos[prevIdx];
     }
 
-    function openProjectLightbox(id) {
+    function openProjectLightbox(id, opts) {
       const project = projects.find(p => p.id === id);
       if (!project) return;
 
@@ -3353,6 +3439,19 @@
       modal.classList.add("opacity-100", "pointer-events-auto");
       document.body.style.overflow = "hidden";
 
+      // SEO (hanya proyek foto): beri URL unik /p/<slug> + meta dinamis per proyek.
+      if (isFotoProject(project)) {
+        const slug = slugifyTitle(project.title);
+        if (!opts || !opts.fromRoute) {
+          try {
+            history.pushState({ p: slug }, "", "/p/" + slug);
+            projectPushedState = true;
+            currentRoute = "/p/" + slug;
+          } catch (_) {}
+        }
+        applyProjectMeta(project, slug);
+      }
+
       lucide.createIcons();
     }
 
@@ -3365,6 +3464,19 @@
       setTimeout(() => {
         activeLightboxProject = null;
       }, 150);
+
+      // Pulihkan URL & meta setelah menutup halaman proyek.
+      const onProjectUrl = (currentRoute || "").startsWith("/p/") ||
+        (typeof location !== "undefined" && location.pathname && location.pathname.startsWith("/p/"));
+      if (onProjectUrl) {
+        if (projectPushedState) {
+          projectPushedState = false;
+          history.back();
+        } else {
+          try { history.replaceState({}, "", "/foto"); } catch (_) {}
+          applyRoute("/foto");
+        }
+      }
     }
 
     function updateLightboxDisplay() {
