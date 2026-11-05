@@ -2087,7 +2087,16 @@
       try {
         localStorage.setItem("forior_portfolio_projects", JSON.stringify(data));
       } catch (e) {
-        console.warn("Cache lokal dilewati:", e && e.name);
+        // Data penuh melebihi kuota localStorage (±5MB). Simpan versi ringkas tanpa galeri
+        // (galeri hanya perlu saat lightbox dibuka, dan selalu tersedia dari data in-memory).
+        try {
+          const light = data.map(p => { const { gallery, ...rest } = p; return rest; });
+          localStorage.setItem("forior_portfolio_projects", JSON.stringify(light));
+        } catch (e2) {
+          // Masih gagal: hapus cache lama agar tidak menampilkan data basi (dummy) saat load.
+          try { localStorage.removeItem("forior_portfolio_projects"); } catch (_) {}
+          console.warn("Cache lokal dilewati:", e2 && e2.name);
+        }
       }
     }
 
@@ -2117,8 +2126,12 @@
         try {
           dbInstance.settings({ experimentalAutoDetectLongPolling: true, merge: true });
         } catch (_) {}
+        // Offline persistence (IndexedDB) SENGAJA dimatikan: pada perangkat dengan IndexedDB
+        // korup/terkunci ia bisa membuat Firestore hang sehingga data tak pernah muncul
+        // (hanya seed/dummy). Tanpa persistence, klien selalu membaca data terbaru dari server.
+        // Bersihkan sisa cache IndexedDB lama dari versi sebelumnya (best-effort).
         try {
-          dbInstance.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+          if (dbInstance.clearPersistence) dbInstance.clearPersistence().catch(() => {});
         } catch (_) {}
 
         storageInstance = firebase.storage();
