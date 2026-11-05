@@ -1824,6 +1824,18 @@
       else el.style.setProperty("display", "none", "important");
     }
 
+    // Perbarui canonical & og:url mengikuti rute aktif supaya tiap halaman kategori
+    // punya URL kanonik sendiri (bukan dianggap duplikat homepage oleh Google).
+    function updateCanonical(r) {
+      const base = "https://showcase.forior.id";
+      const path = (!r || r === "/" || r === "/index.html") ? "/" : r;
+      const url = base + path;
+      const canon = document.querySelector('link[rel="canonical"]');
+      if (canon) canon.setAttribute("href", url);
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute("content", url);
+    }
+
     function applyRoute(route) {
       let r = route.toLowerCase();
       if (r === "/reels") r = "/sosmed";
@@ -1831,6 +1843,7 @@
 
       if (typeof closeMobileMenu === "function") closeMobileMenu();
       if (typeof updateBottomNavActive === "function") updateBottomNavActive();
+      if (typeof updateCanonical === "function") updateCanonical(r);
 
       const hero = document.getElementById("heroSection");
       // Banner sub-rute dihapus seluruhnya; stub classList no-op agar pemanggilan lama aman.
