@@ -2124,7 +2124,9 @@
         }
         dbInstance = firebase.firestore();
         try {
-          dbInstance.settings({ experimentalAutoDetectLongPolling: true, merge: true });
+          // Paksa long-polling (plain HTTPS) alih-alih auto-detect: koneksi lebih cepat &
+          // andal di balik proxy/firewall/jaringan yang membuat probing WebSocket menggantung.
+          dbInstance.settings({ experimentalForceLongPolling: true, merge: true });
         } catch (_) {}
         // Offline persistence (IndexedDB) SENGAJA dimatikan: pada perangkat dengan IndexedDB
         // korup/terkunci ia bisa membuat Firestore hang sehingga data tak pernah muncul
