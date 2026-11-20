@@ -1715,9 +1715,13 @@
       }
     ];
 
-    let projects = [...INITIAL_PROJECTS];
+    // Mulai kosong: jangan tampilkan data seed/dummy. Data asli datang dari cache perangkat,
+    // /api/projects (ringan, di-cache CDN), atau listener realtime (khusus admin).
+    let projects = [];
     let deviceCacheBackup = [];
-    let isDataLoaded = true;
+    let isDataLoaded = false;
+    let fullDataLoaded = false;   // true jika data penuh dari listener Firestore (admin) sudah masuk
+    let realtimeAttached = false;
     let activeCategory = "Semua";
     let adminFilterType = "all";
     let isCloudConnected = false;
@@ -1748,7 +1752,8 @@
         populateBrandDropdown();
         checkAuthStatus();
         loadInitialCache();
-        
+        fetchProjectsSnapshot();
+
         initRouter();
         initFirebaseConnection();
         setupLightboxKeyboardAndSwipe();
@@ -2112,8 +2117,33 @@
               type: p.type || "foto",
               categories: getProjectCategories(p)
             }));
+            isDataLoaded = true;
           }
         } catch(e) {}
+      }
+    }
+
+    // Ambil daftar proyek ringan dari /api/projects (tanpa base64, ±100KB, di-cache CDN).
+    // Jauh lebih cepat & andal di HP daripada listener Firestore yang mengunduh ~16MB.
+    async function fetchProjectsSnapshot() {
+      try {
+        const r = await fetch("/api/projects", { headers: { "Accept": "application/json" } });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const list = await r.json();
+        if (!Array.isArray(list) || list.length === 0) throw new Error("data kosong");
+        if (fullDataLoaded) return; // data penuh (admin) sudah lebih baru
+        projects = list.map(p => ({ ...p, type: p.type || "foto", categories: getProjectCategories(p) }));
+        isDataLoaded = true;
+        cacheProjectsSafely(projects);
+        populateBrandDropdown();
+        applyRoute(currentRoute);
+        renderAdminList();
+      } catch (e) {
+        console.warn("Snapshot /api/projects gagal:", e && e.message);
+        // Cadangan: pakai listener Firestore langsung bila belum ada data sama sekali.
+        if (!isDataLoaded) {
+          if (dbInstance) attachRealtimeListener(); else fallbackToLocalStorage();
+        }
       }
     }
 
@@ -2138,10 +2168,25 @@
 
         storageInstance = firebase.storage();
 
+        // Listener realtime mengunduh SELURUH koleksi (termasuk gambar base64 lama, ±16MB),
+        // jadi hanya dipasang untuk admin yang login. Pengunjung umum memakai /api/projects.
+        if (sessionStorage.getItem("forior_admin_logged")) attachRealtimeListener();
+
+      } catch (e) {
+        console.warn("Inisialisasi Firebase fallback:", e);
+        if (!isDataLoaded) fallbackToLocalStorage();
+      }
+    }
+
+    function attachRealtimeListener() {
+      if (realtimeAttached || !dbInstance) return;
+      realtimeAttached = true;
         dbInstance.collection("showcase_projects").onSnapshot({
           includeMetadataChanges: false
         }, (snapshot) => {
           isCloudConnected = true;
+          fullDataLoaded = true;
+          isDataLoaded = true;
           updateCloudUIStatus(true);
           
           if (!snapshot.empty) {
@@ -2168,11 +2213,6 @@
           console.warn("Koneksi Firestore dialihkan ke lokal:", err.message);
           fallbackToLocalStorage();
         });
-
-      } catch (e) {
-        console.warn("Inisialisasi Firebase fallback:", e);
-        fallbackToLocalStorage();
-      }
     }
 
     // ================= CLIENT-SIDE IMAGE COMPRESSOR =================
@@ -2240,6 +2280,16 @@
       });
     }
 
+    // Gambar base64 lama atau URL /api/img (proxy sementara) diunggah ke Storage saat disimpan,
+    // sehingga dokumen Firestore tetap kecil dan base64 lama ikut termigrasi saat proyek diedit.
+    async function persistableImageUrl(url, folderPath) {
+      if (typeof url === "string" && (url.startsWith("data:") || url.startsWith("/api/img"))) {
+        const blob = await (await fetch(url)).blob();
+        return await uploadToFirebaseStorage(blob, folderPath);
+      }
+      return url;
+    }
+
     async function uploadToFirebaseStorage(fileOrBlob, folderPath = "projects") {
       if (!storageInstance) throw new Error("Storage belum terhubung.");
       
@@ -2275,6 +2325,13 @@
     function fallbackToLocalStorage() {
       isCloudConnected = false;
       updateCloudUIStatus(false);
+      if (isDataLoaded && projects.length > 0) {
+        // Sudah ada data asli (cache / /api/projects): pertahankan, jangan ganti seed.
+        populateBrandDropdown();
+        applyRoute(currentRoute);
+        renderAdminList();
+        return;
+      }
       isDataLoaded = true;
 
       const saved = localStorage.getItem("forior_portfolio_projects");
@@ -2407,7 +2464,7 @@
     function renderFeaturedBrandsSection() {
       const container = document.getElementById("clientSpotlightGrid");
       const navControls = document.getElementById("brandNavControls");
-      if (!container) return;
+      if (!container || !isDataLoaded) return;
 
       const allBrands = getAllBrands();
       const filledBrands = allBrands.filter(brand => getProjectsForBrand(brand).length > 0);
@@ -4093,6 +4150,11 @@
           }
         }
 
+        if (image && (image.startsWith("data:") || image.startsWith("/api/img"))) {
+          progText.textContent = "Memindahkan cover lama ke Storage...";
+          image = await persistableImageUrl(image, "covers");
+        }
+
         const finalGallery = [];
         if (type === 'foto' || type === 'drone' || (type === 'reels' && sosmedSubtype === 'feed')) {
           let count = 1;
@@ -4102,7 +4164,10 @@
               const uploadedUrl = await uploadToFirebaseStorage(item.file, "galleries");
               finalGallery.push(uploadedUrl);
             } else if (item.url) {
-              finalGallery.push(item.url);
+              if (item.url.startsWith("data:") || item.url.startsWith("/api/img")) {
+                progText.textContent = `Memindahkan galeri lama ke Storage (${count}/${pendingGalleryItems.length})...`;
+              }
+              finalGallery.push(await persistableImageUrl(item.url, "galleries"));
             }
             count++;
           }
@@ -4402,6 +4467,8 @@
       for (const item of missing) {
         const { id, ...data } = item;
         if (typeof data.timestamp !== "number") data.timestamp = Date.now();
+        if (typeof data.image === "string" && data.image.startsWith("/api/img")) data.image = "";
+        if (Array.isArray(data.gallery)) data.gallery = data.gallery.filter(g => !(typeof g === "string" && g.startsWith("/api/img")));
         try {
           await dbInstance.collection("showcase_projects").doc(id).set(data, { merge: true });
           restored++;
@@ -4477,6 +4544,7 @@
       }
 
       sessionStorage.setItem("forior_admin_logged", email);
+      attachRealtimeListener();
       checkAuthStatus();
       toggleLoginModal(false);
       toggleAdminPanel(true);
