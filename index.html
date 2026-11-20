@@ -2849,6 +2849,48 @@
       lucide.createIcons();
     }
 
+    // ===== Render kartu ber-kunci =====
+    // Setiap kartu diberi kunci (id proyek) + sidik isi. Kartu yang tidak berubah DIPAKAI ULANG
+    // (elemen & gambar yang sudah termuat dipertahankan), sehingga "Tampilkan lebih banyak",
+    // ganti filter, atau refresh data tidak membuat foto blank lalu dimuat ulang.
+    function cardSignature(item) {
+      return [item.title, item.image, item.location, item.type, item.subtype, item.brand,
+        (item.categories || []).join(","), Array.isArray(item.gallery) ? item.gallery.length : 0].join("|");
+    }
+    function renderKeyedCards(grid, items, toHtml) {
+      if (!grid.__cardCache) grid.__cardCache = new Map(); // kunci+sidik -> elemen (termasuk yang sedang tak tampil)
+      const cache = grid.__cardCache;
+      const nodes = items.map(item => {
+        const key = String(item.id) + "\u0000" + cardSignature(item);
+        let el = cache.get(key);
+        if (!el) {
+          const tpl = document.createElement("template");
+          tpl.innerHTML = toHtml(item).trim();
+          el = tpl.content.firstElementChild;
+          el.dataset.key = String(item.id);
+          cache.set(key, el);
+        }
+        return el;
+      });
+      const cur = grid.children;
+      let prefix = 0;
+      while (prefix < cur.length && prefix < nodes.length && cur[prefix] === nodes[prefix]) prefix++;
+      if (prefix === cur.length) {
+        // Semua kartu yang tampil tetap di tempatnya: cukup tambahkan sisanya (load more).
+        if (prefix < nodes.length) {
+          const frag = document.createDocumentFragment();
+          for (let i = prefix; i < nodes.length; i++) frag.appendChild(nodes[i]);
+          grid.appendChild(frag);
+        }
+      } else if (prefix === nodes.length) {
+        // Daftar menyusut: buang kartu berlebih saja.
+        while (grid.children.length > nodes.length) grid.lastElementChild.remove();
+      } else {
+        // Urutan/isi berbeda: susun ulang memakai elemen yang ada (gambar tidak diunduh ulang).
+        grid.replaceChildren(...nodes);
+      }
+    }
+
     function renderPhotoSection() {
       const grid = document.getElementById("photoPortfolioGrid");
       const emptyState = document.getElementById("emptyPhotoState");
@@ -2874,7 +2916,7 @@
       emptyState.classList.add("hidden");
       const visibleItems = filtered.slice(0, photoDisplayLimit);
 
-      grid.innerHTML = visibleItems.map(item => {
+      renderKeyedCards(grid, visibleItems, item => {
         const totalPhotos = 1 + (item.gallery && Array.isArray(item.gallery) ? item.gallery.length : 0);
         const cats = getProjectCategories(item);
         const badgesHtml = cats.map(c => `
@@ -2935,7 +2977,7 @@
           </div>
         </a>
       `;
-      }).join("");
+      });
 
       if (filtered.length > photoDisplayLimit) {
         const remaining = filtered.length - photoDisplayLimit;
@@ -2973,7 +3015,7 @@
       emptyState.classList.add("hidden");
       const visibleItems = videoProjects.slice(0, videoDisplayLimit);
 
-      grid.innerHTML = visibleItems.map(item => {
+      renderKeyedCards(grid, visibleItems, item => {
         const cats = getProjectCategories(item);
         const badgesHtml = cats.map(c => `
           <span class="badge-category inline-flex items-center justify-center rounded-full text-[10px] font-medium tracking-wide bg-rose-600 text-white shadow-xs">
@@ -3032,7 +3074,7 @@
           </div>
         </div>
       `;
-      }).join("");
+      });
 
       if (videoProjects.length > videoDisplayLimit) {
         const remaining = videoProjects.length - videoDisplayLimit;
