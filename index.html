@@ -1721,6 +1721,8 @@
     let deviceCacheBackup = [];
     let isDataLoaded = false;
     let fullDataLoaded = false;   // true jika data penuh dari listener Firestore (admin) sudah masuk
+    let lastRenderedRoute = null; // rute yang section-nya sedang ter-render (latar lightbox)
+    let lastRenderedTitle = "";
     let realtimeAttached = false;
     let activeCategory = "Semua";
     let adminFilterType = "all";
@@ -1898,6 +1900,38 @@
     function applyRoute(route) {
       let r = route.toLowerCase();
       if (r === "/reels") r = "/sosmed";
+      const prevRoute = currentRoute;
+
+      // (a) Lightbox proyek ini sudah terbuka (mis. data diperbarui saat sedang dilihat):
+      //     cukup segarkan meta, JANGAN render ulang latar belakang.
+      if (r.startsWith("/p/") && activeLightboxProject &&
+          document.getElementById("lightboxModal")?.classList.contains("opacity-100") &&
+          slugifyTitle(activeLightboxProject.title) === r.slice(3)) {
+        currentRoute = r;
+        applyProjectMeta(activeLightboxProject, r.slice(3));
+        return;
+      }
+
+      // (b) Menutup lightbox kembali ke halaman yang memang sudah ter-render di belakangnya:
+      //     tutup lightbox & pulihkan meta saja. Tanpa render ulang -> foto tidak blank/dimuat ulang,
+      //     posisi scroll tetap.
+      if (prevRoute && prevRoute.startsWith("/p/") && !r.startsWith("/p/") && r === lastRenderedRoute) {
+        currentRoute = r;
+        if (typeof closeMobileMenu === "function") closeMobileMenu();
+        if (typeof updateBottomNavActive === "function") updateBottomNavActive();
+        updateCanonical(r);
+        const lbm = document.getElementById("lightboxModal");
+        if (lbm && lbm.classList.contains("opacity-100")) {
+          lbm.classList.remove("opacity-100", "pointer-events-auto");
+          lbm.classList.add("opacity-0", "pointer-events-none");
+          document.body.style.overflow = "";
+        }
+        activeLightboxProject = null;
+        resetMetaToDefault();
+        if (lastRenderedTitle) document.title = lastRenderedTitle;
+        return;
+      }
+
       currentRoute = r;
 
       if (typeof closeMobileMenu === "function") closeMobileMenu();
@@ -2071,6 +2105,14 @@
           renderDroneSection();
         }
       }
+      // Catat halaman yang kini ter-render (untuk /p/ latarnya adalah halaman kategori foto).
+      if (r.startsWith("/p/")) {
+        lastRenderedRoute = "/foto";
+        lastRenderedTitle = "Portofolio Fotografi Interior & Arsitektur — FORIOR";
+      } else {
+        lastRenderedRoute = r;
+        lastRenderedTitle = document.title;
+      }
       lucide.createIcons();
     }
 
@@ -2132,7 +2174,11 @@
         const list = await r.json();
         if (!Array.isArray(list) || list.length === 0) throw new Error("data kosong");
         if (fullDataLoaded) return; // data penuh (admin) sudah lebih baru
-        projects = list.map(p => ({ ...p, type: p.type || "foto", categories: getProjectCategories(p) }));
+        const fresh = list.map(p => ({ ...p, type: p.type || "foto", categories: getProjectCategories(p) }));
+        let cachedRaw = null;
+        try { cachedRaw = localStorage.getItem("forior_portfolio_projects"); } catch (_) {}
+        if (isDataLoaded && cachedRaw && cachedRaw === JSON.stringify(fresh)) return; // identik: tak perlu render ulang
+        projects = fresh;
         isDataLoaded = true;
         cacheProjectsSafely(projects);
         populateBrandDropdown();
